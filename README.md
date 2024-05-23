@@ -3,11 +3,9 @@
 ## Team Members
 
 - Nariman Muldashev: one sentence about you!
-- Person 2: one sentence about you!
-- Person 3: one sentence about you!
-- Person 4: one sentence about you!
-
-
+- Alexander Proskiw: one sentence about you!
+- Chloe Van: one sentence about you!
+- Kai Groden-Gilchrist: one sentence about you!
 
 ## Project Description
 Repo Relay is a web app designed for developers of all experience levels who have coding projects they cannot complete or who are looking for projects to build on. It provides a hub where users can publish, find, and collaborate on unfinished coding projects, allowing them to enhance their technical skills, expand their portfolio, and contribute to the coding community.
@@ -64,10 +62,10 @@ Additional functionalities, such as a machine learning recommender system for pr
 The rough sketch prototypes below show the key tasks of the app including viewing all available projects, and creating a new project.
 
 ### Project List Sketch
-<img src ="images/test.png" width="100px">
+<img src ="images/Projects_view.png" width="700px">
 
 ### Project Creation Sketch
-<img src ="images/test.png" width="100px">
+<img src ="images/Add_project.png" width="700px">
 
 ## Describe your topic/interest in about 150-200 words
 {Add your stuff here}
