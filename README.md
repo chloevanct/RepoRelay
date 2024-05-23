@@ -3,7 +3,7 @@
 ## Team Members
 
 - Nariman Muldashev: one sentence about you!
-- Alexander Proskiw: one sentence about you!
+- Alexander Proskiw: Hi, I'm Alex! I'm in my final year of the BCS program, really excited to learn more about web development, and like fishing in my spare time.
 - Chloe Van: one sentence about you!
 - Kai Groden-Gilchrist: one sentence about you!
 
@@ -68,9 +68,8 @@ The rough sketch prototypes below show the key tasks of the app including viewin
 <img src ="images/Add_project.png" width="700px">
 
 ## Describe your topic/interest in about 150-200 words
-{Add your stuff here}
-
+Our team chose to create Repo Relay because we recognize the common challenge developers face in completing coding projects. Many developers, whether beginners or seasoned professionals, often start ambitious projects but struggle to finish them due to time constraints, shifting priorities, or the need for specific expertise. Repo Relay aims to bridge this gap by providing a platform where these unfinished projects can find new contributors. This collaborative environment not only helps in completing these projects but also fosters learning and growth within the coding community, allowing developers to enhance their skills and expand their portfolios while contributing to meaningful projects.
 
 ## References
-{Add your stuff here}
+N/A
 
