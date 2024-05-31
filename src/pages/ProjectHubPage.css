@@ -1,0 +1,24 @@
+#projectHubPage {
+    display: flex;
+    flex-direction: column;
+}
+
+#projectHubBody {
+    display: flex;
+    flex-direction: column;
+}
+
+#projectDisplay {
+    display: flex;
+    gap: 50px;
+}
+
+#projectList {
+    display: flex;
+    flex-direction: column;
+}
+
+#projectListHeading {
+    display: flex;
+    gap: 30px;
+}
