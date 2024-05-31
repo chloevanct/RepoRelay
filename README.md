@@ -5,7 +5,7 @@
 - Nariman Muldashev: I am 2nd year BCS student with a prior background in consulting and finance. Currently completing a co-op at a Vancouver based fintech startup.
 - Alexander Proskiw: Hi, I'm Alex! I'm in my final year of the BCS program, really excited to learn more about web development, and like fishing in my spare time.
 - Chloe Van: one sentence about you!
-- Kai Groden-Gilchrist: one sentence about you!
+- Kai Groden-Gilchrist: I'm in my final year of BCS - looking to transition from my background in high-throughput biology into software engineering!
 
 ## Project Description
 Repo Relay is a web app designed for developers of all experience levels who have coding projects they cannot complete or who are looking for projects to build on. It provides a hub where users can publish, find, and collaborate on unfinished coding projects, allowing them to enhance their technical skills, expand their portfolio, and contribute to the coding community.
