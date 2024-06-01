@@ -3,7 +3,7 @@ import SearchBar from '../components/projectHub/SearchBar'
 import FilterForm from '../components/projectHub/FilterForm'
 import ProjectListHeader from '../components/projectHub/ProjectListHeader'
 import SortBy from '../components/projectHub/SortBy'
-import ProjectCards from '../components/ProjectCards'
+import ProjectCards from '../components/projectCards/ProjectCards'
 import './ProjectHubPage.css'
 
 export default function ProjectHubPage() {

@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div>
-        <PostProjectPage></PostProjectPage>
+        <ProjectHubPage></ProjectHubPage>
       </div>
     </>
   )
