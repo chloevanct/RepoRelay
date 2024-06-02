@@ -33,7 +33,7 @@ export default function Header() {
           ADD PROJECT
         </Link>
       </div>
-      <SkillTag skill="Python" />
+      {/* <SkillTag skill="Python" /> */}
     </div>
   );
 }
