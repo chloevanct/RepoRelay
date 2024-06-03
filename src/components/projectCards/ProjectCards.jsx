@@ -1,19 +1,19 @@
 import { useSelector } from 'react-redux';
 import ProjectCard from './ProjectCard';
-import './ProjectCards.css'
+import { UnorderedList, ListItem } from '@chakra-ui/react'
 
 export default function ProjectCards() {
     const cards = useSelector((state) => state.cards)
 
     return (
         <>
-            <ul id="projectCards">
+            <UnorderedList listStyleType='none'>
                 {cards.map((card, index) => (
-                <li key={index}>
+                <ListItem key={index}>
                     <ProjectCard card={card}></ProjectCard>
-                </li>
+                </ListItem>
                 ))}
-            </ul>
+            </UnorderedList>
         </>
     )
 }

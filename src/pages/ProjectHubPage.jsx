@@ -13,7 +13,7 @@ export default function ProjectHubPage() {
             <div id='projectHubBody'>
                 <SearchBar></SearchBar>
                 <div id='projectDisplay'>
-                    <FilterForm></FilterForm>
+                    <FilterForm id='filterForm'></FilterForm>
                     <div id='projectList'>
                         <div id='projectListHeading'>
                             <ProjectListHeader></ProjectListHeader>

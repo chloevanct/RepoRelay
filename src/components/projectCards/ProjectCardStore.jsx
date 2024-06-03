@@ -1,4 +1,5 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
+import SkillTag from '../SkillTag'
 
 // Temp cards list for testing until backend is setup
 const cards = [
@@ -10,8 +11,8 @@ const cards = [
         lastActivityDate: "2024-05-10",
         projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
         projectTags: [
-            "Tag 1",
-            "Tag 2"
+            <SkillTag skill='Python'></SkillTag>,
+            <SkillTag skill='JavaScript'></SkillTag>
         ]
     },
     {
@@ -22,8 +23,8 @@ const cards = [
         lastActivityDate: "2024-05-09",
         projectDescription: "Another project desc",
         projectTags: [
-            "Tag 1",
-            "Tag 2"
+            <SkillTag skill='Python'></SkillTag>,
+            <SkillTag skill='JavaScript'></SkillTag>
         ]
     }
 ]
