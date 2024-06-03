@@ -5,9 +5,8 @@ import './PostProjectPage.css'
 export default function PostProjectPage() {
     return (
         <div id='postProjectPage'>
-            <Header></Header>
-            <p>Post a Project sub-heading</p>
-            <ProjectInfoForm></ProjectInfoForm>
+            <Header />
+            <ProjectInfoForm />
         </div>
     )
 }
