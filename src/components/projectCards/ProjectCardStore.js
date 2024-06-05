@@ -20,7 +20,10 @@ const initialCardsState = {
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
             projectTags: [
-                'JavaScript',
+                'Advanced',
+                'AI Development'
+            ],
+            techTags: [
                 'Python'
             ]
         },
@@ -32,8 +35,11 @@ const initialCardsState = {
             lastActivityDate: "2024-05-09",
             projectDescription: "Another project desc",
             projectTags: [
-                'Python',
-                'JavaScript'
+                'Beginner'
+            ],
+            techTags: [
+                'JavaScript',
+                'React'
             ]
         }
     ],
