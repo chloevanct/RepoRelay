@@ -2,20 +2,28 @@ import { useSelector } from 'react-redux';
 import ProjectCard from './ProjectCard';
 import { UnorderedList, ListItem } from '@chakra-ui/react'
 
-
+/* Filters the cards from the redux store that match the active filters
+ *   Both the cards and active filters are contained within the state 
+ *    and managed by the ProjectCardStore
+ * Currently displays any card that matches any (at least one) of the active filters.
+ *   TODO: Discuss -- is the logic we want?
+**/
 const selectFilteredCards = (state) => {
     const cards = state.cards.cards
-    const filters = state.cards.filters.tags
-    console.log(filters)
+    const projectFilters = state.cards.filters.projectTags
+    const techFilters = state.cards.filters.techTags
+    console.log(projectFilters, techFilters)
   
-    if (!filters.length) return cards
+    if (!projectFilters.length && !techFilters.length) return cards
   
     return cards.filter((card) => {
-      const cardTags = card.projectTags
-      return filters.every((filterTag) => cardTags.includes(filterTag))
+      return projectFilters.some((filterTag) => card.projectTags.includes(filterTag)) || 
+             techFilters.some((filterTag) => card.techTags.includes(filterTag))
     })
 }
 
+// TODO: Once there are more cards available, will need to add some logic to only display certain ones.
+//   Click through multiple pages with 10 cards each or something?
 export default function ProjectCards() {
     const displayedCards = useSelector(selectFilteredCards);
 

@@ -6,6 +6,7 @@ Code adapted from the following documentation:
 Actions supported:
   addCard(payload: projectCard)
   toggleTagFilter(payload: (string)tag)
+  clearFilters()
 */
 
 // Temp cards list for testing until backend is setup
@@ -44,7 +45,8 @@ const initialCardsState = {
         }
     ],
     filters: {
-        tags: []
+        projectTags: [],
+        techTags: []
     }
 }
 
@@ -52,37 +54,41 @@ const cardSlice = createSlice({
     name: 'cards',
     initialState: initialCardsState,
     reducers: {
-      addCard: (state, action) => {
-        const projectCard = action.payload
-        return {
-            ...state,
-            cards: [...state.cards, projectCard]
-        }
-      },
-      toggleTagFilter: (state, action) => {
-        const tag = action.payload;
-        const currentFilters = state.filters.tags;
+        addCard: (state, action) => {
+            const projectCard = action.payload
+            return {
+                ...state,
+                cards: [...state.cards, projectCard]
+            }
+        },
+        toggleTagFilter: (state, action) => {
+            const { tag, type } = action.payload;
+            const currentFilters = state.filters[type];
 
-        const isExistingFilter = currentFilters.includes(tag);
-        const updatedFilters = isExistingFilter
-            ? currentFilters.filter((f) => f !== tag)
-            : [...currentFilters, tag];
-        return {
-            ...state,
-            filters: {
-                ...state.filters,
-                tags: updatedFilters,
-            },
-        };
-      },
-      clearFilters: (state) => {
-        return {
-            ...state,
-            filters: {
-                ...state.filters,
-                tags: []
-            },
-      }
+            // Could use a set here but apparently that's bad practice in redux
+            //   So avoiding duplicates like this instead
+            const isExistingFilter = currentFilters.includes(tag);
+            const updatedFilters = isExistingFilter
+                ? currentFilters.filter((f) => f !== tag)
+                : [...currentFilters, tag];
+
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    [type]: updatedFilters,
+                }
+            }
+        },
+        clearFilters: (state) => {
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    projectTags: [],
+                    techTags: []
+                }
+            }
         }
     }
 })
