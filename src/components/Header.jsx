@@ -5,8 +5,6 @@ import "./Header.css"; // Make sure to have this file for your styles
 import NotificationBell from "../assets/notification-bell.png";
 import Headshot from "../assets/headshot.jpg";
 
-import SkillTag from "./SkillTag";
-
 export default function Header() {
   return (
     <div className="topnav">
@@ -29,7 +27,7 @@ export default function Header() {
         <Link to="/home">
           <img src={Headshot} alt="Profile" />
         </Link>
-        <Link to="/home" id="add-project">
+        <Link to="/post" id="add-project">
           ADD PROJECT
         </Link>
       </div>
