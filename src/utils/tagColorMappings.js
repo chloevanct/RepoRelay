@@ -1,4 +1,7 @@
 const projectColorMapping = {
+	"Beginner": "#00FF00",
+	"Intermediate": "#FFA500",
+	"Advanced": "#FF0000",
 	"AI Development": "#46aed7",
 	"AgriTech": "#da8643",
 	"AR/VR Development": "#d94088",
