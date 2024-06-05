@@ -4,14 +4,14 @@ import { DeleteButton } from "./DeleteButton";
 
 export function TagInput({ id, label, tags, onAdd, onRemove }) {
 	const [inputValue, setInputValue] = useState("");
-	
+
 	const handleInputChange = (e) => setInputValue(e.target.value);
 
 	const handleAddTag = () => {
 		onAdd(inputValue);
 		setInputValue("");
 	};
-	
+
 	return (
 		<FormControl>
 			<FormLabel htmlFor={id}>{label}</FormLabel>

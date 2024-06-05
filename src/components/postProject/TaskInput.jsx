@@ -11,7 +11,7 @@ export function TaskInput({ id, label, tasks, onAdd, onRemove }) {
 		onAdd(inputValue);
 		setInputValue("");
 	};
-	
+
 	return (
 		<FormControl>
 			<FormLabel htmlFor={id}>{label}</FormLabel>
