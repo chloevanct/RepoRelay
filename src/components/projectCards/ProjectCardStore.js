@@ -68,7 +68,16 @@ const cardSlice = createSlice({
                 tags: updatedFilters,
             },
         };
+      },
+      clearFilters: (state) => {
+        return {
+            ...state,
+            filters: {
+                ...state.filters,
+                tags: []
+            },
       }
+        }
     }
 })
 
@@ -78,5 +87,5 @@ const store = configureStore({
     }
 })
 
-export const { addCard, toggleTagFilter } = cardSlice.actions
+export const { addCard, toggleTagFilter, clearFilters } = cardSlice.actions
 export default store;

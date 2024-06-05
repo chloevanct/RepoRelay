@@ -1,6 +1,8 @@
 import { Button } from '@chakra-ui/react';
+import clearAllTags from './FilterForm'
 
-export default function ClearFiltersButton() {
+// TODO: Add functionality
+export default function ClearFiltersButton({ onClick }) {
     return(
         <Button
             variant='link'
@@ -9,6 +11,7 @@ export default function ClearFiltersButton() {
             color='blue'
             pt='5px'
             pb='5px'
+            onClick={onClick()}
         >
             CLEAR FILTERS
         </Button>
