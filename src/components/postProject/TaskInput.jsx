@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormControl, FormLabel, HStack, Input, Button, Box, List, ListItem, Text, IconButton } from "@chakra-ui/react";
+import { FormControl, FormLabel, HStack, Input, Button, Box, List, ListItem, Text } from "@chakra-ui/react";
 import { DeleteButton } from "./DeleteButton";
 
 export function TaskInput({ id, label, tasks, onAdd, onRemove }) {
