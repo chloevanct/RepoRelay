@@ -1,21 +1,29 @@
 #projectHubPage {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 #projectHubBody {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 #projectDisplay {
     display: flex;
     gap: 50px;
+    width: 100%;
+}
+
+#filterForm {
+    width: 20%;
 }
 
 #projectList {
     display: flex;
     flex-direction: column;
+    width: 80%;
 }
 
 #projectListHeading {

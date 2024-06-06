@@ -4,6 +4,7 @@ import { TextInput } from "./TextInput";
 import { TagInput } from "./TagInput";
 import { TaskInput } from "./TaskInput";
 import { useFormData } from "../../hooks/useFormData";
+import { projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
 
 export default function ProjectInfoForm() {
 
@@ -28,6 +29,7 @@ export default function ProjectInfoForm() {
               id="projectTag"
               label="Project Tags"
               tags={formData.projectTags}
+              tagMapping={projectColorMapping}
               onAdd={(tag) => addToList("projectTags", tag)}
               onRemove={(index) => removeFromList("projectTags", index)}
             />
@@ -35,6 +37,7 @@ export default function ProjectInfoForm() {
               id="techTag"
               label="Technology Tags"
               tags={formData.techTags}
+              tagMapping={technologyColorMapping}
               onAdd={(tag) => addToList("techTags", tag)}
               onRemove={(index) => removeFromList("techTags", index)}
             />

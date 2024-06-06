@@ -1,23 +1,34 @@
 import { useState } from "react";
-import { FormControl, FormLabel, HStack, Input, Button, Box, Wrap, WrapItem, Text, IconButton } from "@chakra-ui/react";
+import { FormControl, FormLabel, HStack, Select, Button, Box, Wrap, WrapItem} from "@chakra-ui/react";
 import { DeleteButton } from "./DeleteButton";
+import Tag from "../Tag";
 
-export function TagInput({ id, label, tags, onAdd, onRemove }) {
-	const [inputValue, setInputValue] = useState("");
 
-	const handleInputChange = (e) => setInputValue(e.target.value);
+export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
+	
+	const [selectedTag, setSelectedTag] = useState("");
+
+	const handleSelectChange = (e) => setSelectedTag(e.target.value);
 
 	const handleAddTag = () => {
-		onAdd(inputValue);
-		setInputValue("");
+		if (selectedTag && !tags.includes(selectedTag)) {
+			onAdd(selectedTag);
+			setSelectedTag("");
+		}
 	};
 
 	return (
 		<FormControl>
 			<FormLabel htmlFor={id}>{label}</FormLabel>
 			<HStack>
-				<Input id={id} name={id} value={inputValue} onChange={handleInputChange} />
-				<Button colorScheme="teal" onClick={handleAddTag}>
+				<Select id={id} name={id} value={selectedTag} onChange={handleSelectChange} placeholder="Select tag">
+					{Object.keys(tagMapping).map((tagName) => (
+						<option key={tagName} value={tagName}>
+							{tagName}
+						</option>
+					))}
+				</Select>
+        		<Button colorScheme="teal" onClick={handleAddTag}>
 					Add Tag
 				</Button>
 			</HStack>
@@ -27,7 +38,7 @@ export function TagInput({ id, label, tags, onAdd, onRemove }) {
 						{tags.map((tag, index) => (
 							<WrapItem key={index}>
 								<HStack spacing={2}>
-									<Text>{tag}</Text>
+									<Tag tagName={tag} colorMapping={tagMapping} />
 									<DeleteButton onClick={() => onRemove(index)} />
 								</HStack>
 							</WrapItem>

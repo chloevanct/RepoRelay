@@ -1,8 +1,10 @@
 import Header from '../components/Header'
 import SearchBarHeader from '../components/projectHub/SearchBarHeader/SearchBarHeader'
 import FilterForm from '../components/projectHub/FilterForm'
+
 import ProjectListHeader from '../components/projectHub/ProjectListHeader/ProjectListHeader'
-import ProjectCards from '../components/ProjectCards'
+import ProjectCards from '../components/projectCards/ProjectCards'
+
 import './ProjectHubPage.css'
 
 export default function ProjectHubPage() {
@@ -12,7 +14,7 @@ export default function ProjectHubPage() {
             <div id='projectHubBody'>
                 <SearchBarHeader></SearchBarHeader>
                 <div id='projectDisplay'>
-                    <FilterForm></FilterForm>
+                    <FilterForm id='filterForm'></FilterForm>
                     <div id='projectList'>
                         <div id='projectListHeading'>
                             <ProjectListHeader></ProjectListHeader>
