@@ -47,7 +47,8 @@ const initialCardsState = {
     filters: {
         projectTags: [],
         techTags: []
-    }
+    },
+    searchQuery: '',
 }
 
 const cardSlice = createSlice({
@@ -89,6 +90,9 @@ const cardSlice = createSlice({
                     techTags: []
                 }
             }
+        },
+        setSearchQuery: (state, action) => {
+            state.searchQuery = action.payload
         }
     }
 })
@@ -99,5 +103,5 @@ const store = configureStore({
     }
 })
 
-export const { addCard, toggleTagFilter, clearFilters } = cardSlice.actions
+export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions
 export default store;

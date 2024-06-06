@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProjectCard from './ProjectCard';
 import { UnorderedList, ListItem } from '@chakra-ui/react'
 
@@ -13,12 +13,25 @@ const selectFilteredCards = (state) => {
     const projectFilters = state.cards.filters.projectTags
     const techFilters = state.cards.filters.techTags
     console.log(projectFilters, techFilters)
-  
-    if (!projectFilters.length && !techFilters.length) return cards
-  
+
+    const searchQuery = state.cards.searchQuery.toLowerCase()
+
+    if (!projectFilters.length && !techFilters.length && !searchQuery) return cards
+
+    // TODO: search other project keys?
+    // TODO: change .some to .every if we want filtering to only show cards if it matches ALL active project and tech filters and the search query if provided
+    // empty state defaults to true
     return cards.filter((card) => {
-      return projectFilters.some((filterTag) => card.projectTags.includes(filterTag)) || 
-             techFilters.some((filterTag) => card.techTags.includes(filterTag))
+        const matchesSearchQuery = card.projectName.toLowerCase().includes(searchQuery) ||
+                                   card.projectDescription.toLowerCase().includes(searchQuery)
+
+        const matchesProjectFilters = projectFilters.length === 0 ||
+                                      projectFilters.some((filterTag) => card.projectTags.includes(filterTag))
+
+        const matchesTechFilters = techFilters.length === 0 ||
+                                   techFilters.some((filterTag) => card.techTags.includes(filterTag))
+
+        return matchesSearchQuery && matchesProjectFilters && matchesTechFilters
     })
 }
 
