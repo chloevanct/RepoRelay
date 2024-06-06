@@ -5,8 +5,7 @@ import { UnorderedList, ListItem } from '@chakra-ui/react'
 /* Filters the cards from the redux store that match the active filters
  *   Both the cards and active filters are contained within the state 
  *    and managed by the ProjectCardStore
- * Currently displays any card that matches any (at least one) of the active filters.
- *   TODO: Discuss -- is the logic we want?
+ * Currently displays any card that matches ALL of the active filters.
 **/
 const selectFilteredCards = (state) => {
     const cards = state.cards.cards
@@ -19,17 +18,15 @@ const selectFilteredCards = (state) => {
     if (!projectFilters.length && !techFilters.length && !searchQuery) return cards
 
     // TODO: search other project keys?
-    // TODO: change .some to .every if we want filtering to only show cards if it matches ALL active project and tech filters and the search query if provided
-    // empty state defaults to true
     return cards.filter((card) => {
         const matchesSearchQuery = card.projectName.toLowerCase().includes(searchQuery) ||
                                    card.projectDescription.toLowerCase().includes(searchQuery)
 
         const matchesProjectFilters = projectFilters.length === 0 ||
-                                      projectFilters.some((filterTag) => card.projectTags.includes(filterTag))
+                                      projectFilters.every((filterTag) => card.projectTags.includes(filterTag))
 
         const matchesTechFilters = techFilters.length === 0 ||
-                                   techFilters.some((filterTag) => card.techTags.includes(filterTag))
+                                   techFilters.every((filterTag) => card.techTags.includes(filterTag))
 
         return matchesSearchQuery && matchesProjectFilters && matchesTechFilters
     })
