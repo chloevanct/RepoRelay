@@ -3,6 +3,7 @@ import { FormControl, FormLabel, HStack, Select, Button, Box, Wrap, WrapItem} fr
 import { DeleteButton } from "./DeleteButton";
 import Tag from "../Tag";
 
+
 export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
 	
 	const [selectedTag, setSelectedTag] = useState("");
@@ -15,7 +16,7 @@ export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
 			setSelectedTag("");
 		}
 	};
-	
+
 	return (
 		<FormControl>
 			<FormLabel htmlFor={id}>{label}</FormLabel>
