@@ -4,18 +4,24 @@ import { DeleteButton } from "./DeleteButton";
 import Tag from "../Tag";
 
 
-export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
-	
+export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove, allowMultiple }) {
+	// State to manage the currently selected tag
 	const [selectedTag, setSelectedTag] = useState("");
 
+	// Handler for select input change
 	const handleSelectChange = (e) => setSelectedTag(e.target.value);
 
-	const handleAddTag = () => {
-		if (selectedTag && !tags.includes(selectedTag)) {
-			onAdd(selectedTag);
-			setSelectedTag("");
-		}
-	};
+    // Handler for adding a new tag
+    const handleAddTag = () => {
+        // Check if a tag is selected and if it is not already in the tags list
+        if (selectedTag && !tags.includes(selectedTag)) {
+            // Add the selected tag if multiple tags are allowed or if no tags are currently selected
+            if (allowMultiple || tags.length === 0) {
+                onAdd(selectedTag); // Call the onAdd callback with the selected tag
+                setSelectedTag(""); // Reset the selected tag
+            }
+        }
+    };
 
 	return (
 		<FormControl>
