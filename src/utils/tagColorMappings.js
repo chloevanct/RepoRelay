@@ -1,7 +1,10 @@
-const projectColorMapping = {
+const difficultyColorMapping = {
 	"Beginner": "#00FF00",
 	"Intermediate": "#FFA500",
 	"Advanced": "#FF0000",
+};
+
+const projectColorMapping = {
 	"AI Development": "#46aed7",
 	"AgriTech": "#da8643",
 	"AR/VR Development": "#d94088",
@@ -67,4 +70,4 @@ const technologyColorMapping = {
 	"Vue": "#8b53a4",
 };
 
-export { projectColorMapping, technologyColorMapping };  
+export { difficultyColorMapping, projectColorMapping, technologyColorMapping };  

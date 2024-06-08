@@ -4,7 +4,7 @@ import { TextInput } from "./TextInput";
 import { TagInput } from "./TagInput";
 import { TaskInput } from "./TaskInput";
 import { useFormData } from "../../hooks/useFormData";
-import { projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
+import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
 
 export default function ProjectInfoForm() {
 
@@ -26,12 +26,22 @@ export default function ProjectInfoForm() {
             <TextInput id="repoLink" label="Project Repo Link" value={formData.repoLink} onChange={handleChange} required />
             <TextInput id="description" label="Project Description" value={formData.description} onChange={handleChange} required />
             <TagInput
+              id="difficultyTag"
+              label="Difficulty Tags"
+              tags={formData.difficultyTags}
+              tagMapping={difficultyColorMapping}
+              onAdd={(tag) => addToList("difficultyTags", tag)}
+              onRemove={(index) => removeFromList("difficultyTags", index)}
+              allowMultiple ={false}
+            />
+            <TagInput
               id="projectTag"
               label="Project Tags"
               tags={formData.projectTags}
               tagMapping={projectColorMapping}
               onAdd={(tag) => addToList("projectTags", tag)}
               onRemove={(index) => removeFromList("projectTags", index)}
+              allowMultiple ={true}
             />
             <TagInput
               id="techTag"
@@ -40,6 +50,7 @@ export default function ProjectInfoForm() {
               tagMapping={technologyColorMapping}
               onAdd={(tag) => addToList("techTags", tag)}
               onRemove={(index) => removeFromList("techTags", index)}
+              allowMultiple ={true}
             />
             <TaskInput
               id="taskCompleted"

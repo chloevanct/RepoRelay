@@ -9,8 +9,10 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
+            difficultyTags: [
+                'Advanced'
+            ],
             projectTags: [
-                'Advanced',
                 'AI Development'
             ],
             techTags: [
@@ -24,8 +26,11 @@ const initialCardsState = {
             postedDate: "2024-05-09",
             lastActivityDate: "2024-05-09",
             projectDescription: "Another project desc",
-            projectTags: [
+            difficultyTags: [
                 'Beginner'
+            ],
+            projectTags: [
+                'Frontend'
             ],
             techTags: [
                 'JavaScript',
@@ -39,9 +44,11 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
+            difficultyTags: [
+                'Intermediate'
+            ],
             projectTags: [
-                'Intermediate',
-                "Web Dev"
+                "Social Media"
             ],
             techTags: [
                 'JavaScript',
@@ -55,8 +62,11 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            projectTags: [
+            difficultyTags: [
                 'Beginner'
+            ],
+            projectTags: [
+                'Full Stack'
             ],
             techTags: [
                 'React'
@@ -69,8 +79,11 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            projectTags: [
+            difficultyTags: [
                 'Advanced'
+            ],
+            projectTags: [
+                'Backend'
             ],
             techTags: [
                 'Python'
@@ -83,9 +96,11 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
+            difficultyTags: [
+                'Intermediate'
+            ],
             projectTags: [
-                'Intermediate',
-                'Automation'
+                'DevOps'
             ],
             techTags: [
                 'Python'
@@ -98,8 +113,10 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
+            difficultyTags: [
+                'Advanced'
+            ],
             projectTags: [
-                'Advanced',
                 'AI Development'
             ],
             techTags: [
@@ -113,8 +130,11 @@ const initialCardsState = {
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
             projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            projectTags: [
+            difficultyTags: [
                 'Advanced'
+            ],
+            projectTags: [
+                'Cloud Computing'
             ],
             techTags: [
                 'JavaScript',
@@ -123,6 +143,7 @@ const initialCardsState = {
         }
     ],
     filters: {
+        difficultyTags: [],
         projectTags: [],
         techTags: []
     },

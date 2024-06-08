@@ -15,52 +15,48 @@ const cardSlice = createSlice({
     initialState: initialCardsState,
     reducers: {
         addCard: (state, action) => {
-            const projectCard = action.payload
-            return {
-                ...state,
-                cards: [...state.cards, projectCard]
-            }
+            const projectCard = action.payload;
+            state.cards.push(projectCard);
         },
         toggleTagFilter: (state, action) => {
             const { tag, type } = action.payload;
-            const currentFilters = state.filters[type];
 
-            // Could use a set here but apparently that's bad practice in redux
-            //   So avoiding duplicates like this instead
-            const isExistingFilter = currentFilters.includes(tag);
-            const updatedFilters = isExistingFilter
-                ? currentFilters.filter((f) => f !== tag)
-                : [...currentFilters, tag];
-
-            return {
-                ...state,
-                filters: {
-                    ...state.filters,
-                    [type]: updatedFilters,
+            // Ensure only one difficulty tag can be selected at once
+            if (type === 'difficultyTags') {
+                if (state.filters.difficultyTags.includes(tag)) {
+                    state.filters.difficultyTags = [];
+                } else {
+                    state.filters.difficultyTags = [tag];
                 }
+            } else {
+                const currentFilters = state.filters[type];
+
+                const isExistingFilter = currentFilters.includes(tag);
+                const updatedFilters = isExistingFilter
+                    ? currentFilters.filter((f) => f !== tag)
+                    : [...currentFilters, tag];
+
+                state.filters[type] = updatedFilters;
             }
         },
         clearFilters: (state) => {
-            return {
-                ...state,
-                filters: {
-                    ...state.filters,
-                    projectTags: [],
-                    techTags: []
-                }
-            }
+            state.filters = {
+                difficultyTags: [],
+                projectTags: [],
+                techTags: []
+            };
         },
         setSearchQuery: (state, action) => {
-            state.searchQuery = action.payload
+            state.searchQuery = action.payload;
         }
     }
-})
+});
 
 const store = configureStore({
     reducer: {
         cards: cardSlice.reducer
     }
-})
+});
 
-export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions
+export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions;
 export default store;
