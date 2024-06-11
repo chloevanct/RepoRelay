@@ -1,28 +1,26 @@
 import Header from '../components/Header'
 import SearchBarHeader from '../components/projectHub/SearchBarHeader/SearchBarHeader'
 import FilterForm from '../components/projectHub/FilterForm'
-
 import ProjectListHeader from '../components/projectHub/ProjectListHeader/ProjectListHeader'
 import ProjectCards from '../components/projectCards/ProjectCards'
-
-import './ProjectHubPage.css'
+import { Flex } from '@chakra-ui/react'
 
 export default function ProjectHubPage() {
     return (
-        <div id='projectHubPage'>
+        <Flex id='projectHubPage' direction='column' width='100%'>
             <Header></Header>
-            <div id='projectHubBody'>
+            <Flex id='projectHubBody' direction='column' width='100%'>
                 <SearchBarHeader></SearchBarHeader>
-                <div id='projectDisplay'>
+                <Flex id='projectDisplay' gap='50px' width='100%'>
                     <FilterForm id='filterForm'></FilterForm>
-                    <div id='projectList'>
-                        <div id='projectListHeading'>
+                    <Flex id='projectList' direction='column' width='80%'>
+                        <Flex id='projectListHeading' gap='30px'>
                             <ProjectListHeader></ProjectListHeader>
-                        </div>
+                        </Flex>
                         <ProjectCards></ProjectCards>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </Flex>
+                </Flex>
+            </Flex>
+        </Flex>
     )
 }

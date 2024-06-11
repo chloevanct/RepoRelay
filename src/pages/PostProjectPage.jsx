@@ -1,12 +1,13 @@
 import Header from '../components/Header'
 import ProjectInfoForm from '../components/postProject/ProjectInfoForm'
-import './PostProjectPage.css'
+import { Box } from '@chakra-ui/react'
+
 
 export default function PostProjectPage() {
     return (
-        <div id='postProjectPage'>
+        <Box id='postProjectPage'>
             <Header />
             <ProjectInfoForm />
-        </div>
+        </Box>
     )
 }

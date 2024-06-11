@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Header.css"; // Make sure to have this file for your styles
+import "./Header.css";
 
 import NotificationBell from "../assets/notification-bell.png";
 import Headshot from "../assets/headshot.jpg";
