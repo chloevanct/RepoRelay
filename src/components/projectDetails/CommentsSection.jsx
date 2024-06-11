@@ -1,5 +1,6 @@
+import PostCommentsForm from './PostCommentForm'
 import Comment from './Comment'
-import { UnorderedList, ListItem } from '@chakra-ui/react';
+import { Flex, Heading, UnorderedList, ListItem } from '@chakra-ui/react';
 
 
 const cardComments = [
@@ -19,12 +20,17 @@ const cardComments = [
 
 export default function CommentsSection({ card }) {
     return (
-        <UnorderedList listStyleType='none' pt='10px'>
-            {cardComments.map((comment, index) => (
-                <ListItem key={index} mb='20px' border='1px solid' p='5px'>
-                    <Comment comment={comment} />
-                </ListItem>
-            ))}
-        </UnorderedList>
+        <Flex direction='column'>
+            <Heading align='left'>Comments:</Heading>
+            <PostCommentsForm />
+            <UnorderedList listStyleType='none' pt='10px'>
+                {cardComments.map((comment, index) => (
+                    <ListItem key={index} mb='20px' border='1px solid' p='5px'>
+                        <Comment comment={comment} />
+                    </ListItem>
+                ))}
+            </UnorderedList>
+        </Flex>
+
     )
 }

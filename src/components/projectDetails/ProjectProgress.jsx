@@ -1,3 +1,4 @@
+import ProgressBar from './ProgressBar'
 import { Flex, Progress, Text, Box, Heading, Checkbox } from "@chakra-ui/react"
 
 // Mock tasks
@@ -20,21 +21,20 @@ export default function ProjectProgress({ card }) {
     return (
         <Flex direction='column' mb='10px'>
             <Flex mb='10px' justifyContent='center' align='center'>
-                <Progress width='80%' value='70' hasStripe ></Progress>
-                <Text ml='10px'>70% Complete!</Text>
+                <ProgressBar value={70}>Complete</ProgressBar>
             </Flex>
             <Flex justifyContent='center' gap='5%'>
                 <Flex border='1px solid' width='100%' direction='column' pl='20px' pb='20px' pr='20px'>
                     <Heading>Complete:</Heading>
-                    {complete_tasks.map((task) => (
-                        <Checkbox isChecked='y'>{task.title}</Checkbox>
+                    {complete_tasks.map((task, index) => (
+                        <Checkbox isChecked='y' key={index}>{task.title}</Checkbox>
                     ))
                 }
                 </Flex>
                 <Flex border='1px solid' width='100%' direction='column' pl='20px' pb='20px' pr='20px'>
                     <Heading>Todo:</Heading>
-                    {complete_tasks.map((task) => (
-                        <Checkbox>{task.title}</Checkbox>
+                    {complete_tasks.map((task, index) => (
+                        <Checkbox key={index}>{task.title}</Checkbox>
                     ))
                 }
                 </Flex>
