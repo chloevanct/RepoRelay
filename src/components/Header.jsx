@@ -16,7 +16,7 @@ export default function Header() {
       <div className="right-nav">
         <Link to="/home">DASHBOARD</Link>
         <Link to="/home">PROJECT HUB</Link>
-        <Link to="/home">ABOUT US</Link>
+        <Link to="/aboutUs">ABOUT US</Link>
         <Link to="/home">
           <img
             src={NotificationBell}
