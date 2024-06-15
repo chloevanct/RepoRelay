@@ -12,7 +12,7 @@ export default function DetailedProjectInfo({ card }) {
                 <ProjectInfo card={card} />
             </Flex>
             <Divider mb='10px'/>
-            <ProjectTags card={card} />
+            <ProjectTags card={card} mb='10px'/>
             <Divider mb='10px'/>
             <ProjectProgress card={card} />
         </Flex>
