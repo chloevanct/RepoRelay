@@ -22,12 +22,8 @@ const cardSlice = createSlice({
             const { tag, type } = action.payload;
 
             // Ensure only one difficulty tag can be selected at once
-            if (type === 'difficultyTags') {
-                if (state.filters.difficultyTags.includes(tag)) {
-                    state.filters.difficultyTags = [];
-                } else {
-                    state.filters.difficultyTags = [tag];
-                }
+            if (type === 'difficultyTag') {
+                state.filters.difficultyTag = tag === state.filters.difficultyTag ? '' : tag;
             } else {
                 const currentFilters = state.filters[type];
 
@@ -41,7 +37,7 @@ const cardSlice = createSlice({
         },
         clearFilters: (state) => {
             state.filters = {
-                difficultyTags: [],
+                difficultyTag: '',
                 projectTags: [],
                 techTags: []
             };

@@ -4,19 +4,16 @@ import ProjectTags from './ProjectTags'
 import { Link } from "react-router-dom";
 import { Flex, Divider, Box } from '@chakra-ui/react'
 
-export default function ProjectCard({ card }) {
-
-    const projectName = card.projectName
-
+export default function ProjectCard({ project }) {
     return (
-        <Link to='/projectDetails' state={{ name: {projectName} }}>
+        <Link to='/projectDetails'>
             <Flex border='1px solid' alignItems='center' justifyContent='flex-start' padding='10px' margin='10px' backgroundColor='#f8f4fc' color='black' height='16%'>  
-                <ProjectImage card={card} />
+                <ProjectImage project={project} />
                 <Flex direction='column' width='80%' height='100%'>
                     <Flex height='150px'>
-                        <ProjectInfo card={card} />
+                        <ProjectInfo project={project} />
                         <Divider orientation='vertical' borderColor='gray.400'/>
-                        <ProjectTags card={card}/>
+                        <ProjectTags project={project}/>
                     </Flex>
                 </Flex>
             </Flex>

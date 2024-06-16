@@ -1,149 +1,63 @@
+import { TASK_STATUS_PENDING, TASK_STATUS_COMPLETE } from "../../utils/Task"
+
 // Temp cards list for testing until backend is setup
 // Later replaced by API call to DB
 const initialCardsState = {
     cards: [
         {
+            projectID: "1",
             projectName: "Project 1",
+            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
             projectImg: "https://hips.hearstapps.com/hmg-prod/images/cute-photos-of-cats-looking-at-camera-1593184780.jpg",
-            postedBy: "username123",
+            githubURL: "https://github.com/",
+            projectOwner: "username123",
+            pastContributors: ["username321", "username444"],
+            subscribedUsers: ["username123", "username321"], // Project needs to know who subs to it?
             postedDate: "2024-05-10",
             lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Advanced'
-            ],
+            difficultyTag: 'Advanced',
             projectTags: [
-                'AI Development'
+                'AI Development', 
+                "AgriTech", 
+                "AR/VR Development",
+                "Automotive Tech",
+                "Backend",
+                "Big Data",
+                "Blockchain",
+                "Cloud Computing",
+                "Cybersecurity"
             ],
             techTags: [
-                'Python'
-            ]
-        },
-        {
-            projectName: "Project 2",
-            projectImg: "https://media.istockphoto.com/id/1402854418/photo/kitten-with-a-ball.jpg?s=612x612&w=0&k=20&c=-TyFSMp_RKa5sNs0eI5wq2WEdqn4tsvW0tyMTpOsybI=",
-            postedBy: "username000",
-            postedDate: "2024-05-09",
-            lastActivityDate: "2024-05-09",
-            projectDescription: "Another project desc",
-            difficultyTags: [
-                'Beginner'
+                'Python',
+                "Angular",
+                "Assembly",
+                "C",
+                "C++",
+                "CSharp",
+                "COBOL",
+                "CSS",
+                "Django",
+                "Flask",
+                "Go",
+                "Haskell",
+                "HTML",
+                "Java",
+                "JavaScript",
             ],
-            projectTags: [
-                'Frontend'
+            tasks: [
+                { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
+                { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
+                { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
+                { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            techTags: [
-                'JavaScript',
-                'React'
-            ]
-        },
-        {
-            projectName: "Project 3",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Intermediate'
-            ],
-            projectTags: [
-                "Social Media"
-            ],
-            techTags: [
-                'JavaScript',
-                'React'
-            ]
-        },
-        {
-            projectName: "Project 4",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Beginner'
-            ],
-            projectTags: [
-                'Full Stack'
-            ],
-            techTags: [
-                'React'
-            ]
-        },
-        {
-            projectName: "Project 5",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Advanced'
-            ],
-            projectTags: [
-                'Backend'
-            ],
-            techTags: [
-                'Python'
-            ]
-        },
-        {
-            projectName: "Project 6",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Intermediate'
-            ],
-            projectTags: [
-                'DevOps'
-            ],
-            techTags: [
-                'Python'
-            ]
-        },
-        {
-            projectName: "Project 7",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Advanced'
-            ],
-            projectTags: [
-                'AI Development'
-            ],
-            techTags: [
-                'Python'
-            ]
-        },
-        {
-            projectName: "Project 8",
-            projectImg: "",
-            postedBy: "username123",
-            postedDate: "2024-05-10",
-            lastActivityDate: "2024-05-10",
-            projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-            difficultyTags: [
-                'Advanced'
-            ],
-            projectTags: [
-                'Cloud Computing'
-            ],
-            techTags: [
-                'JavaScript',
-                'React'
+            comments: [
+                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
+                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
             ]
         }
     ],
     filters: {
-        difficultyTags: [],
+        difficultyTag: '',
         projectTags: [],
         techTags: []
     },

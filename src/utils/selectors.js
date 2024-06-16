@@ -12,7 +12,7 @@ export const selectFilteredCards = createSelector(
     [selectCards, selectFilters, selectSearchQuery],
     (cards, filters, searchQuery) => {
         // Destructure the filters for difficulty, project, and tech tags
-        const { difficultyTags = [], projectTags = [], techTags = [] } = filters;
+        const { difficultyTag = "", projectTags = [], techTags = [] } = filters;
 
         // Filter the cards based on the search query and filters
         return cards.filter((card) => {
@@ -21,8 +21,8 @@ export const selectFilteredCards = createSelector(
                                        card.projectDescription.toLowerCase().includes(searchQuery);
 
             // Check if the card matches all selected difficulty filters (or if no filters are selected)
-            const matchesDifficultyFilters = difficultyTags.length === 0 ||
-                                             difficultyTags.every((filterTag) => card.difficultyTags.includes(filterTag));
+            const matchesDifficultyFilters = difficultyTag === "" || 
+                                             difficultyTag === card.difficultyTag;
 
             // Check if the card matches all selected project filters (or if no filters are selected)
             const matchesProjectFilters = projectTags.length === 0 ||

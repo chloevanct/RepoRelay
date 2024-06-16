@@ -47,7 +47,7 @@ export default function FilterForm() {
                 };
             }
         });
-        const type = `${category}Tags`; // 'difficultyTags', 'projectTags', or 'techTags'
+        const type = category === 'difficulty' ? 'difficultyTag' : `${category}Tags`;
         dispatch(toggleTagFilter({ tag, type }));
     };
 

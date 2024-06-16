@@ -39,7 +39,7 @@ export default function ProjectCards() {
                 <UnorderedList listStyleType='none'>
                     {currPageCards.map((card, index) => (
                         <ListItem key={index}>
-                            <ProjectCard card={card} />
+                            <ProjectCard project={card} />
                         </ListItem>
                     ))}
                 </UnorderedList>
