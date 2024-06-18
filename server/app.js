@@ -25,10 +25,29 @@ app.use("/users", usersRouter);
 
 app.use("/auth", usersRouter);
 
+app.get("/oauth/callback", async (req, res) => {
+  const code = req.query.code;
 
+  try {
+    const response = await axios.post(
+      "https://github.com/login/oauth/access_token",
+      {
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        code,
+      },
+      {
+        headers: {
+          accept: "application/json",
+        },
+      }
+    );
 
-
-
-
+    const accessToken = response.data.access_token;
+    res.redirect(`http://localhost:5173?token=${accessToken}`);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = app;
