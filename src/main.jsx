@@ -4,8 +4,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App.jsx";
 import "./index.css";
 import { Provider } from "react-redux";
-import store from "./components/projectCards/ProjectCardStore";
 
+import store from './redux/store'
 import { BrowserRouter } from "react-router-dom";
 
 // const CLIENT_ID = "Ov23li1yHM1QOlk2RKrV";

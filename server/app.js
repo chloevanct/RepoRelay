@@ -3,6 +3,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+var projectsRouter = require('./routes/projects');
 const axios = require("axios");
 const cors = require("cors");
 
@@ -24,6 +25,8 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 app.use("/auth", usersRouter);
+app.use('/projects', projectsRouter);
+
 
 app.get("/oauth/callback", async (req, res) => {
   const code = req.query.code;
