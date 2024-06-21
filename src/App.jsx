@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import Login from "./pages/Login";
-
 import ProjectHubPage from "./pages/ProjectHubPage";
 import PostProjectPage from "./pages/PostProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
+import UserProfilePage from "./pages/UserProfilePage";
 import "./App.css";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
@@ -41,28 +41,11 @@ function App() {
           <Route path="/home" element={<ProjectHubPage />} />
           <Route path="/post" element={<PostProjectPage />} />
           <Route path="/projectDetails" element={<ProjectDetailsPage />} />
+          <Route path="/user" element={<UserProfilePage />} />
         </>
       )}
     </Routes>
   );
 }
-
-// function App() {
-//   return (
-//     <>
-//       <BrowserRouter>
-//         {/* <div> */}
-//         <Routes>
-//           {/* <PostProjectPage></PostProjectPage> */}
-//           <Route index element={<ProjectHubPage />} />
-//           <Route path="/home" element={<ProjectHubPage />} />
-//           <Route path="/post" element={<PostProjectPage />} />
-//           <Route path="/projectDetails" element={<ProjectDetailsPage />} />
-//         </Routes>
-//         {/* </div> */}
-//       </BrowserRouter>
-//     </>
-//   );
-// }
 
 export default App;
