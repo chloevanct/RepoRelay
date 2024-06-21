@@ -9,12 +9,12 @@ const initialUserState = {
         subscribedProjects: ["1"],
         firstName: "John",
         lastName: "Doe",
-        userImage: "",
+        userImage: "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
         emailAddress: "john.doe@example.com",
         preferences: {
-          difficultyTags: ["Beginner"],
-          projectTags: ["AI Development", "Machine Learning"],
-          techTags: ["Python", "Java", "JavaScript"]
+            difficultyTags: ["Beginner"],
+            projectTags: ["AI Development", "Machine Learning"],
+            techTags: ["Python", "Java", "JavaScript"]
         }
     }
 };
