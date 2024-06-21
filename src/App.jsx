@@ -41,7 +41,7 @@ function App() {
           <Route index element={<ProjectHubPage />} />
           <Route path="/home" element={<ProjectHubPage />} />
           <Route path="/post" element={<PostProjectPage />} />
-          <Route path="/projectDetails" element={<ProjectDetailsPage />} />
+          <Route path="/projectDetails/:projectId" element={<ProjectDetailsPage />} />
           <Route path="/aboutUs" element={<AboutUsPage />} />
           <Route path="/user" element={<UserProfilePage />} />
         </>

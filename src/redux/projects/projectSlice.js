@@ -1,22 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
-import initialCardsState from './initialCardState'
+import initialCardsState from './initialProjectState'
 
 /*
 Code adapted from the following documentation:
   https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
 Actions supported:
-  addCard(payload: projectCard)
+  addProject(payload: project)
   toggleTagFilter(payload: (string)tag)
   clearFilters()
 */
 
-const cardSlice = createSlice({
-    name: 'cards',
+const projectSlice = createSlice({
+    name: 'projects',
     initialState: initialCardsState,
     reducers: {
-        addCard: (state, action) => {
-            const projectCard = action.payload;
-            state.cards.push(projectCard);
+        addProject: (state, action) => {
+            const project = action.payload;
+            state.projects.push(project);
         },
         toggleTagFilter: (state, action) => {
             const { tag, type } = action.payload;
@@ -48,6 +48,6 @@ const cardSlice = createSlice({
     }
 });
 
-export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions;
+export const { addProject, toggleTagFilter, clearFilters, setSearchQuery } = projectSlice.actions;
 
-export default cardSlice.reducer;
+export default projectSlice.reducer;

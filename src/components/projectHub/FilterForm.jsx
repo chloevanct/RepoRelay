@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Box, Stack, Heading, Checkbox, Select, Button } from '@chakra-ui/react';
-import { toggleTagFilter, clearFilters } from '../../redux/projects/projectCardSlice.js';
+import { toggleTagFilter, clearFilters } from '../../redux/projects/projectSlice.js';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../../utils/tagColorMappings';
 import ClearFiltersButton from './ClearFiltersButton';
 

@@ -1,8 +1,8 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProjectCard from './ProjectCard';
 import { UnorderedList, ListItem, Flex, Button, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { selectFilteredCards } from '../../utils/selectors';
+import { selectFilteredProjects } from '../../utils/selectors';
 
 const CARDS_PER_PAGE = 5;
 
@@ -12,7 +12,7 @@ const CARDS_PER_PAGE = 5;
 // Query: how do I adjust my project cards to display 5 at a time with 
 //        multiple pages to scroll through if there's more than 5?
 export default function ProjectCards() {
-    const displayedCards = useSelector(selectFilteredCards);
+    const displayedCards = useSelector(selectFilteredProjects);
 
     const hasResults = displayedCards.length > 0;
     const maxPage = Math.ceil(displayedCards.length / CARDS_PER_PAGE);

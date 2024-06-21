@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentDateTime } from "../utils/dateUtils";
-import { addCard } from "../redux/projects/projectCardSlice";
+import { addProject } from "../redux/projects/projectSlice";
 
 // Custom hook to manage form data for adding a new project card
 export function useFormData() {
@@ -72,7 +72,7 @@ export function useFormData() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch the addCard action with the form data
-        dispatch(addCard({
+        dispatch(addProject({
             projectName: formData.name,
             projectImg: "https://hips.hearstapps.com/hmg-prod/images/cute-photos-of-cats-looking-at-camera-1593184780.jpg",
             postedBy: "username123",
