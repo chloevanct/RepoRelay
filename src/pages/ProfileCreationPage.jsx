@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
 import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Header from '../components/Header';
 import { TagInput } from '../components/postProject/TagInput';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../utils/tagColorMappings';
-import { updateUser } from '../redux/user/userSlice';
+import { useUser } from '../hooks/useUser'; // Import the custom hook
 
 export default function ProfileCreationPage() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const user = useSelector(state => state.user.currentUser);
+    const { currentUser, handleUpdateUser } = useUser();
 
     const [userID, setUserID] = useState("");
     const [githubUsername, setGithubUsername] = useState("");
@@ -24,6 +21,7 @@ export default function ProfileCreationPage() {
     const [techTags, setTechTags] = useState([]);
 
     const handleSave = () => {
+        console.log("Current user", currentUser);
         const updatedUser = {
             userID,
             githubUsername,
@@ -40,20 +38,17 @@ export default function ProfileCreationPage() {
                 techTags
             }
         };
-        dispatch(updateUser(updatedUser));
+        handleUpdateUser(updatedUser);
         console.log("Updated user", updatedUser);
+        console.log("Current user", currentUser);
+        // Optionally navigate to home or another page after saving
+        // navigate("/home");
     };
 
-    useEffect(() => {
-        if (user.firstName && user.lastName && user.emailAddress) {
-            console.log("Navigating to home");
-            navigate("/home");
-        }
-    }, [user, navigate]);
-
     return (
+        <>
+        <Header />
         <Container maxW="container.lg" width="100%" mt={5}>
-            <Header />
             <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50" width="100%" mt={5}>
                 <Heading as="h3" size="lg" mb={5}>
                     Profile Creation
@@ -149,5 +144,6 @@ export default function ProfileCreationPage() {
                 </VStack>
             </Box>
         </Container>
+        </>
     );
 }
