@@ -1,5 +1,5 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
-import initialCardsState from './InitialCardsState'
+import { createSlice } from '@reduxjs/toolkit'
+import initialCardsState from './initialCardState'
 
 /*
 Code adapted from the following documentation:
@@ -48,11 +48,6 @@ const cardSlice = createSlice({
     }
 });
 
-const store = configureStore({
-    reducer: {
-        cards: cardSlice.reducer
-    }
-});
-
 export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions;
-export default store;
+
+export default cardSlice.reducer;

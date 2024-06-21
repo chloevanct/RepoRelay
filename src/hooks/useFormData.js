@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentDateTime } from "../utils/dateUtils";
-import { addCard } from "../components/projectCards/ProjectCardStore";
+import { addCard } from "../redux/projects/projectCardSlice";
 
 // Custom hook to manage form data for adding a new project card
 export function useFormData() {

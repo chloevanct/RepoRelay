@@ -24,7 +24,7 @@ export default function Header() {
             id="notification-bell"
           />
         </Link>
-        <Link to="/home">
+        <Link to="/user">
           <img src={Headshot} alt="Profile" />
         </Link>
         <Link to="/post" id="add-project">
