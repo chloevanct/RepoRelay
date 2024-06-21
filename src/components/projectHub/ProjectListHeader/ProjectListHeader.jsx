@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import SortByMenu from './SortByMenu';
 import { Flex, Box, Text } from '@chakra-ui/react';
-import { selectFilteredCardCount } from '../../../utils/selectors';
+import { selectFilteredProjectCount } from '../../../utils/selectors';
 
 // Component to display the header of the project list, including the number of available projects and a sort menu
 export default function ProjectListHeader() {
 
     // Get the count of filtered projects from the Redux store
-    const filteredProjectCount = useSelector(selectFilteredCardCount);
+    const filteredProjectCount = useSelector(selectFilteredProjectCount);
 
     return (
         <Flex id="project-list-header" direction="column" justify="flex-start" align="flex-start" p="4" width="100%">

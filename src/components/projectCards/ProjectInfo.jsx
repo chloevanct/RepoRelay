@@ -1,17 +1,17 @@
 import { Heading, Text, Flex } from '@chakra-ui/react'
 
-export default function ProjectInfo({ card }) {
+export default function ProjectInfo({ project }) {
     return (
         <Flex direction='column' align='flex-start' flex='7' pr='10px'>
             <Flex width='100%' gap='50px'>
-                <Heading size='md'>{card.projectName}</Heading>
-                <Text ml='auto'>{card.postedBy}</Text>
+                <Heading size='md'>{project.projectName}</Heading>
+                <Text ml='auto'>{project.projectOwner}</Text>
             </Flex>
             <Flex gap='20px'>
-                <Text>Posted: {card.postedDate}</Text>
-                <Text>Last activity: {card.lastActivityDate}</Text>
+                <Text>Posted: {project.postedDate}</Text>
+                <Text>Last activity: {project.lastActivityDate}</Text>
             </Flex>
-            <Text maxWidth='100%' noOfLines={3} align='left'>{card.projectDescription}</Text>
+            <Text maxWidth='100%' noOfLines={3} align='left'>{project.projectDescription}</Text>
         </Flex>
     )
 }

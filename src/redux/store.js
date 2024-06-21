@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cardSlice from './projects/projectCardSlice';
+import projectSlice from './projects/projectSlice';
 import userSlice from './user/userSlice';
 
 const store = configureStore({
     reducer: {
-        cards: cardSlice,
+        projects: projectSlice,
         user: userSlice
     },
     devTools: true

@@ -1,11 +1,11 @@
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react'
 import { SearchIcon } from "@chakra-ui/icons"
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchQuery } from '../../../redux/projects/projectCardSlice'
+import { setSearchQuery } from '../../../redux/projects/projectSlice'
 
 export default function SearchBar() {
     const dispatch = useDispatch()
-    const searchQuery = useSelector((state) => state.cards.searchQuery)
+    const searchQuery = useSelector((state) => state.projects.searchQuery)
 
     const handleSearchQueryInputChange = (e) => {
         dispatch(setSearchQuery(e.target.value))

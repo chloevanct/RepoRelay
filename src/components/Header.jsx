@@ -22,7 +22,7 @@ export default function Header() {
           <Link to="/home">
             <Text color="gray.700">PROJECT HUB</Text>
           </Link>
-          <Link to="/home">
+          <Link to="/aboutUs">
             <Text color="gray.700">ABOUT US</Text>
           </Link>
           <Link to="/home">
