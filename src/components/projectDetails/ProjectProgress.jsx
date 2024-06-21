@@ -6,10 +6,14 @@ export default function ProjectProgress({ project }) {
     const pending_tasks = project.tasks.filter(task => task.taskStatus === TASK_STATUS_PENDING);
     const complete_tasks = project.tasks.filter(task => task.taskStatus === TASK_STATUS_COMPLETE);
 
+    // BASIC MEASURE OF COMPLETION 
+    //   Eventaully may want to have users enter this on their own?
+    const percentage_compelete = pending_tasks.length / (complete_tasks.length + pending_tasks.length) * 100;
+
     return (
             <Flex width='100%' mb='10px'>
                 <Flex mb='10px' justifyContent='center' align='center' width='50%'>
-                    <ProgressBar value={70}>Complete</ProgressBar>
+                    <ProgressBar value={percentage_compelete}>Complete</ProgressBar>
                 </Flex>
                 <Flex width='50%'justifyContent='center' gap='5%' direction='column'>
                     <Box border='1px solid' width='100%' pl='20px' mb='20px' pr='20px'>

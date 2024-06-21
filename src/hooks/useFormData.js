@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCurrentDateTime } from "../utils/dateUtils";
 import { addProject } from "../redux/projects/projectSlice";
+import { TASK_STATUS_PENDING, TASK_STATUS_COMPLETE } from "../utils/Task";
+
 
 // Custom hook to manage form data for adding a new project card
 export function useFormData() {
@@ -72,16 +74,38 @@ export function useFormData() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Dispatch the addCard action with the form data
+        const tasks = [
+            ...formData.tasksCompleted.map(task => ({
+              postedBy: "username123",
+              datePosted: formData.date,
+              taskBody: task,
+              taskStatus: TASK_STATUS_COMPLETE
+            })),
+            ...formData.tasksToComplete.map(task => ({
+              postedBy: "username123",
+              datePosted: formData.date,
+              taskBody: task,
+              taskStatus: TASK_STATUS_PENDING
+            }))
+          ];
+
         dispatch(addProject({
+            projectID: Math.floor(Math.random() * (1000000)).toString(), // TEMPORARY RANDOM GENERATE ID
             projectName: formData.name,
-            projectImg: "https://hips.hearstapps.com/hmg-prod/images/cute-photos-of-cats-looking-at-camera-1593184780.jpg",
-            postedBy: "username123",
+            projectDescription: formData.description,
+            projectImg: "",
+            githubURL: formData.repoLink,
+            projectOwner: "username123",
+            pastContributors: [],
+            subscribedUsers: [],
             postedDate: formData.date,
             lastActivityDate: formData.date,
-            projectDescription: formData.description,
-            difficultyTags: formData.difficultyTags,
+            difficultyTag: formData.difficultyTags[0],
             projectTags: formData.projectTags,
-            techTags: formData.techTags
+            techTags: formData.techTags,
+            tasks: tasks,
+            comments: []
+            
         }));
         // Reset the form after submission
         handleReset();

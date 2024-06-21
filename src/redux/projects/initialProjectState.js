@@ -51,8 +51,8 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
             comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
+                { postedBy: "username321", datePosted: "2024-05-09", commentBody: "This is the best project I've ever seen!" },
+                { postedBy: "username444", datePosted: "2024-05-07", commentBody: "This is the worst project I've ever seen! Who taught you to code?" }
             ]
         },
         {
@@ -81,10 +81,7 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
-            ]
+            comments: []
         },
         {
             projectID: "3",
@@ -110,10 +107,7 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
-            ]
+            comments: []
         },
         {
             projectID: "4",
@@ -140,10 +134,7 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
-            ]
+            comments: []
         },
         {
             projectID: "5",
@@ -172,10 +163,7 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
-            ]
+            comments: []
         },
         {
             projectID: "6",
@@ -204,10 +192,7 @@ const initialCardsState = {
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
             ],
-            comments: [
-                { postedBy: "username321", datePosted: "2024-05-09", taskBody: "This is the best project I've ever seen!" },
-                { postedBy: "username444", datePosted: "2024-05-07", taskBody: "This is the worst project I've ever seen! Who taught you to code?" }
-            ]
+            comments: []
         }
     ],
     filters: {
