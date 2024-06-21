@@ -1,51 +1,49 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import { Box, Container, Heading, VStack, HStack, Avatar, Text, Wrap, WrapItem, Button } from "@chakra-ui/react";
 import Header from '../components/Header';
 import Tag from '../components/Tag';
 import { TagInput } from '../components/postProject/TagInput';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../utils/tagColorMappings';
-import { updateDifficultyTags, updateProjectTags, updateTechTags } from '../redux/user/userSlice';
+import { useUser } from '../hooks/useUser'; 
 
 export default function UserProfilePage() {
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.user.currentUser);
-
+    const { currentUser, handleUpdateDifficultyTags, handleUpdateProjectTags, handleUpdateTechTags } = useUser();
+    
     const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
     const [isEditingProject, setIsEditingProject] = useState(false);
     const [isEditingTech, setIsEditingTech] = useState(false);
 
-    const [newDifficultyTags, setNewDifficultyTags] = useState(user.preferences.difficultyTags);
-    const [newProjectTags, setNewProjectTags] = useState(user.preferences.projectTags);
-    const [newTechTags, setNewTechTags] = useState(user.preferences.techTags);
+    const [newDifficultyTags, setNewDifficultyTags] = useState(currentUser.preferences.difficultyTags);
+    const [newProjectTags, setNewProjectTags] = useState(currentUser.preferences.projectTags);
+    const [newTechTags, setNewTechTags] = useState(currentUser.preferences.techTags);
 
     const handleSaveDifficulty = () => {
-        dispatch(updateDifficultyTags(newDifficultyTags));
+        handleUpdateDifficultyTags(newDifficultyTags);
         setIsEditingDifficulty(false);
     };
 
     const handleSaveProject = () => {
-        dispatch(updateProjectTags(newProjectTags));
+        handleUpdateProjectTags(newProjectTags);
         setIsEditingProject(false);
     };
 
     const handleSaveTech = () => {
-        dispatch(updateTechTags(newTechTags));
+        handleUpdateTechTags(newTechTags);
         setIsEditingTech(false);
     };
 
     const handleCancelDifficulty = () => {
-        setNewDifficultyTags(user.preferences.difficultyTags);
+        setNewDifficultyTags(currentUser.preferences.difficultyTags);
         setIsEditingDifficulty(false);
     };
 
     const handleCancelProject = () => {
-        setNewProjectTags(user.preferences.projectTags);
+        setNewProjectTags(currentUser.preferences.projectTags);
         setIsEditingProject(false);
     };
 
     const handleCancelTech = () => {
-        setNewTechTags(user.preferences.techTags);
+        setNewTechTags(currentUser.preferences.techTags);
         setIsEditingTech(false);
     };
 
@@ -59,11 +57,11 @@ export default function UserProfilePage() {
                     </Heading>
                     <VStack spacing={4} align="stretch">
                         <HStack spacing={4} align="center">
-                            <Avatar size="xl" name={`${user.firstName} ${user.lastName}`} src={user.userImage} />
+                            <Avatar size="xl" name={`${currentUser.firstName} ${currentUser.lastName}`} src={currentUser.userImage} />
                             <Box>
-                                <Heading as="h4" size="md">{`${user.firstName} ${user.lastName}`}</Heading>
-                                <Text>{user.emailAddress}</Text>
-                                <Text>{`GitHub: ${user.githubUsername}`}</Text>
+                                <Heading as="h4" size="md">{`${currentUser.firstName} ${currentUser.lastName}`}</Heading>
+                                <Text>{currentUser.emailAddress}</Text>
+                                <Text>{`GitHub: ${currentUser.githubUsername}`}</Text>
                             </Box>
                         </HStack>
 
@@ -187,7 +185,7 @@ export default function UserProfilePage() {
                         <Box>
                             <Heading as="h4" size="md" mb={2}>Owned Projects</Heading>
                             <VStack align="start">
-                                {user.ownedProjects.map((projectId, index) => (
+                                {currentUser.ownedProjects.map((projectId, index) => (
                                     <Text key={index}>Project ID: {projectId}</Text>
                                 ))}
                             </VStack>
@@ -196,7 +194,7 @@ export default function UserProfilePage() {
                         <Box>
                             <Heading as="h4" size="md" mb={2}>Subscribed Projects</Heading>
                             <VStack align="start">
-                                {user.subscribedProjects.map((projectId, index) => (
+                                {currentUser.subscribedProjects.map((projectId, index) => (
                                     <Text key={index}>Project ID: {projectId}</Text>
                                 ))}
                             </VStack>

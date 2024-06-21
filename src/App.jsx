@@ -6,6 +6,7 @@ import ProjectHubPage from "./pages/ProjectHubPage";
 import PostProjectPage from "./pages/PostProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import ProfileCreationPage from "./pages/ProfileCreationPage";
 import "./App.css";
 
 function App() {
@@ -41,7 +42,8 @@ function App() {
           <Route path="/home" element={<ProjectHubPage />} />
           <Route path="/post" element={<PostProjectPage />} />
           <Route path="/projectDetails" element={<ProjectDetailsPage />} />
-          <Route path="/user" element={<UserProfilePage />} />
+          <Route path="/userProfile" element={<UserProfilePage />} />
+          <Route path="/initProfile" element={<ProfileCreationPage />} />
         </>
       )}
     </Routes>

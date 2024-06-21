@@ -1,4 +1,5 @@
-// Login.js
+import React from "react";
+import { Box, Button, Container, Heading, VStack, Text } from "@chakra-ui/react";
 
 const CLIENT_ID = "Ov23li1yHM1QOlk2RKrV";
 const REDIRECT_URI = "http://localhost:3000/oauth/callback";
@@ -11,10 +12,21 @@ function loginWithGithub() {
 
 const Login = () => {
   return (
-    <div>
-      <h1>Login</h1>
-      <button onClick={loginWithGithub}>Login with GitHub</button>
-    </div>
+    <Container maxW="container.sm" centerContent mt={10}>
+      <Box p={8} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50" width="100%" textAlign="center">
+        <Heading as="h1" size="xl" mb={4} color="teal.500">
+          Welcome to Repo Relay
+        </Heading>
+        <Text fontSize="md" mb={6} color="gray.700">
+          Repo Relay is a web app for developers to publish, find, and collaborate on unfinished coding projects, enhancing their skills and expanding their portfolio.
+        </Text>
+        <VStack spacing={4}>
+          <Button colorScheme="teal" size="lg" onClick={loginWithGithub}>
+            Login with GitHub
+          </Button>
+        </VStack>
+      </Box>
+    </Container>
   );
 };
 
