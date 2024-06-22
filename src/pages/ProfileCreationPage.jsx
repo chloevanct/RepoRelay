@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button, useToast, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Header from '../components/Header';
 import { TagInput } from '../components/postProject/TagInput';
+import { DifficultySelector } from '../components/postProject/DifficultySelector';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../utils/tagColorMappings';
-import { useUser } from '../hooks/useUser'; // Import the custom hook
+import { useUser } from '../hooks/useUser';
 
 export default function ProfileCreationPage() {
     const { currentUser, handleUpdateUser } = useUser();
+    const navigate = useNavigate();
+    const toast = useToast();
 
     const [userID, setUserID] = useState("");
     const [githubUsername, setGithubUsername] = useState("");
@@ -20,8 +23,15 @@ export default function ProfileCreationPage() {
     const [projectTags, setProjectTags] = useState([]);
     const [techTags, setTechTags] = useState([]);
 
+    const [isSaveEnabled, setIsSaveEnabled] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    useEffect(() => {
+        const allFieldsFilled = userID && githubUsername && password && firstName && lastName && email && userImage && difficultyTags.length > 0;
+        setIsSaveEnabled(allFieldsFilled);
+    }, [userID, githubUsername, password, firstName, lastName, email, userImage, difficultyTags]);
+
     const handleSave = () => {
-        console.log("Current user", currentUser);
         const updatedUser = {
             userID,
             githubUsername,
@@ -39,10 +49,15 @@ export default function ProfileCreationPage() {
             }
         };
         handleUpdateUser(updatedUser);
-        console.log("Updated user", updatedUser);
-        console.log("Current user", currentUser);
-        // Optionally navigate to home or another page after saving
-        // navigate("/home");
+        toast({
+            title: "Profile created.",
+            description: "Your profile has been successfully created.",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+            position: "top",
+        });
+        navigate("/home");
     };
 
     return (
@@ -64,12 +79,19 @@ export default function ProfileCreationPage() {
                         value={githubUsername}
                         onChange={(e) => setGithubUsername(e.target.value)}
                     />
-                    <Input
-                        placeholder="Password"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <InputGroup>
+                        <Input
+                            placeholder="Password"
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <InputRightElement width="4.5rem">
+                            <Button h="1.75rem" size="sm" onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? "Hide" : "Show"}
+                            </Button>
+                        </InputRightElement>
+                    </InputGroup>
                     <HStack spacing={4} align="center">
                         <Avatar size="xl" src={userImage} />
                         <Box>
@@ -101,14 +123,12 @@ export default function ProfileCreationPage() {
 
                     <Box>
                         <Heading as="h4" size="md" mb={2}>Difficulty Preferences</Heading>
-                        <TagInput
+                        <DifficultySelector
                             id="difficultyTags"
-                            label="Difficulty Tags"
-                            tags={difficultyTags}
-                            tagMapping={difficultyColorMapping}
-                            onAdd={(tag) => setDifficultyTags([tag])}
-                            onRemove={() => setDifficultyTags([])}
-                            allowMultiple={false}
+                            label="Difficulty Level"
+                            value={difficultyTags[0]}
+                            onChange={(value) => setDifficultyTags([value])}
+                            options={Object.keys(difficultyColorMapping)}
                         />
                     </Box>
 
@@ -138,7 +158,7 @@ export default function ProfileCreationPage() {
                         />
                     </Box>
 
-                    <Button colorScheme="teal" onClick={handleSave}>
+                    <Button colorScheme="teal" onClick={handleSave} isDisabled={!isSaveEnabled}>
                         Save Profile
                     </Button>
                 </VStack>

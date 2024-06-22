@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import initialCardsState from './initialProjectState'
+import { createSlice } from '@reduxjs/toolkit';
+import initialCardsState from './initialProjectState';
 
 /*
 Code adapted from the following documentation:
@@ -23,7 +23,7 @@ const projectSlice = createSlice({
 
             // Ensure only one difficulty tag can be selected at once
             if (type === 'difficultyTag') {
-                state.filters.difficultyTag = tag === state.filters.difficultyTag ? '' : tag;
+                state.filters.difficultyTag = tag === null ? '' : tag;
             } else {
                 const currentFilters = state.filters[type];
 

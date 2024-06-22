@@ -3,7 +3,7 @@ import DetailedProjectInfo from '../components/projectDetails/DetailedProjectInf
 import CommentsSection from '../components/projectDetails/CommentsSection'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Divider } from '@chakra-ui/react'
+import { Box, Divider } from '@chakra-ui/react'
 
 export default function ProjectDetailsPage() {
     
@@ -15,9 +15,11 @@ export default function ProjectDetailsPage() {
     return (
         <>
             <Header />
-            <DetailedProjectInfo project={project} />
-            <Divider />
-            <CommentsSection project={project} />
+            <Box mt={10}>
+                <DetailedProjectInfo project={project} />
+                <Divider />
+                <CommentsSection project={project} />
+            </Box>
         </>
     )
 }

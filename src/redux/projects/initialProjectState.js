@@ -33,7 +33,7 @@ const initialCardsState = {
                 "Assembly",
                 "C",
                 "C++",
-                "CSharp",
+                "C#",
                 "COBOL",
                 "CSS",
                 "Django",
@@ -184,7 +184,7 @@ const initialCardsState = {
             techTags: [
                 "C",
                 "C++",
-                "CSharp"
+                "C#"
             ],
             tasks: [
                 { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },

@@ -3,6 +3,7 @@ import { Box, Container, Heading, VStack, HStack, Avatar, Text, Wrap, WrapItem, 
 import Header from '../components/Header';
 import Tag from '../components/Tag';
 import { TagInput } from '../components/postProject/TagInput';
+import { DifficultySelector } from '../components/postProject/DifficultySelector';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../utils/tagColorMappings';
 import { useUser } from '../hooks/useUser'; 
 
@@ -84,14 +85,12 @@ export default function UserProfilePage() {
                                 )}
                             </HStack>
                             {isEditingDifficulty ? (
-                                <TagInput
+                                <DifficultySelector
                                     id="difficultyTags"
-                                    label="Difficulty Tags"
-                                    tags={newDifficultyTags}
-                                    tagMapping={difficultyColorMapping}
-                                    onAdd={(tag) => setNewDifficultyTags([tag])}
-                                    onRemove={() => setNewDifficultyTags([])}
-                                    allowMultiple={false}
+                                    label="Difficulty Level"
+                                    value={newDifficultyTags[0]}
+                                    onChange={(value) => setNewDifficultyTags([value])}
+                                    options={Object.keys(difficultyColorMapping)}
                                 />
                             ) : (
                                 <Wrap spacing={2}>

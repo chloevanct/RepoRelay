@@ -42,7 +42,7 @@ const technologyColorMapping = {
 	"Assembly": "#a04e2f",
 	"C": "#c7b06f",
 	"C++": "#e17c8c",
-	"CSharp": "#83b940",
+	"C#": "#83b940",
 	"COBOL": "#df9176",
 	"CSS": "#d79f31",
 	"Django": "#d88dcf",
