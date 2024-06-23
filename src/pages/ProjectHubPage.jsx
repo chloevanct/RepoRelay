@@ -40,16 +40,14 @@ export default function ProjectHubPage() {
   console.log(userName);
 
   return (
-    <Flex id="projectHubPage" direction="column" width="100%">
+    <Flex direction="column" width="100%">
       <Header></Header>
-      <Flex id="projectHubBody" direction="column" width="100%">
+      <Flex direction="column" width="100%">
         <SearchBarHeader></SearchBarHeader>
-        <Flex id="projectDisplay" gap="50px" width="100%">
-          <FilterForm id="filterForm"></FilterForm>
-          <Flex id="projectList" direction="column" width="80%">
-            <Flex id="projectListHeading" gap="30px">
-              <ProjectListHeader></ProjectListHeader>
-            </Flex>
+        <Flex gap="50px" width="100%">
+          <FilterForm></FilterForm>
+          <Flex direction="column" width="80%">
+            <ProjectListHeader></ProjectListHeader>
             <ProjectCards></ProjectCards>
           </Flex>
         </Flex>

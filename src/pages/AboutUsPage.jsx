@@ -8,11 +8,11 @@ export default function AboutUsPage() {
     return (
         <Flex direction='column'>
             <Header />
-            <Flex direction='column' align='center' pb='20px'>
+            <Flex direction='column' align='center' pb='20px' pt='10px'>
                 <Image src={RelayImg} alt='Relay Image' width='40%' pb='10px'/>
                 <Heading pb='5px'>Grow your portfolio with Repo Relay</Heading>
                 <Text pb='10px'>Share your unfinished coding projects with the community, or contribute to existing ones</Text>
-                <Button width='10%' justifyContent='center' background='blue' color='white'>JOIN NOW</Button>
+                <Button colorScheme='teal' fontWeight='bold'>JOIN NOW</Button>
             </Flex>
             <Divider alignSelf='center' width='90%'/>
             <Flex justify='center' gap='20px' pt='20px' pb='20px'>

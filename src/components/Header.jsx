@@ -36,17 +36,7 @@ export default function Header() {
             <Avatar size="sm" src={currentUser.userImage || ""} />
           </Link>
           <Link to="/post">
-            <Button
-              bg="teal.500"
-              color="white"
-              fontWeight="bold"
-              px={4}
-              py={2}
-              borderRadius="md"
-              _hover={{ bg: "teal.600" }}
-            >
-              ADD PROJECT
-            </Button>
+            <Button colorScheme="teal" fontWeight='bold'>ADD PROJECT</Button>
           </Link>
         </HStack>
       </Flex>
