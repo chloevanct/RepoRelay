@@ -1,33 +1,29 @@
-import { createSlice, configureStore } from '@reduxjs/toolkit'
-import initialCardsState from './InitialCardsState'
+import { createSlice } from '@reduxjs/toolkit';
+import initialCardsState from './initialProjectState';
 
 /*
 Code adapted from the following documentation:
   https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
 Actions supported:
-  addCard(payload: projectCard)
+  addProject(payload: project)
   toggleTagFilter(payload: (string)tag)
   clearFilters()
 */
 
-const cardSlice = createSlice({
-    name: 'cards',
+const projectSlice = createSlice({
+    name: 'projects',
     initialState: initialCardsState,
     reducers: {
-        addCard: (state, action) => {
-            const projectCard = action.payload;
-            state.cards.push(projectCard);
+        addProject: (state, action) => {
+            const project = action.payload;
+            state.projects.push(project);
         },
         toggleTagFilter: (state, action) => {
             const { tag, type } = action.payload;
 
             // Ensure only one difficulty tag can be selected at once
-            if (type === 'difficultyTags') {
-                if (state.filters.difficultyTags.includes(tag)) {
-                    state.filters.difficultyTags = [];
-                } else {
-                    state.filters.difficultyTags = [tag];
-                }
+            if (type === 'difficultyTag') {
+                state.filters.difficultyTag = tag === null ? '' : tag;
             } else {
                 const currentFilters = state.filters[type];
 
@@ -41,7 +37,7 @@ const cardSlice = createSlice({
         },
         clearFilters: (state) => {
             state.filters = {
-                difficultyTags: [],
+                difficultyTag: '',
                 projectTags: [],
                 techTags: []
             };
@@ -52,11 +48,6 @@ const cardSlice = createSlice({
     }
 });
 
-const store = configureStore({
-    reducer: {
-        cards: cardSlice.reducer
-    }
-});
+export const { addProject, toggleTagFilter, clearFilters, setSearchQuery } = projectSlice.actions;
 
-export const { addCard, toggleTagFilter, clearFilters, setSearchQuery } = cardSlice.actions;
-export default store;
+export default projectSlice.reducer;

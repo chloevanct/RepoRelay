@@ -1,35 +1,25 @@
 import Header from '../components/Header'
 import DetailedProjectInfo from '../components/projectDetails/DetailedProjectInfo'
 import CommentsSection from '../components/projectDetails/CommentsSection'
-import { Divider } from '@chakra-ui/react'
-
-// Temp card for testing
-const card = {
-    projectName: "Project 1",
-    projectImg: "https://hips.hearstapps.com/hmg-prod/images/cute-photos-of-cats-looking-at-camera-1593184780.jpg",
-    postedBy: "username123",
-    postedDate: "2024-05-10",
-    lastActivityDate: "2024-05-10",
-    projectDescription: "This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot. This really long description gets cut off and ends in a dot dot dot.",
-    difficultyTags: [
-        'Advanced'
-    ],
-    projectTags: [
-        'AI Development'
-    ],
-    techTags: [
-        'Python'
-    ]
-}
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Box, Divider } from '@chakra-ui/react'
 
 export default function ProjectDetailsPage() {
+    
+    // The project loads by passing the ID as a parameter in the link (see ProjectCard.jsx). 
+    const { projectId } = useParams();
+    const projects = useSelector((state) => state.projects.projects);
+    const project = projects.find(p => p.projectID === projectId);
 
     return (
         <>
             <Header />
-            <DetailedProjectInfo card={card} />
-            <Divider />
-            <CommentsSection card={card} />
+            <Box mt={10}>
+                <DetailedProjectInfo project={project} />
+                <Divider />
+                <CommentsSection project={project} />
+            </Box>
         </>
     )
 }
