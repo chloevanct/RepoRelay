@@ -8,7 +8,7 @@ export default function Header() {
   const { currentUser } = useUser();
 
   return (
-    <Box bg="gray.50" p={4} shadow="md" borderWidth="1px" borderRadius="lg">
+    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4}>
       <Flex justifyContent="space-between" alignItems="center" maxW="container.lg" mx="auto">
         <Link to="/home" id="logo-link">
           <Text fontSize="2rem" fontWeight="bold" color="teal.500">

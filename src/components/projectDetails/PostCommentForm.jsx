@@ -15,7 +15,7 @@ export default function PostCommentForm() {
                     <Input height='100%' placeholder='Write a comment...' _placeholder={{ textAlign: 'start', lineHeight: '100%' }} justifyItems='start'/>
                 </FormControl>
             </Flex>
-            <Button width='10%' ml='auto' mt='5px'>Comment</Button>
+            <Button colorScheme="teal" fontWeight='bold' width='10%' ml='auto' mt='5px'>Comment</Button>
         </Flex>
 
 
