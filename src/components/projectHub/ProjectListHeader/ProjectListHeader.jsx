@@ -11,7 +11,7 @@ export default function ProjectListHeader() {
     const filteredProjectCount = useSelector(selectFilteredProjectCount);
 
     return (
-        <Flex id="project-list-header" direction="column" justify="flex-start" align="flex-start" p="4" width="100%">
+        <Flex id="project-list-header" direction="column" justify="flex-start" align="flex-start" pl="4" pr="4" width="100%">
             <Box>
                 <Text fontSize="3xl">All Projects</Text>
             </Box>

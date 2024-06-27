@@ -7,7 +7,7 @@ import { Flex, Divider, Box } from '@chakra-ui/react'
 export default function ProjectCard({ project }) {
     return (
         <Link to={`/projectDetails/${project.projectID}`}>
-            <Flex border='1px solid' alignItems='center' justifyContent='flex-start' padding='10px' margin='10px' backgroundColor='#f8f4fc' color='black' height='16%'>  
+            <Flex alignItems='center' justifyContent='flex-start' borderWidth="2px" borderRadius="lg" p='5px' m='10px' bg="gray.50" color='black' h='12vh'>  
                 <ProjectImage project={project} />
                 <Flex direction='column' width='80%' height='100%'>
                     <Flex height='150px'>

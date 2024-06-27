@@ -8,7 +8,7 @@ export default function Header() {
   const { currentUser } = useUser();
 
   return (
-    <Box bg="gray.50" p={4} shadow="md" borderWidth="1px" borderRadius="lg">
+    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4}>
       <Flex justifyContent="space-between" alignItems="center" maxW="container.lg" mx="auto">
         <Link to="/home" id="logo-link">
           <Text fontSize="2rem" fontWeight="bold" color="teal.500">
@@ -36,17 +36,7 @@ export default function Header() {
             <Avatar size="sm" src={currentUser.userImage || ""} />
           </Link>
           <Link to="/post">
-            <Button
-              bg="teal.500"
-              color="white"
-              fontWeight="bold"
-              px={4}
-              py={2}
-              borderRadius="md"
-              _hover={{ bg: "teal.600" }}
-            >
-              ADD PROJECT
-            </Button>
+            <Button colorScheme="teal" fontWeight='bold'>ADD PROJECT</Button>
           </Link>
         </HStack>
       </Flex>

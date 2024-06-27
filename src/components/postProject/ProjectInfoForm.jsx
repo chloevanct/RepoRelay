@@ -84,10 +84,10 @@ export default function ProjectInfoForm() {
               onRemove={(index) => removeFromList("tasksToComplete", index)}
             />
             <HStack>
-              <Button type="submit" colorScheme="teal" isDisabled={!validateForm()}>
+              <Button type="submit" colorScheme="teal" fontWeight='bold' isDisabled={!validateForm()}>
                 Publish Project
               </Button>
-              <Button type="reset" colorScheme="red">
+              <Button type="reset" colorScheme="red" fontWeight='bold'>
                 Clear Inputs
               </Button>
             </HStack>

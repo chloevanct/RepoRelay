@@ -20,8 +20,8 @@ export default function ProgressBar({ value }) {
     
           [role="progressbar"] {
             --percentage: var(--value);
-            --primary: #369;
-            --secondary: #adf;
+            --primary: #319795;
+            --secondary: #D5F2F1;
             --size: 300px;
             animation: progress 2s 0.5s forwards;
             width: var(--size);
@@ -58,13 +58,6 @@ export default function ProgressBar({ value }) {
             display: block;
           }
     
-          body {
-            margin: 0;
-            display: grid;
-            place-items: center;
-            height: 100vh;
-            background: #f0f8ff;
-          }
           `}
         </style>
         <Box
