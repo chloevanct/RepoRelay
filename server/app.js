@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const connectDB = require('./db/connection')
 
 var projectsRouter = require('./routes/projects');
 const axios = require("axios");
@@ -11,6 +12,9 @@ require("dotenv").config(); // To load CLIENT_ID and CLIENT_SECRET from .env fil
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+
+// connect MongoDB
+connectDB();
 
 var app = express();
 

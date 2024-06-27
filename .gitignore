@@ -26,8 +26,7 @@ dist-ssr
 package-lock.json
 
 
-# Server 
+# Server
 server\node_modules
 server\package-lock.json
-
-.env
+server/.env
