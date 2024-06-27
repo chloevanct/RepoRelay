@@ -29,5 +29,3 @@ package-lock.json
 # Server
 server\node_modules
 server\package-lock.json
-
-.env
