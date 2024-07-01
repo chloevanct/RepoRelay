@@ -25,7 +25,19 @@ router.post("/user", async (req, res) => {
 
     const githubData = githubResponse.data;
 
-    // console.log(githubData.name.split(" ")[0]);
+    let firstName = "";
+    let lastName = "";
+
+    if (githubData.name) {
+      const nameParts = githubData.name.split(" ");
+      firstName = nameParts[0]; // Set firstName to the first part of the name
+
+      if (nameParts.length > 1) {
+        lastName = nameParts.slice(1).join(" "); // Set lastName to the rest of the name
+      }
+    }
+
+    console.log(firstName, lastName);
 
     // Check if user exists in the database
     let user = await User.findOne({ githubUsername: githubData.login });
@@ -35,8 +47,8 @@ router.post("/user", async (req, res) => {
       user = new User({
         userID: githubData.login,
         githubUsername: githubData.login,
-        firstName: githubData.name.split(" ")[0], // Assumes first part of the name is firstName
-        lastName: githubData.name.split(" ").slice(1).join(" "), // Assumes the rest is lastName
+        firstName: firstName,
+        lastName: lastName,
         userImage: githubData.avatar_url,
         emailAddress: githubData.email,
         preferences: {

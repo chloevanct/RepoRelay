@@ -9,10 +9,10 @@ const userSchema = new Schema({
   githubUsername: { type: String, required: true, unique: true },
   ownedProjects: { type: [String], default: [] },
   subscribedProjects: { type: [String], default: [] },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
+  firstName: { type: String, required: false },
+  lastName: { type: String, required: false },
   userImage: { type: String, required: true },
-  emailAddress: { type: String, required: false, unique: true },
+  emailAddress: { type: String, required: false, unique: false },
   preferences: {
     difficultyTags: { type: [String], default: [] },
     techTags: { type: [String], default: [] },
