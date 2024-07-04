@@ -4,7 +4,7 @@ const seedUserData = require('./seedUserData');
 const connectDB = require("../connection");
 require('dotenv').config();
 
-// Resets the projects in the database to the seedData
+// Resets the users in the database to the seedUserData
 async function seedProjects() {
   try {
     await connectDB();

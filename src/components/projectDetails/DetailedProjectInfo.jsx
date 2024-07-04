@@ -1,5 +1,6 @@
 import ProjectImage from '../projectCards/ProjectImage'
 import ProjectInfo from '../projectCards/ProjectInfo'
+import ProjectContributors from './ProjectContributors'
 import ProjectTags from './ProjectTags'
 import ProjectProgress from './ProjectProgress'
 import { Flex, Divider } from '@chakra-ui/react'
@@ -11,6 +12,8 @@ export default function DetailedProjectInfo({ project }) {
                 <ProjectImage project={project} />
                 <ProjectInfo project={project}/>
             </Flex>
+            <Divider mb='10px'/>
+            <ProjectContributors project={project} />
             <Divider mb='10px'/>
             <ProjectTags project={project} mb='10px'/>
             <Divider mb='10px'/>

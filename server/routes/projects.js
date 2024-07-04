@@ -14,7 +14,6 @@ const { Project } = require('../db/models');
   // therefore we use findOne({ projectID: projectID })
 // ! tasks and comments are found by _id (mongodb's allocated id)
   // therefore we use tasks.id(taskID), comments.id(commentID)
-
 /* ------------------------------ projects ------------------------------ */
 // GET list of projects
 router.get('/', async (req, res) => {
