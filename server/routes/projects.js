@@ -11,11 +11,26 @@ const { v4: uuidv4 } = require('uuid');
 const { Project } = require('../db/models');
 
 
+/* ------------------------------ projects ------------------------------ */
 // GET list of projects
 router.get('/', async (req, res) => {
     try {
         const projects = await Project.find();
         return res.status(200).send(projects);
+    } catch (err) {
+        return res.status(500).send('Internal Error: ' + err.message);
+    }
+});
+
+// GET a project by projectID
+router.get('/:id', async (req, res) => {
+    try {
+        const projectID = req.params.id;
+        const project = await Project.findOne({ projectID: projectID });
+        if (!project) {
+          return res.status(404).send('Project not found');
+        }
+        return res.status(200).send(project);
     } catch (err) {
         return res.status(500).send('Internal Error: ' + err.message);
     }
@@ -89,5 +104,124 @@ router.delete('/:id', async (req, res) => {
         return res.status(500).send('Internal Error: ' + err.message);
     }
   });
+
+
+/* ------------------------------ tasks ------------------------------ */
+// GET list of all tasks in a project
+router.get('/:projectID/tasks', async (req, res) => {
+    try {
+        const projectID = req.params.projectID;
+        const project = await Project.findOne({ projectID: projectID });
+        if (!project) {
+            return res.status(404).send('Project not found');
+        }
+        return res.status(200).send(project.tasks);
+    } catch (err) {
+        return res.status(500).send('Internal Error: ' + err.message);
+    }
+  });
+
+// GET a specific task in a project
+  router.get('/:projectID/tasks/:taskID', async (req, res) => {
+    try {
+          const projectID = req.params.projectID;
+          const project = await Project.findOne({ projectID: projectID });
+          if (!project) {
+              return res.status(404).send('Project not found');
+          }
+          const taskID = req.params.taskID;
+          const task = project.tasks.id(taskID);
+          if (!task) {
+              return res.status(404).send('Task not found');
+          }
+          res.status(200).send(task);
+    } catch (err) {
+        return res.status(500).send('Internal Error: ' + err.message);
+    }
+  });
+
+
+// POST a new task to a project
+router.post('/:id/tasks', async (req, res) => {
+  try {
+      const projectID = req.params.id;
+      const project = await Project.findOne({ projectID: projectID });
+      if (!project) {
+        return res.status(404).send('Project not found');
+      }
+      project.tasks.push(req.body);
+      await project.save();
+      res.status(201).send(project);
+  } catch (err) {
+      return res.status(500).send('Internal Error: ' + err.message);
+  }
+});
+
+  // PUT (edit) a task in a project
+  router.put('/:projectID/tasks/:taskID', async (req, res) => {
+    try {
+       const projectID = req.params.projectID;
+       const project = await Project.findOne({ projectID: projectID });
+       if (!project) {
+            return res.status(404).send('Project not found');
+        }
+        const taskID = req.params.taskID;
+        const task = project.tasks.id(taskID);
+        if (!task) {
+            return res.status(404).send('Task not found');
+        }
+        task.set(req.body);
+        await project.save();
+        res.status(200).send(project);
+    } catch (err) {
+        res.status(500).send('Error: ' + err.message);
+    }
+});
+
+  // PATCH (partial edit) a task in a project
+  router.patch('/:projectID/tasks/:taskID', async (req, res) => {
+    try {
+       const projectID = req.params.projectID;
+       const project = await Project.findOne({ projectID: projectID });
+       if (!project) {
+            return res.status(404).send('Project not found');
+        }
+        const taskID = req.params.taskID;
+        const task = project.tasks.id(taskID);
+        if (!task) {
+            return res.status(404).send('Task not found');
+        }
+        Object.assign(task, req.body);
+        await project.save();
+        res.status(200).send(project);
+    } catch (err) {
+        res.status(500).send('Error: ' + err.message);
+    }
+});
+
+// DELETE a task from a project
+  router.delete('/:projectID/tasks/:taskID', async (req, res) => {
+    try {
+        const projectID = req.params.projectID;
+        const project = await Project.findOne({ projectID: projectID });
+        if (!project) {
+            return res.status(404).send('Project not found');
+        }
+        const taskID = req.params.taskID;
+        const task = project.tasks.id(taskID);
+        if (!task) {
+            return res.status(404).send('Task not found');
+        }
+        project.tasks.pull(taskID)
+        await project.save();
+        res.status(204).send();
+    } catch (err) {
+        return res.status(500).send('Internal Error: ' + err.message);
+    }
+  });
+
+/* ------------------------------ comments ------------------------------ */
+
+
 
 module.exports = router;
