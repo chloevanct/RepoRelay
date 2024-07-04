@@ -1,5 +1,5 @@
-// Adapted following MongoDB tutorial
-// Accessed June 17 2024 - https://www.mongodb.com/resources/languages/express-mongodb-rest-api-tutorial
+/* Adapted following MongoDB tutorial
+ Accessed June 17 2024 - https://www.mongodb.com/resources/languages/express-mongodb-rest-api-tutorial */
 
 /* ChatGPT 4.0 June 27 2024
 Prompts used were “Help me get started writing a PUT/PATCH project with Project models in mongoDB/mongoose"
@@ -10,6 +10,10 @@ var router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const { Project } = require('../db/models');
 
+// ! projects are found by ProjectID (as per group meeting to not break front end)
+  // therefore we use findOne({ projectID: projectID })
+// ! tasks and comments are found by _id (mongodb's allocated id)
+  // therefore we use tasks.id(taskID), comments.id(commentID)
 
 /* ------------------------------ projects ------------------------------ */
 // GET list of projects
@@ -140,7 +144,6 @@ router.get('/:projectID/tasks', async (req, res) => {
     }
   });
 
-
 // POST a new task to a project
 router.post('/:id/tasks', async (req, res) => {
   try {
@@ -222,6 +225,116 @@ router.post('/:id/tasks', async (req, res) => {
 
 /* ------------------------------ comments ------------------------------ */
 
+// GET list of all comments in a project
+router.get('/:projectID/comments', async (req, res) => {
+  try {
+      const projectID = req.params.projectID;
+      const project = await Project.findOne({ projectID: projectID });
+      if (!project) {
+          return res.status(404).send('Project not found');
+      }
+      return res.status(200).send(project.comments);
+  } catch (err) {
+      return res.status(500).send('Internal Error: ' + err.message);
+  }
+});
 
+// GET a specific comment in a project
+router.get('/:projectID/comments/:commentID', async (req, res) => {
+  try {
+        const projectID = req.params.projectID;
+        const project = await Project.findOne({ projectID: projectID });
+        if (!project) {
+            return res.status(404).send('Project not found');
+        }
+        const commentID = req.params.commentID;
+        const comment = project.comments.id(commentID);
+        if (!comment) {
+            return res.status(404).send('Comment not found');
+        }
+        res.status(200).send(comment);
+  } catch (err) {
+      return res.status(500).send('Internal Error: ' + err.message);
+  }
+});
+
+// POST a new comment to a project
+router.post('/:id/comments', async (req, res) => {
+try {
+    const projectID = req.params.id;
+    const project = await Project.findOne({ projectID: projectID });
+    if (!project) {
+      return res.status(404).send('Project not found');
+    }
+    project.comments.push(req.body);
+    await project.save();
+    res.status(201).send(project);
+} catch (err) {
+    return res.status(500).send('Internal Error: ' + err.message);
+}
+});
+
+// PUT (edit) a comment in a project
+router.put('/:projectID/comments/:commentID', async (req, res) => {
+  try {
+     const projectID = req.params.projectID;
+     const project = await Project.findOne({ projectID: projectID });
+     if (!project) {
+          return res.status(404).send('Project not found');
+      }
+      const commentID = req.params.commentID;
+      const comment = project.comments.id(commentID);
+      if (!comment) {
+          return res.status(404).send('Comment not found');
+      }
+      comment.set(req.body);
+      await project.save();
+      res.status(200).send(project);
+  } catch (err) {
+      res.status(500).send('Error: ' + err.message);
+  }
+});
+
+// PATCH (partial edit) a comment in a project
+router.patch('/:projectID/comments/:commentID', async (req, res) => {
+  try {
+     const projectID = req.params.projectID;
+     const project = await Project.findOne({ projectID: projectID });
+     if (!project) {
+          return res.status(404).send('Project not found');
+      }
+      const commentID = req.params.commentID;
+      const comment = project.comments.id(commentID);
+      if (!comment) {
+          return res.status(404).send('Comment not found');
+      }
+      Object.assign(comment, req.body);
+      await project.save();
+      res.status(200).send(project);
+  } catch (err) {
+      res.status(500).send('Error: ' + err.message);
+  }
+});
+
+// DELETE a comment from a project
+router.delete('/:projectID/comments/:commentID', async (req, res) => {
+  try {
+      const projectID = req.params.projectID;
+      const project = await Project.findOne({ projectID: projectID });
+      if (!project) {
+          return res.status(404).send('Project not found');
+      }
+      const commentID = req.params.commentID;
+      const comment = project.comments.id(commentID);
+      if (!comment) {
+          return res.status(404).send('Comment not found');
+      }
+      project.comments.pull(commentID)
+      await project.save();
+      res.status(204).send();
+  } catch (err) {
+      return res.status(500).send('Internal Error: ' + err.message);
+  }
+});
 
 module.exports = router;
