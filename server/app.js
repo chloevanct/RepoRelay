@@ -14,7 +14,6 @@ var indexRouter = require("./routes/index");
 
 const userRouter = require("./routes/user");
 
-// connect MongoDB
 connectDB();
 
 var app = express();

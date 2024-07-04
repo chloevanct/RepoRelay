@@ -4,7 +4,7 @@ lets write an endpoint which gives the server a token. the server takes that tok
 
 const express = require("express");
 const axios = require("axios");
-const User = require("../db/model/user");
+const User = require("../db/models/user");
 
 const router = express.Router();
 

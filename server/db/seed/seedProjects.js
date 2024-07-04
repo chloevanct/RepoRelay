@@ -1,17 +1,19 @@
 const mongoose = require('mongoose');
-const Project = require('./model/project'); // TODO: post project schema
-const seedData = require('./seedData');
+const Project = require('../models/project');
+const seedData = require('./seedProjectData');
+const connectDB = require("../connection");
+require('dotenv').config();
 
 // Resets the projects in the database to the seedData
 async function seedProjects() {
   try {
-    await mongoose.connect(process.env.DB_CONNECTION);
+    await connectDB();
 
     await Project.deleteMany({});
 
-    await Project.insertMany(seedData.projects);
+    await Project.insertMany(seedData);
 
-    console.log('Database seeded successfully!');
+    console.log('Database projects seeded successfully!');
     mongoose.connection.close();
   } catch (err) {
     console.error('Error seeding the database:', err);

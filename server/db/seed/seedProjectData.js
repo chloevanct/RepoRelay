@@ -1,5 +1,4 @@
-module.exports = {
-    projects: [
+module.exports = [
     {
         projectID: "1",
         projectName: "Project 1",
@@ -41,10 +40,10 @@ module.exports = {
             "JavaScript",
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: [
             { postedBy: "username321", datePosted: "2024-05-09", commentBody: "This is the best project I've ever seen!" },
@@ -72,10 +71,10 @@ module.exports = {
             "Django"
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: []
     },
@@ -98,10 +97,10 @@ module.exports = {
             "JavaScript",
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: []
     },
@@ -125,10 +124,10 @@ module.exports = {
             "Flask"
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: []
     },
@@ -154,17 +153,17 @@ module.exports = {
             "Haskell"
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: []
     },
     {
         projectID: "6",
         projectName: "Project 6",
-        projectDescription: "",
+        projectDescription: "A description of the project.",
         projectImg: "",
         githubURL: "https://github.com/",
         projectOwner: "username123",
@@ -183,12 +182,11 @@ module.exports = {
             "C#"
         ],
         tasks: [
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: TASK_STATUS_PENDING },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: TASK_STATUS_COMPLETE },
-            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: TASK_STATUS_COMPLETE }
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another pending task", taskStatus: "pending" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "A complete task", taskStatus: "completed" },
+            { postedBy: "username123", datePosted: "2024-05-10", taskBody: "Another complete task", taskStatus: "completed" }
         ],
         comments: []
     }
-    ]
-};
+];
