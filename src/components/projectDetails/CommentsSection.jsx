@@ -16,6 +16,5 @@ export default function CommentsSection({ project }) {
                 ))}
             </UnorderedList>
         </Flex>
-
     )
 }

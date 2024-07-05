@@ -1,8 +1,13 @@
-import { useSelector } from 'react-redux';
-import ProjectCard from './ProjectCard';
-import { UnorderedList, ListItem, Flex, Button, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { selectFilteredProjects } from '../../utils/selectors';
+import { getProjectsAsync } from '../../redux/projects/projectCardThunks';
+import { REQUEST_STATE } from '../../redux/requestState';
+import ProjectCard from './ProjectCard';
+
+import { UnorderedList, ListItem, Flex, Button, Text, Spinner } from '@chakra-ui/react';
+
 
 const CARDS_PER_PAGE = 5;
 
@@ -12,7 +17,10 @@ const CARDS_PER_PAGE = 5;
 // Query: how do I adjust my project cards to display 5 at a time with 
 //        multiple pages to scroll through if there's more than 5?
 export default function ProjectCards() {
+    const dispatch = useDispatch();
     const displayedCards = useSelector(selectFilteredProjects);
+    const getProjectsStatus = useSelector(state => state.projects.getProjects);
+    const error = useSelector(state => state.projects.error);
 
     const hasResults = displayedCards.length > 0;
     const maxPage = Math.ceil(displayedCards.length / CARDS_PER_PAGE);
@@ -26,6 +34,18 @@ export default function ProjectCards() {
     const pageChange = (pageNumber) => {
         setCurrPage(pageNumber);
     };
+
+    useEffect(() => {
+        dispatch(getProjectsAsync());
+    }, [dispatch]);
+
+    if (getProjectsStatus === REQUEST_STATE.PENDING) {
+        return <Spinner />;
+    }
+
+    if (getProjectsStatus === REQUEST_STATE.REJECTED) {
+        return <Text>Error: {error}</Text>;
+    }
 
     return (
         <>

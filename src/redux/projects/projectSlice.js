@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import initialCardsState from './initialProjectState';
+import { REQUEST_STATE } from '../requestState';
 import { getProjectsAsync, getProjectAsync, addProjectAsync, updateProjectAsync, updatePartialProjectAsync, deleteProjectAsync } from './projectCardThunks';
 
 /*
@@ -10,10 +10,21 @@ Actions supported:
   toggleTagFilter(payload: (string)tag)
   clearFilters()
 */
+const INITIAL_STATE = {
+    projects: [],
+    getProjects: REQUEST_STATE.IDLE,
+    getProject: REQUEST_STATE.IDLE,
+    addProject: REQUEST_STATE.IDLE,
+    updateProject: REQUEST_STATE.IDLE,
+    deleteProject: REQUEST_STATE.IDLE,
+    filters: [],
+    searchQuery: '',
+    error: null
+};
 
 const projectSlice = createSlice({
     name: 'projects',
-    initialState: initialCardsState,
+    initialState: INITIAL_STATE,
     reducers: {
         addProject: (state, action) => {
             const project = action.payload;
@@ -49,21 +60,39 @@ const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        /* get ALL projects */
         .addCase(getProjectsAsync.fulfilled, (state, action) => {
+            state.getProjects = REQUEST_STATE.FULFILLED
             state.projects = action.payload;
         })
+        .addCase(getProjectsAsync.pending, (state) => {
+            state.getProjects = REQUEST_STATE.PENDING
+            state.error = null;
+        })
+        .addCase(getProjectsAsync.rejected, (state, action) => {
+            state.getProjects = REQUEST_STATE.REJECTED
+            state.error = action.error;
+        })
+
+        /* get ONE project */
         .addCase(getProjectAsync.fulfilled, (state, action) => {
             state.projects.push(action.payload); // GET a project by ProjectID and add to [projects]
         })
+
+        /* add project */
         .addCase(addProjectAsync.fulfilled, (state, action) => {
             state.projects.push(action.payload);
         })
+        
+        /* update project */
         .addCase(updateProjectAsync.fulfilled, (state, action) => {
             const index = state.projects.findIndex(project => project.id === action.payload.id);
             if (index !== -1) {
                 state.projects[index] = action.payload;
             }
         })
+
+        /* update partial project */
         .addCase(updatePartialProjectAsync.fulfilled, (state, action) => {
             const index = state.projects.findIndex(project => project.id === action.payload.id);
             if (index !== -1) {
@@ -73,6 +102,8 @@ const projectSlice = createSlice({
                 }
             }
         })
+
+        /* delete project */
         .addCase(deleteProjectAsync.fulfilled, (state, action) => {
             state.projects = state.projects.filter(project => project.id === action.payload.id)
         })
