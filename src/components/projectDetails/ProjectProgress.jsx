@@ -3,8 +3,8 @@ import { TASK_STATUS_PENDING, TASK_STATUS_COMPLETE } from "../../utils/Task"
 import { Flex, Box, Heading, Checkbox } from "@chakra-ui/react"
 
 export default function ProjectProgress({ project }) {
-    const pending_tasks = project.tasks.filter(task => task.taskStatus === TASK_STATUS_PENDING);
-    const complete_tasks = project.tasks.filter(task => task.taskStatus === TASK_STATUS_COMPLETE);
+    const pending_tasks = project.tasks.filter(task => task.taskStatus === 'pending');
+    const complete_tasks = project.tasks.filter(task => task.taskStatus === 'completed');
 
     // BASIC MEASURE OF COMPLETION 
     //   Eventaully may want to have users enter this on their own?
