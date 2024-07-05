@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getProjectsApi, addProjectApi, updateProjectApi, deleteProjectApi } from './projectCardService';
 
 export const getProjectsAsync = createAsyncThunk (
-    'cards/getProjects',
+    'projects/getProjects',
     async() => {
         return await getProjectsApi();
     }
@@ -10,35 +10,35 @@ export const getProjectsAsync = createAsyncThunk (
 
 // GET a project by ProjectID
 export const getProjectAsync = createAsyncThunk (
-    'cards/getProject',
+    'projects/getProject',
     async(id) => {
         return await getProjectApi(id);
     }
 );
 
 export const addProjectAsync = createAsyncThunk (
-    'cards/addProject',
+    'projects/addProject',
     async(project) => {
         return await addProjectApi(project);
     }
 );
 
 export const updateProjectAsync = createAsyncThunk (
-    'cards/updateProject',
+    'projects/updateProject',
     async(id, project) => {
         return await updateProjectApi(id, project);
     }
 );
 
 export const updatePartialProjectAsync = createAsyncThunk (
-    'cards/updatePartialProject',
+    'projects/updatePartialProject',
     async(id, project) => {
         return await updatePartialProjectApi(id, project);
     }
 );
 
 export const deleteProjectAsync = createAsyncThunk (
-    'cards/deleteProject',
+    'projects/deleteProject',
     async(id) => {
         return await deleteProjectApi(id);
     }
