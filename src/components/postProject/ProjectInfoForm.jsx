@@ -7,11 +7,14 @@ import { DifficultySelector } from "./DifficultySelector";
 import { useFormData } from "../../hooks/useFormData";
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProjectAsync } from "../../redux/projects/projectCardThunks";
 
 export default function ProjectInfoForm() {
-  const { formData, handleChange, addToList, removeFromList, handleReset, handleSubmit } = useFormData();
+  const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
+  const dispatch = useDispatch();
 
   const validateForm = () => {
     return formData.name && formData.repoLink && formData.description && formData.difficultyTags.length > 0;
@@ -19,7 +22,41 @@ export default function ProjectInfoForm() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(e);
+
+    const tasks = [
+      ...formData.tasksCompleted.map(task => ({
+        postedBy: "username123",
+        datePosted: formData.date,
+        taskBody: task,
+        taskStatus: TASK_STATUS_COMPLETE
+      })),
+      ...formData.tasksToComplete.map(task => ({
+        postedBy: "username123",
+        datePosted: formData.date,
+        taskBody: task,
+        taskStatus: TASK_STATUS_PENDING
+      }))
+    ];
+
+    const newProject = {
+      projectID: Math.floor(Math.random() * (1000000)).toString(), // TEMPORARY RANDOM GENERATE ID
+      projectName: formData.name,
+      projectDescription: formData.description,
+      projectImg: "",
+      githubURL: formData.repoLink,
+      projectOwner: "username123",
+      pastContributors: [],
+      subscribedUsers: [],
+      postedDate: formData.date,
+      lastActivityDate: formData.date,
+      difficultyTag: formData.difficultyTags[0],
+      projectTags: formData.projectTags,
+      techTags: formData.techTags,
+      tasks: tasks,
+      comments: []
+    };
+
+    dispatch(addProjectAsync(newProject));
     setIsSubmitted(true);
     toast({
       title: "Project published.",
@@ -29,6 +66,7 @@ export default function ProjectInfoForm() {
       isClosable: true,
       position: "top",
     });
+    handleReset();
   };
 
   return (
