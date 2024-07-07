@@ -51,7 +51,7 @@ module.exports = [
     userID: "NariM11",
     githubUsername: "NariM11",
     ownedProjects: ["100"],
-    subscribedProjects: ["100"],
+    subscribedProjects: ["100", "6"],
     firstName: "NotNari",
     lastName: "Muldashev",
     userImage: "https://avatars.githubusercontent.com/u/109767334?v=4",

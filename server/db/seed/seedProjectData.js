@@ -257,7 +257,7 @@ module.exports = [
     githubURL: "https://github.com/",
     projectOwner: "username123",
     pastContributors: ["username321", "username444"],
-    subscribedUsers: ["username123", "username321"],
+    subscribedUsers: ["username123", "username321", "NariM11"],
     postedDate: "2024-05-10",
     lastActivityDate: "2024-05-10",
     difficultyTag: "Advanced",

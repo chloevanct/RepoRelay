@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Container,
@@ -22,7 +22,9 @@ import {
 } from "../utils/tagColorMappings";
 import { useUser } from "../hooks/useUser";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getProjectsAsync } from "../redux/projects/projectCardThunks";
 
 import ProjectCard from "../components/projectCards/ProjectCard";
 
@@ -34,22 +36,43 @@ export default function UserProfilePage() {
     handleUpdateTechTags,
   } = useUser();
 
+  const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.projects);
-  console.log("owned projects ", projects);
 
   const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
   const [isEditingProject, setIsEditingProject] = useState(false);
   const [isEditingTech, setIsEditingTech] = useState(false);
 
-  const [newDifficultyTags, setNewDifficultyTags] = useState(
-    currentUser.preferences.difficultyTags
-  );
-  const [newProjectTags, setNewProjectTags] = useState(
-    currentUser.preferences.projectTags
-  );
-  const [newTechTags, setNewTechTags] = useState(
-    currentUser.preferences.techTags
-  );
+  const [newDifficultyTags, setNewDifficultyTags] = useState([]);
+
+  const [newProjectTags, setNewProjectTags] = useState([]);
+  const [newTechTags, setNewTechTags] = useState([]);
+  const [ownedProjects, setOwnedProjects] = useState([]);
+  const [subscribedProjects, setSubscribedProjects] = useState([]);
+
+  useEffect(() => {
+    dispatch(getProjectsAsync());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setNewDifficultyTags(currentUser.preferences.difficultyTags);
+    setNewProjectTags(currentUser.preferences.projectTags);
+    setNewTechTags(currentUser.preferences.techTags);
+    setOwnedProjects(
+      // projects
+      projects.filter((project) =>
+        currentUser.ownedProjects.includes(project.projectID)
+      )
+    );
+    setSubscribedProjects(
+      projects.filter((project) =>
+        currentUser.subscribedProjects.includes(project.projectID)
+      )
+    );
+    // console.log(ownedProjects);
+  }, [currentUser, projects]);
+
+  console.log(currentUser);
 
   const handleSaveDifficulty = () => {
     handleUpdateDifficultyTags(newDifficultyTags);
@@ -80,13 +103,6 @@ export default function UserProfilePage() {
     setNewTechTags(currentUser.preferences.techTags);
     setIsEditingTech(false);
   };
-
-  // Filter the projects to only include those owned by the current user
-  const ownedProjects = projects.filter((project) =>
-    currentUser.ownedProjects.includes(project.projectID)
-  );
-
-  console.log(ownedProjects);
 
   return (
     <>
@@ -257,7 +273,7 @@ export default function UserProfilePage() {
               )}
             </Box>
 
-            <Box>
+            {/* <Box>
               <Heading as="h4" size="md" mb={2}>
                 Owned Projects
               </Heading>
@@ -266,7 +282,7 @@ export default function UserProfilePage() {
                   <Text key={index}>Project ID: {projectId}</Text>
                 ))}
               </VStack>
-            </Box>
+            </Box> */}
 
             <Box>
               <Heading as="h4" size="md" mb={2}>
@@ -284,8 +300,8 @@ export default function UserProfilePage() {
                 Subscribed Projects
               </Heading>
               <VStack align="start">
-                {currentUser.subscribedProjects.map((projectId, index) => (
-                  <Text key={index}>Project ID: {projectId}</Text>
+                {subscribedProjects.map((project) => (
+                  <ProjectCard key={project.projectID} project={project} />
                 ))}
               </VStack>
             </Box>
