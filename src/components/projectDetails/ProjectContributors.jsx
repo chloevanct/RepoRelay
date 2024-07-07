@@ -26,47 +26,57 @@ export default function ProjectUsers({ project }) {
         dispatch(updatePartialProjectAsync({ id: project.projectID, project: { subscribedUsers: project.subscribedUsers.filter(subscriber => subscriber !== currentUser.userID) } }));
     };
 
+    const isUserInPastContributors = project.pastContributors.includes(currentUser.userID);
+    const isUserInSubscribedUsers = project.subscribedUsers.includes(currentUser.userID);
+
     return (
         <Flex direction="column" mb="10px">
-            <Flex justify="space-between" mb="10px">
-                <Button size="sm" onClick={handleAddPastContributor}>Add Self as Contributor</Button>
-                <Button size="sm" onClick={handleRemovePastContributor}>Remove Self as Contributor</Button>
-                <Button size="sm" onClick={handleAddSubscribedUser}>Add Self as Subscriber</Button>
-                <Button size="sm" onClick={handleRemoveSubscribedUser}>Remove Self as Subscriber</Button>
-            </Flex>
-            <Flex align="center" justify="flex-start" mb="10px">
-                <Heading size="md" width="20%">Project Owner:</Heading>
-                <Box width="80%">
+            <Flex align="center" justify="space-between" my="10px" direction={['column', 'column', 'row']} gap="5px">
+                <Box flex="1" textAlign="left" my="5px">
+                    <Heading size="md">Project Owner:</Heading>
+                </Box>
+                <Box flex="2" textAlign={['center', 'center', 'left']} my="5px" px="10px">
                     <p>{project.projectOwner}</p>
                 </Box>
+                <Box flex="1" my="5px"></Box> {/* Placeholder for alignment */}
             </Flex>
-            <Flex align="center" justify="flex-start" mb="10px">
-                <Flex direction="column" width="20%">
+
+            <Flex align="center" justify="space-between" my="10px" direction={['column', 'column', 'row']} gap="5px">
+                <Box flex="1" textAlign="left" my="5px">
                     <Heading size="md">Past Contributors:</Heading>
-                </Flex>
-                <Flex direction="column" width="80%">
-                    <UnorderedList listStyleType="none" display="flex" flexWrap="wrap" gap="10px" mb="10px">
+                </Box>
+                <Box flex="2" textAlign={['center', 'center', 'left']} my="5px" px="10px">
+                    <UnorderedList listStyleType="none" m={0} p={0} display="flex" flexWrap="wrap" justifyContent={['center', 'center', 'flex-start']} alignItems="center" gap="10px">
                         {project.pastContributors.map((pastContributor, index) => (
                             <ListItem key={index}>
                                 <p>{pastContributor}</p>
                             </ListItem>
                         ))}
                     </UnorderedList>
-                </Flex>
+                </Box>
+                <Box flex="1" display="flex" flexDirection="column" gap="5px" textAlign="left" my="5px">
+                    <Button size="sm" colorScheme="teal" onClick={handleAddPastContributor} isDisabled={isUserInPastContributors}>Add Self as Contributor</Button>
+                    <Button size="sm" colorScheme="red" onClick={handleRemovePastContributor} isDisabled={!isUserInPastContributors}>Remove Self as Contributor</Button>
+                </Box>
             </Flex>
-            <Flex align="center" justify="flex-start" mb="10px">
-                <Flex direction="column" width="20%">
+
+            <Flex align="center" justify="space-between" my="10px" direction={['column', 'column', 'row']} gap="5px">
+                <Box flex="1" textAlign="left" my="5px">
                     <Heading size="md">Subscribed Users:</Heading>
-                </Flex>
-                <Flex direction="column" width="80%">
-                    <UnorderedList listStyleType="none" display="flex" flexWrap="wrap" gap="10px" mb="10px">
+                </Box>
+                <Box flex="2" textAlign={['center', 'center', 'left']} my="5px" px="10px">
+                    <UnorderedList listStyleType="none" m={0} p={0} display="flex" flexWrap="wrap" justifyContent={['center', 'center', 'flex-start']} alignItems="center" gap="10px">
                         {project.subscribedUsers.map((subscribedUser, index) => (
                             <ListItem key={index}>
                                 <p>{subscribedUser}</p>
                             </ListItem>
                         ))}
                     </UnorderedList>
-                </Flex>
+                </Box>
+                <Box flex="1" display="flex" flexDirection="column" gap="5px" textAlign="left" my="5px">
+                    <Button size="sm" colorScheme="teal" onClick={handleAddSubscribedUser} isDisabled={isUserInSubscribedUsers}>Add Self as Subscriber</Button>
+                    <Button size="sm" colorScheme="red" onClick={handleRemoveSubscribedUser} isDisabled={!isUserInSubscribedUsers}>Remove Self as Subscriber</Button>
+                </Box>
             </Flex>
         </Flex>
     );
