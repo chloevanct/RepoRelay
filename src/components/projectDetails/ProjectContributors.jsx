@@ -26,8 +26,8 @@ export default function ProjectUsers({ project }) {
         dispatch(updatePartialProjectAsync({ id: project.projectID, project: { subscribedUsers: project.subscribedUsers.filter(subscriber => subscriber !== currentUser.userID) } }));
     };
 
-    const isUserInPastContributors = project.pastContributors.includes(currentUser.userID);
-    const isUserInSubscribedUsers = project.subscribedUsers.includes(currentUser.userID);
+    const isContributor = project.pastContributors.includes(currentUser.userID);
+    const isSubscriber = project.subscribedUsers.includes(currentUser.userID);
 
     return (
         <Flex direction="column" mb="10px">
@@ -38,7 +38,7 @@ export default function ProjectUsers({ project }) {
                 <Box flex="2" textAlign={['center', 'center', 'left']} my="5px" px="10px">
                     <p>{project.projectOwner}</p>
                 </Box>
-                <Box flex="1" my="5px"></Box> {/* Placeholder for alignment */}
+                <Box flex="1"></Box> {/* Placeholder for alignment */}
             </Flex>
 
             <Flex align="center" justify="space-between" my="10px" direction={['column', 'column', 'row']} gap="5px">
@@ -54,9 +54,12 @@ export default function ProjectUsers({ project }) {
                         ))}
                     </UnorderedList>
                 </Box>
-                <Box flex="1" display="flex" flexDirection="column" gap="5px" textAlign="left" my="5px">
-                    <Button size="sm" colorScheme="teal" onClick={handleAddPastContributor} isDisabled={isUserInPastContributors}>Add Self as Contributor</Button>
-                    <Button size="sm" colorScheme="red" onClick={handleRemovePastContributor} isDisabled={!isUserInPastContributors}>Remove Self as Contributor</Button>
+                <Box flex="1" display="flex" flexDirection={['column', 'column', 'row']} gap="5px" textAlign="left" my="5px" width={['50%', '50%', 'auto']} px={['10px', '10px', '0px']}>
+                    {!isContributor ? (
+                        <Button size="sm" colorScheme="teal" onClick={handleAddPastContributor} flex="1" p="10px">Start Contributing</Button>
+                    ) : (
+                        <Button size="sm" colorScheme="red" onClick={handleRemovePastContributor} flex="1" p="10px">Stop Contributing</Button>
+                    )}
                 </Box>
             </Flex>
 
@@ -73,9 +76,12 @@ export default function ProjectUsers({ project }) {
                         ))}
                     </UnorderedList>
                 </Box>
-                <Box flex="1" display="flex" flexDirection="column" gap="5px" textAlign="left" my="5px">
-                    <Button size="sm" colorScheme="teal" onClick={handleAddSubscribedUser} isDisabled={isUserInSubscribedUsers}>Add Self as Subscriber</Button>
-                    <Button size="sm" colorScheme="red" onClick={handleRemoveSubscribedUser} isDisabled={!isUserInSubscribedUsers}>Remove Self as Subscriber</Button>
+                <Box flex="1" display="flex" flexDirection={['column', 'column', 'row']} gap="5px" textAlign="left" my="5px" width={['50%', '50%', 'auto']} px={['10px', '10px', '0px']}>
+                    {!isSubscriber ? (
+                        <Button size="sm" colorScheme="teal" onClick={handleAddSubscribedUser} flex="1" p="10px">Subscribe</Button>
+                    ) : (
+                        <Button size="sm" colorScheme="red" onClick={handleRemoveSubscribedUser} flex="1" p="10px">Unsubscribe</Button>
+                    )}
                 </Box>
             </Flex>
         </Flex>
