@@ -145,9 +145,9 @@ router.get('/:projectID/tasks', async (req, res) => {
   });
 
 // POST a new task to a project
-router.post('/:id/tasks', async (req, res) => {
+router.post('/:projectID/tasks', async (req, res) => {
   try {
-      const projectID = req.params.id;
+      const projectID = req.params.projectID;
       const project = await Project.findOne({ projectID: projectID });
       if (!project) {
         return res.status(404).send('Project not found');
@@ -258,9 +258,9 @@ router.get('/:projectID/comments/:commentID', async (req, res) => {
 });
 
 // POST a new comment to a project
-router.post('/:id/comments', async (req, res) => {
+router.post('/:projectID/comments', async (req, res) => {
 try {
-    const projectID = req.params.id;
+    const projectID = req.params.projectID;
     const project = await Project.findOne({ projectID: projectID });
     if (!project) {
       return res.status(404).send('Project not found');

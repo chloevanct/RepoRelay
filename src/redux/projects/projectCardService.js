@@ -2,7 +2,8 @@
 
 import { handleResponse } from '../../utils/apiUtils.js';
 
-const API_BASE_URL = 'http://localhost:3000/projects'
+
+export const API_BASE_URL = 'http://localhost:3000/projects'
 
 // GET list of projects
 export const getProjectsApi = async () => {
@@ -65,5 +66,6 @@ export const deleteProjectApi = async (id) => {
         const errorText = await response.text();
         throw new Error(`${response.status}: ${errorText}`);
     }
+
     return id;
 }
