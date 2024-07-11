@@ -3,12 +3,13 @@ import { TASK_STATUS_PENDING, TASK_STATUS_COMPLETE } from "../../utils/Task"
 import { Flex, Box, Heading, Checkbox } from "@chakra-ui/react"
 
 export default function ProjectProgress({ project }) {
-    const pending_tasks = project.tasks.filter(task => task.taskStatus === 'pending');
     const complete_tasks = project.tasks.filter(task => task.taskStatus === 'completed');
+    const pending_tasks = project.tasks.filter(task => task.taskStatus === 'pending');
+    const open_tasks = project.tasks.filter(task => task.taskStatus === 'open');
 
     // BASIC MEASURE OF COMPLETION 
     //   Eventaully may want to have users enter this on their own?
-    const percentage_compelete = pending_tasks.length / (complete_tasks.length + pending_tasks.length) * 100;
+    const percentage_compelete = open_tasks.length / (complete_tasks.length + open_tasks.length) * 100;
 
     return (
             <Flex width='100%' mb='10px' gap={4}>
@@ -26,9 +27,18 @@ export default function ProjectProgress({ project }) {
                         </Flex>
                     </Box>
                     <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} width='100%'>
-                        <Heading>Todo:</Heading>
+                        <Heading>In progress:</Heading>
                         <Flex direction='column'>
                             {pending_tasks.map((task, index) => (
+                                <Checkbox isChecked='' key={task.taskBody} textAlign='left'>{task.taskBody}</Checkbox>
+                                ))
+                            }
+                        </Flex>
+                    </Box>
+                    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} width='100%'>
+                        <Heading>Todo:</Heading>
+                        <Flex direction='column'>
+                            {open_tasks.map((task, index) => (
                                 <Checkbox isChecked='' key={task.taskBody} textAlign='left'>{task.taskBody}</Checkbox>
                                 ))
                             }

@@ -52,13 +52,13 @@ export default function ProjectInfoForm() {
         postedBy: currentUser.userID,
         datePosted: formData.date,
         taskBody: task,
-        taskStatus: TASK_STATUS_COMPLETE,
+        taskStatus: 'completed',
       })),
       ...formData.tasksToComplete.map((task) => ({
         postedBy: currentUser.userID,
         datePosted: formData.date,
         taskBody: task,
-        taskStatus: TASK_STATUS_PENDING,
+        taskStatus: 'open',
       })),
     ];
 

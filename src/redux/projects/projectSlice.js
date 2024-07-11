@@ -19,7 +19,11 @@ const INITIAL_STATE = {
     addProject: REQUEST_STATE.IDLE,
     updateProject: REQUEST_STATE.IDLE,
     deleteProject: REQUEST_STATE.IDLE,
-    filters: [],
+    filters: {
+        difficultyTag: '',
+        projectTags: [],
+        techTags: []
+    },
     searchQuery: '',
     error: null
 };
