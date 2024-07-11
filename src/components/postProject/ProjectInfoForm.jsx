@@ -1,50 +1,74 @@
-import { Box, Button, Container, Heading, VStack, HStack, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  VStack,
+  HStack,
+  useToast,
+} from "@chakra-ui/react";
 import { DateInput } from "./DateInput";
 import { TextInput } from "./TextInput";
 import { TagInput } from "./TagInput";
 import { TaskInput } from "./TaskInput";
 import { DifficultySelector } from "./DifficultySelector";
 import { useFormData } from "../../hooks/useFormData";
-import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
+import {
+  difficultyColorMapping,
+  projectColorMapping,
+  technologyColorMapping,
+} from "../../utils/tagColorMappings";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
 
+import { useUser } from "../../hooks/useUser";
+
 export default function ProjectInfoForm() {
-  const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
+  const { formData, handleChange, addToList, removeFromList, handleReset } =
+    useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
 
+  const { currentUser } = useUser();
+
+  // console.log(currentUser);
+
   const validateForm = () => {
-    return formData.name && formData.repoLink && formData.description && formData.difficultyTags.length > 0;
+    return (
+      formData.name &&
+      formData.repoLink &&
+      formData.description &&
+      formData.difficultyTags.length > 0
+    );
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     const tasks = [
-      ...formData.tasksCompleted.map(task => ({
-        postedBy: "username123",
+      ...formData.tasksCompleted.map((task) => ({
+        postedBy: currentUser.userID,
         datePosted: formData.date,
         taskBody: task,
-        taskStatus: TASK_STATUS_COMPLETE
+        taskStatus: TASK_STATUS_COMPLETE,
       })),
-      ...formData.tasksToComplete.map(task => ({
-        postedBy: "username123",
+      ...formData.tasksToComplete.map((task) => ({
+        postedBy: currentUser.userID,
         datePosted: formData.date,
         taskBody: task,
-        taskStatus: TASK_STATUS_PENDING
-      }))
+        taskStatus: TASK_STATUS_PENDING,
+      })),
     ];
 
     const newProject = {
-      projectID: Math.floor(Math.random() * (1000000)).toString(), // TEMPORARY RANDOM GENERATE ID
+      projectID: Math.floor(Math.random() * 1000000).toString(), // TEMPORARY RANDOM GENERATE ID
       projectName: formData.name,
       projectDescription: formData.description,
       projectImg: "",
       githubURL: formData.repoLink,
-      projectOwner: "username123",
+      projectOwner: currentUser.userID,
       pastContributors: [],
       subscribedUsers: [],
       postedDate: formData.date,
@@ -53,7 +77,7 @@ export default function ProjectInfoForm() {
       projectTags: formData.projectTags,
       techTags: formData.techTags,
       tasks: tasks,
-      comments: []
+      comments: [],
     };
 
     dispatch(addProjectAsync(newProject));
@@ -71,7 +95,14 @@ export default function ProjectInfoForm() {
 
   return (
     <Container maxW="container.lg" width="100%" mt={5}>
-      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50" width="100%">
+      <Box
+        p={5}
+        shadow="md"
+        borderWidth="1px"
+        borderRadius="lg"
+        bg="gray.50"
+        width="100%"
+      >
         <Heading as="h3" size="lg" mb={5}>
           Project Info Form
         </Heading>
@@ -81,14 +112,36 @@ export default function ProjectInfoForm() {
         <Box as="form" onSubmit={handleFormSubmit} onReset={handleReset}>
           <VStack spacing={4} align="stretch">
             <DateInput value={formData.date} />
-            <TextInput id="name" label="Project Name" value={formData.name} onChange={handleChange} required />
-            <TextInput id="repoLink" label="Project Repo Link" value={formData.repoLink} onChange={handleChange} required />
-            <TextInput id="description" label="Project Description" value={formData.description} onChange={handleChange} required />
+            <TextInput
+              id="name"
+              label="Project Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <TextInput
+              id="repoLink"
+              label="Project Repo Link"
+              value={formData.repoLink}
+              onChange={handleChange}
+              required
+            />
+            <TextInput
+              id="description"
+              label="Project Description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
             <DifficultySelector
               id="difficultyTag"
               label="Difficulty Level"
               value={formData.difficultyTags[0] || ""}
-              onChange={(value) => handleChange({ target: { name: "difficultyTags", value: [value] } })}
+              onChange={(value) =>
+                handleChange({
+                  target: { name: "difficultyTags", value: [value] },
+                })
+              }
               options={Object.keys(difficultyColorMapping)}
             />
             <TagInput
@@ -122,10 +175,15 @@ export default function ProjectInfoForm() {
               onRemove={(index) => removeFromList("tasksToComplete", index)}
             />
             <HStack>
-              <Button type="submit" colorScheme="teal" fontWeight='bold' isDisabled={!validateForm()}>
+              <Button
+                type="submit"
+                colorScheme="teal"
+                fontWeight="bold"
+                isDisabled={!validateForm()}
+              >
                 Publish Project
               </Button>
-              <Button type="reset" colorScheme="red" fontWeight='bold'>
+              <Button type="reset" colorScheme="red" fontWeight="bold">
                 Clear Inputs
               </Button>
             </HStack>

@@ -95,7 +95,7 @@ lets now create a patch request where the client will give us the github handle 
 */
 
 // PATCH endpoint to update user data
-router.patch("/:githubUsername", async (req, res) => {
+router.put("/:githubUsername", async (req, res) => {
   const { githubUsername } = req.params;
   const updateData = req.body;
 
@@ -113,6 +113,59 @@ router.patch("/:githubUsername", async (req, res) => {
     // Update user with provided data
     Object.keys(updateData).forEach((key) => {
       user[key] = updateData[key];
+    });
+
+    await user.save();
+
+    // Prepare the response in the required format
+    const responseData = {
+      currentUser: {
+        userID: user.userID,
+        githubUsername: user.githubUsername,
+        password: "", // Omit or handle as needed
+        ownedProjects: user.ownedProjects,
+        subscribedProjects: user.subscribedProjects,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userImage: user.userImage,
+        emailAddress: user.emailAddress,
+        preferences: {
+          difficultyTags: user.preferences.difficultyTags,
+          projectTags: user.preferences.projectTags,
+          techTags: user.preferences.techTags,
+        },
+      },
+    };
+
+    res.json(responseData);
+  } catch (error) {
+    console.error("Error updating user data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.patch("/:githubUsername", async (req, res) => {
+  const { githubUsername } = req.params;
+  const updateData = req.body;
+
+  console.log(githubUsername);
+  console.log(updateData);
+
+  try {
+    // Find user by GitHub username
+    let user = await User.findOne({ githubUsername });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update user with provided data
+    Object.keys(updateData).forEach((key) => {
+      if (Array.isArray(user[key]) && Array.isArray(updateData[key])) {
+        user[key] = [...user[key], ...updateData[key]];
+      } else {
+        user[key] = updateData[key];
+      }
     });
 
     await user.save();
