@@ -1,50 +1,244 @@
-import ProgressBar from './ProgressBar'
-import { TASK_STATUS_PENDING, TASK_STATUS_COMPLETE } from "../../utils/Task"
-import { Flex, Box, Heading, Checkbox } from "@chakra-ui/react"
+import React, { useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Flex,
+  Box,
+  Heading,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Textarea,
+  useDisclosure,
+  IconButton,
+  HStack,
+} from '@chakra-ui/react';
+import { CloseIcon, CheckIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import ProgressBar from './ProgressBar';
+import { addTaskAsync, updatePartialTaskAsync, deleteTaskAsync } from '../../redux/projects/projectTaskThunks';
 
 export default function ProjectProgress({ project }) {
-    const complete_tasks = project.tasks.filter(task => task.taskStatus === 'completed');
-    const pending_tasks = project.tasks.filter(task => task.taskStatus === 'pending');
-    const open_tasks = project.tasks.filter(task => task.taskStatus === 'open');
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    // BASIC MEASURE OF COMPLETION 
-    //   Eventaully may want to have users enter this on their own?
-    const percentage_compelete = open_tasks.length / (complete_tasks.length + open_tasks.length) * 100;
+  const [localTasks, setLocalTasks] = useState(project.tasks || []);
+  const [newTaskBody, setNewTaskBody] = useState('');
 
-    return (
-            <Flex width='100%' mb='10px' gap={4}>
-                <Flex bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} mb='10px' justifyContent='center' width='50%'>
-                    <ProgressBar value={percentage_compelete} >Complete</ProgressBar>
-                </Flex>
-                <Flex width='50%'justifyContent='center' gap='5%' direction='column'>
-                    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} width='100%'>
-                        <Heading>Complete:</Heading>
-                        <Flex direction='column' pb='10px'>
-                            {complete_tasks.map((task, index) => (
-                                <Checkbox isChecked='y' key={task.taskBody} textAlign='left'>{task.taskBody}</Checkbox>
-                            ))
-                        }
-                        </Flex>
-                    </Box>
-                    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} width='100%'>
-                        <Heading>In progress:</Heading>
-                        <Flex direction='column'>
-                            {pending_tasks.map((task, index) => (
-                                <Checkbox isChecked='' key={task.taskBody} textAlign='left'>{task.taskBody}</Checkbox>
-                                ))
-                            }
-                        </Flex>
-                    </Box>
-                    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4} width='100%'>
-                        <Heading>Todo:</Heading>
-                        <Flex direction='column'>
-                            {open_tasks.map((task, index) => (
-                                <Checkbox isChecked='' key={task.taskBody} textAlign='left'>{task.taskBody}</Checkbox>
-                                ))
-                            }
-                        </Flex>
-                    </Box>
-                </Flex>
-            </Flex>
-    )
+  useEffect(() => {
+    setLocalTasks(project.tasks || []);
+  }, [project.tasks]);
+
+  useEffect(() => {
+    console.log('Local tasks updated:', localTasks);
+  }, [localTasks]);
+
+  const complete_tasks = useMemo(() => localTasks.filter(task => task && task.taskStatus === 'completed'), [localTasks]);
+  const pending_tasks = useMemo(() => localTasks.filter(task => task && task.taskStatus === 'pending'), [localTasks]);
+  const open_tasks = useMemo(() => localTasks.filter(task => task && task.taskStatus === 'open'), [localTasks]);
+
+  const percentage_complete = localTasks.length > 0 ? (complete_tasks.length / localTasks.length) * 100 : 0;
+
+  const handleStatusChange = async (taskID, newStatus) => {
+    const updatedTasks = localTasks.map(task =>
+      task._id === taskID ? { ...task, taskStatus: newStatus } : task
+    );
+    setLocalTasks(updatedTasks);
+
+    await dispatch(updatePartialTaskAsync({ projectID: project.projectID, taskID, task: { taskStatus: newStatus } }));
+  };
+
+  const handleAddTask = async () => {
+    if (!project.projectID) {
+      console.error('Project ID is undefined');
+      return;
+    }
+
+    const newTask = {
+      postedBy: currentUser.userID,
+      datePosted: new Date().toISOString(),
+      taskBody: newTaskBody,
+      taskStatus: 'open',
+    };
+
+    console.log('Adding new task:', newTask);
+
+    const resultAction = await dispatch(addTaskAsync({ projectID: project.projectID, task: newTask }));
+    if (addTaskAsync.fulfilled.match(resultAction)) {
+      const updatedTasks = resultAction.payload.tasks;
+      console.log('Tasks updated:', updatedTasks);
+      setLocalTasks(updatedTasks);
+    } else {
+      console.error('Failed to add task:', resultAction.error);
+    }
+    onClose();
+    setNewTaskBody('');
+  };
+
+  const handleDeleteTask = async (taskID) => {
+    const resultAction = await dispatch(deleteTaskAsync({ projectID: project.projectID, taskID }));
+    if (deleteTaskAsync.fulfilled.match(resultAction)) {
+      const updatedTasks = localTasks.filter(task => task._id !== taskID);
+      setLocalTasks(updatedTasks);
+      console.log('Task deleted:', taskID);
+    } else {
+      console.error('Failed to delete task:', resultAction.error);
+    }
+  };
+
+  const isOwner = currentUser.userID === project.projectOwner;
+  const isSubscribedUser = project.subscribedUsers.includes(currentUser.userID);
+  const canEdit = isOwner || isSubscribedUser;
+
+  return (
+    <Flex direction={['column', 'column', 'row']} width='100%' mb='10px' gap={4}>
+      <Flex
+        bg='gray.50'
+        shadow='md'
+        borderWidth='1px'
+        borderRadius='lg'
+        p={4}
+        mb='10px'
+        justifyContent='center'
+        width={['100%', '100%', '50%']}
+      >
+        <ProgressBar value={percentage_complete} />
+      </Flex>
+      <Flex width={['100%', '100%', '50%']} justifyContent='center' gap='5%' direction='column'>
+        <Box bg='gray.50' shadow='md' borderWidth='1px' borderRadius='lg' p={4} width='100%' mb={4}>
+          <Heading size='md' mb={2}>Complete:</Heading>
+          <Flex direction='column' pb='10px'>
+            {complete_tasks.map((task) => (
+              <HStack key={task._id} justify='space-between' mb={1}>
+                {canEdit && (
+                  <Flex>
+                    <IconButton
+                      aria-label='Move to pending'
+                      icon={<ArrowBackIcon />}
+                      size='xs'
+                      colorScheme='yellow'
+                      onClick={() => handleStatusChange(task._id, 'pending')}
+                    />
+                  </Flex>
+                )}
+                <Box textAlign='left'>{task.taskBody}</Box>
+                {canEdit && (
+                  <IconButton
+                    aria-label='Delete task'
+                    icon={<CloseIcon />}
+                    size='xs'
+                    colorScheme='red'
+                    onClick={() => handleDeleteTask(task._id)}
+                  />
+                )}
+              </HStack>
+            ))}
+          </Flex>
+        </Box>
+        <Box bg='gray.50' shadow='md' borderWidth='1px' borderRadius='lg' p={4} width='100%' mb={4}>
+          <Heading size='md' mb={2}>In progress:</Heading>
+          <Flex direction='column'>
+            {pending_tasks.map((task) => (
+              <HStack key={task._id} justify='space-between' mb={1}>
+                {canEdit && (
+                  <Flex>
+                    <IconButton
+                      aria-label='Move to complete'
+                      icon={<CheckIcon />}
+                      size='xs'
+                      colorScheme='green'
+                      onClick={() => handleStatusChange(task._id, 'completed')}
+                    />
+                    <IconButton
+                      aria-label='Move to todo'
+                      icon={<ArrowBackIcon />}
+                      size='xs'
+                      colorScheme='yellow'
+                      ml={1}
+                      onClick={() => handleStatusChange(task._id, 'open')}
+                    />
+                  </Flex>
+                )}
+                <Box textAlign='left'>{task.taskBody}</Box>
+                {canEdit && (
+                  <IconButton
+                    aria-label='Delete task'
+                    icon={<CloseIcon />}
+                    size='xs'
+                    colorScheme='red'
+                    onClick={() => handleDeleteTask(task._id)}
+                  />
+                )}
+              </HStack>
+            ))}
+          </Flex>
+        </Box>
+        <Box bg='gray.50' shadow='md' borderWidth='1px' borderRadius='lg' p={4} width='100%' mb={4}>
+          <Heading size='md' mb={2}>Todo:</Heading>
+          <Flex direction='column'>
+            {open_tasks.map((task) => (
+              <HStack key={task._id} justify='space-between' mb={1}>
+                {canEdit && (
+                  <Flex>
+                    <IconButton
+                      aria-label='Move to pending'
+                      icon={<CheckIcon />}
+                      size='xs'
+                      colorScheme='green'
+                      onClick={() => handleStatusChange(task._id, 'pending')}
+                    />
+                  </Flex>
+                )}
+                <Box textAlign='left'>{task.taskBody}</Box>
+                {canEdit && (
+                  <IconButton
+                    aria-label='Delete task'
+                    icon={<CloseIcon />}
+                    size='xs'
+                    colorScheme='red'
+                    onClick={() => handleDeleteTask(task._id)}
+                  />
+                )}
+              </HStack>
+            ))}
+          </Flex>
+          {canEdit && (
+            <Button size='sm' mt={4} onClick={onOpen}>
+              Add New Task
+            </Button>
+          )}
+        </Box>
+      </Flex>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add New Task</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Task Description</FormLabel>
+              <Textarea
+                value={newTaskBody}
+                onChange={(e) => setNewTaskBody(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' size='sm' mr={3} onClick={handleAddTask}>
+              Add Task
+            </Button>
+            <Button variant='ghost' size='sm' onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Flex>
+  );
 }
