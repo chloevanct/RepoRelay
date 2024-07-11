@@ -4,11 +4,12 @@ import { difficultyColorMapping, projectColorMapping, technologyColorMapping } f
 import { Flex, Heading, Button, HStack, Box, Wrap, WrapItem } from '@chakra-ui/react';
 import { TagInput } from '../postProject/TagInput';
 import { DifficultySelector } from '../postProject/DifficultySelector';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunks';
 
 export default function ProjectTags({ project }) {
     const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
 
     const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
     const [isEditingProject, setIsEditingProject] = useState(false);
@@ -48,6 +49,10 @@ export default function ProjectTags({ project }) {
         setIsEditingTech(false);
     };
 
+    const isOwner = currentUser.userID === project.projectOwner;
+    const isSubscribedUser = project.subscribedUsers.includes(currentUser.userID);
+    const canEdit = isOwner || isSubscribedUser;
+
     return (
         <Flex direction='column' mb='10px'>
             <Flex align='center' justify='space-between' my='10px' direction={['column', 'column', 'row']} gap='5px'>
@@ -74,7 +79,7 @@ export default function ProjectTags({ project }) {
                             <Button size='sm' p="10px" flex="1" onClick={handleCancelDifficulty}>Cancel</Button>
                         </HStack>
                     ) : (
-                        <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingDifficulty(true)}>Edit</Button>
+                        canEdit && <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingDifficulty(true)}>Edit</Button>
                     )}
                 </Box>
             </Flex>
@@ -111,7 +116,7 @@ export default function ProjectTags({ project }) {
                             <Button size='sm' p="10px" flex="1" onClick={handleCancelProject}>Cancel</Button>
                         </HStack>
                     ) : (
-                        <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingProject(true)}>Edit</Button>
+                        canEdit && <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingProject(true)}>Edit</Button>
                     )}
                 </Box>
             </Flex>
@@ -148,7 +153,7 @@ export default function ProjectTags({ project }) {
                             <Button size='sm' p="10px" flex="1" onClick={handleCancelTech}>Cancel</Button>
                         </HStack>
                     ) : (
-                        <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingTech(true)}>Edit</Button>
+                        canEdit && <Button size='sm' p="10px" flex="1" onClick={() => setIsEditingTech(true)}>Edit</Button>
                     )}
                 </Box>
             </Flex>
