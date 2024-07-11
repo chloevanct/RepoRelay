@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Flex, Heading, Text, Box, Button, Input, Textarea, Image } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunks';
 import GitHubLogo from "../../assets/github-logo.png";
 import DeleteProjectButton from './DeleteProjectButton';
 
 export default function EditableProjectInfo({ project }) {
     const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.user.currentUser);
 
     const [isEditing, setIsEditing] = useState(false);
     const [newProjectName, setNewProjectName] = useState(project.projectName);
@@ -32,6 +33,10 @@ export default function EditableProjectInfo({ project }) {
         setIsEditing(false);
     };
 
+    const isOwner = currentUser.userID === project.projectOwner;
+    const isSubscribedUser = project.subscribedUsers.includes(currentUser.userID);
+    const canEdit = isOwner || isSubscribedUser;
+
     return (
         <Flex direction="column" align="flex-start" bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4}>
             <Flex width="100%" mb={3} align="center" justify="space-between" direction={['column', 'column', 'row']}>
@@ -47,12 +52,12 @@ export default function EditableProjectInfo({ project }) {
                         <Heading size="lg">{project.projectName}</Heading>
                     )}
                 </Box>
-                {!isEditing && (
+                {!isEditing && canEdit && (
                     <Flex gap="5px" justify={['center', 'center', 'flex-end']} width={['100%', '100%', 'auto']}>
                         <Button colorScheme="teal" onClick={() => setIsEditing(true)}>
                             Edit
                         </Button>
-                        <DeleteProjectButton projectID={project.projectID} />
+                        <DeleteProjectButton project={project} />
                     </Flex>
                 )}
             </Flex>

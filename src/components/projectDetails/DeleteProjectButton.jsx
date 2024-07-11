@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteProjectAsync } from '../../redux/projects/projectCardThunks';
 
-const DeleteProjectButton = ({ projectID }) => {
+const DeleteProjectButton = ({ project }) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClose = () => setIsOpen(false);
     const cancelRef = useRef();
@@ -14,7 +14,7 @@ const DeleteProjectButton = ({ projectID }) => {
 
     const handleDelete = async () => {
         try {
-            await dispatch(deleteProjectAsync(projectID)).unwrap();
+            await dispatch(deleteProjectAsync(project.projectID)).unwrap();
             toast({
                 title: "Project deleted.",
                 description: "The project has been successfully deleted.",
@@ -36,9 +36,26 @@ const DeleteProjectButton = ({ projectID }) => {
         }
     };
 
+    const handleDeleteClick = () => {
+        if (project.subscribedUsers.length <= 1) {
+            setIsOpen(true);
+        } else {
+            toast({
+                title: "Cannot delete project.",
+                description: "The project cannot be deleted as there are more than one subscribed users.",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top",
+            });
+        }
+    };
+
+    const canDelete = project.subscribedUsers.length <= 1;
+
     return (
         <>
-            <Button colorScheme="red" onClick={() => setIsOpen(true)}>
+            <Button colorScheme="red" onClick={handleDeleteClick} isDisabled={!canDelete} opacity={canDelete ? 1 : 0.5}>
                 Delete Project
             </Button>
 
