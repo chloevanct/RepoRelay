@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { updateUserPreferences } from "../utils/updateUserPreferences";
+import { updateUserPreferences } from "../redux/user/updateUserPreferences";
 import {
   setUser,
   updateUser,
