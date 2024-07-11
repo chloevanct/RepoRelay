@@ -10,6 +10,8 @@ var router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const { Project } = require("../db/models");
 
+const User = require("../db/models/user");
+
 // ! projects are found by ProjectID (as per group meeting to not break front end)
 // therefore we use findOne({ projectID: projectID })
 // ! tasks and comments are found by _id (mongodb's allocated id)
@@ -43,6 +45,19 @@ router.get("/:id", async (req, res) => {
 // POST a new project
 router.post("/", async (req, res) => {
   const newProject = new Project({ projectID: uuidv4(), ...req.body });
+
+  const ownerID = newProject.projectOwner;
+
+  const user = await User.findOneAndUpdate(
+    { userID: ownerID },
+    { $push: { ownedProjects: newProject.projectID } },
+    { new: true }
+  );
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
   console.log(req.body);
   try {
     await newProject.save();

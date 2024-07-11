@@ -33,7 +33,7 @@ export default function ProjectInfoForm() {
 
   const { currentUser } = useUser();
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
   const validateForm = () => {
     return (
