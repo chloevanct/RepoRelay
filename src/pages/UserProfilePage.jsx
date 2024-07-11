@@ -36,6 +36,8 @@ export default function UserProfilePage() {
     handleUpdateTechTags,
   } = useUser();
 
+  // console.log(currentUser);
+
   const dispatch = useDispatch();
   const projects = useSelector((state) => state.projects.projects);
 
@@ -72,8 +74,7 @@ export default function UserProfilePage() {
     // console.log(ownedProjects);
   }, [currentUser, projects]);
 
-  console.log(currentUser);
-
+  // console.log(currentUser);
   const handleSaveDifficulty = () => {
     handleUpdateDifficultyTags(newDifficultyTags);
     setIsEditingDifficulty(false);
