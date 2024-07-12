@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartialProjectAsync } from "../../redux/projects/projectCardThunks";
-
 import { updateUser } from "../../redux/user/userThunks";
 
 export default function ProjectUsers({ project }) {
@@ -103,7 +102,7 @@ export default function ProjectUsers({ project }) {
         gap="5px"
       >
         <Box flex="1" textAlign="left" my="5px">
-          <Heading size="md">Subscribed Users:</Heading>
+          <Heading size="md">Contributors:</Heading>
         </Box>
         <Box
           flex="2"
@@ -146,7 +145,7 @@ export default function ProjectUsers({ project }) {
               flex="1"
               p="10px"
             >
-              Subscribe
+              Join The Team
             </Button>
           ) : (
             <Button
@@ -156,7 +155,7 @@ export default function ProjectUsers({ project }) {
               flex="1"
               p="10px"
             >
-              Unsubscribe
+              Leave The Team
             </Button>
           )}
         </Box>

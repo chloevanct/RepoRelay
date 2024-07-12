@@ -111,7 +111,7 @@ const projectSlice = createSlice({
 
         /* delete a project */
         .addCase(deleteProjectAsync.fulfilled, (state, action) => {
-            state.projects = state.projects.filter(project => project.id === action.payload.id)
+            state.projects = state.projects.filter(project => project.id !== action.payload.id)
         })
 
         /* ------------------------------ tasks ------------------------------ */
