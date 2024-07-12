@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getProjectsApi, addProjectApi, updateProjectApi, updatePartialProjectApi, deleteProjectApi } from './projectCardService';
+import { getProjectsApi, getProjectApi, addProjectApi, updateProjectApi, updatePartialProjectApi, deleteProjectApi } from './projectCardService';
 
 export const getProjectsAsync = createAsyncThunk (
     'projects/getProjects',

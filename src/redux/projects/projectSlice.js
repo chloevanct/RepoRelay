@@ -125,7 +125,7 @@ const projectSlice = createSlice({
         })
 
         /* get ONE task */
-        .addCase(getTaskAsync.fulfilled, (state) => {
+        .addCase(getTaskAsync.fulfilled, (state, action) => {
             const { projectID, task } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -134,7 +134,7 @@ const projectSlice = createSlice({
         })
 
         /* add a task*/
-        .addCase(addTaskAsync.fulfilled, (state) => {
+        .addCase(addTaskAsync.fulfilled, (state, action) => {
             const { projectID, task } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -143,7 +143,7 @@ const projectSlice = createSlice({
         })
 
         /* update a task*/
-        .addCase(updateTaskAsync.fulfilled, (state) => {
+        .addCase(updateTaskAsync.fulfilled, (state, action) => {
             const { projectID, task } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -155,7 +155,7 @@ const projectSlice = createSlice({
         })
 
         /* update a task PARTIALLY*/
-        .addCase(updatePartialTaskAsync.fulfilled, (state) => {
+        .addCase(updatePartialTaskAsync.fulfilled, (state, action) => {
             const { projectID, task } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -170,7 +170,7 @@ const projectSlice = createSlice({
         })
 
         /* delete a task*/
-        .addCase(deleteTaskAsync.fulfilled, (state) => {
+        .addCase(deleteTaskAsync.fulfilled, (state, action) => {
             const { projectID, taskID } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -189,7 +189,7 @@ const projectSlice = createSlice({
         })
 
         /* get ONE comment */
-        .addCase(getCommentAsync.fulfilled, (state) => {
+        .addCase(getCommentAsync.fulfilled, (state, action) => {
             const { projectID, comment } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -198,16 +198,16 @@ const projectSlice = createSlice({
         })
 
         /* add a comment*/
-        .addCase(addCommentAsync.fulfilled, (state) => {
+        .addCase(addCommentAsync.fulfilled, (state, action) => {
             const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
+            const project = state.projects.find(project => project.projectID === projectID);
             if (project) {
                 project.comments.push(comment);
             }
         })
 
         /* update a comment*/
-        .addCase(updateCommentAsync.fulfilled, (state) => {
+        .addCase(updateCommentAsync.fulfilled, (state, action) => {
             const { projectID, comment } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -219,7 +219,7 @@ const projectSlice = createSlice({
         })
 
         /* update a comment PARTIALLY*/
-        .addCase(updatePartialCommentAsync.fulfilled, (state) => {
+        .addCase(updatePartialCommentAsync.fulfilled, (state, action) => {
             const { projectID, comment } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
@@ -234,7 +234,7 @@ const projectSlice = createSlice({
         })
 
         /* delete a comment*/
-        .addCase(deleteCommentAsync.fulfilled, (state) => {
+        .addCase(deleteCommentAsync.fulfilled, (state, action) => {
             const { projectID, commentID } = action.payload;
             const project = state.projects.find(project => project.id === projectID);
             if (project) {
