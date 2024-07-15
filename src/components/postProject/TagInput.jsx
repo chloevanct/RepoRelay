@@ -26,7 +26,7 @@ export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
             </option>
           ))}
         </Select>
-        <Button colorScheme="teal" onClick={handleAddTag}>
+        <Button colorScheme="teal" fontWeight='bold' onClick={handleAddTag}>
           Add Tag
         </Button>
       </HStack>

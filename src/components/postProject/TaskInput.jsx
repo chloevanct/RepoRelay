@@ -18,7 +18,7 @@ export function TaskInput({ id, label, tasks, onAdd, onRemove }) {
 			<FormLabel htmlFor={id}>{label}</FormLabel>
 			<HStack>
 				<Input id={id} name={id} value={inputValue} onChange={handleInputChange} />
-				<Button colorScheme="teal" onClick={handleAddTask}>
+				<Button colorScheme="teal" fontWeight='bold' onClick={handleAddTask}>
 					Add Task
 				</Button>
 			</HStack>

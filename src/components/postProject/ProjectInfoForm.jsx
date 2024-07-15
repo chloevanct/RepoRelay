@@ -1,25 +1,86 @@
-import { Box, Button, Container, Heading, VStack, HStack, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  VStack,
+  HStack,
+  useToast,
+} from "@chakra-ui/react";
 import { DateInput } from "./DateInput";
 import { TextInput } from "./TextInput";
 import { TagInput } from "./TagInput";
 import { TaskInput } from "./TaskInput";
 import { DifficultySelector } from "./DifficultySelector";
 import { useFormData } from "../../hooks/useFormData";
-import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from "../../utils/tagColorMappings";
+import {
+  difficultyColorMapping,
+  projectColorMapping,
+  technologyColorMapping,
+} from "../../utils/tagColorMappings";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProjectAsync } from "../../redux/projects/projectCardThunks";
+
+import { useUser } from "../../hooks/useUser";
 
 export default function ProjectInfoForm() {
-  const { formData, handleChange, addToList, removeFromList, handleReset, handleSubmit } = useFormData();
+  const { formData, handleChange, addToList, removeFromList, handleReset } =
+    useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
+  const dispatch = useDispatch();
+
+  const { currentUser } = useUser();
+
+  // console.log(currentUser);
 
   const validateForm = () => {
-    return formData.name && formData.repoLink && formData.description && formData.difficultyTags.length > 0;
+    return (
+      formData.name &&
+      formData.repoLink &&
+      formData.description &&
+      formData.difficultyTags.length > 0
+    );
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    handleSubmit(e);
+
+    const tasks = [
+      ...formData.tasksCompleted.map((task) => ({
+        postedBy: currentUser.userID,
+        datePosted: formData.date,
+        taskBody: task,
+        taskStatus: 'completed',
+      })),
+      ...formData.tasksToComplete.map((task) => ({
+        postedBy: currentUser.userID,
+        datePosted: formData.date,
+        taskBody: task,
+        taskStatus: 'open',
+      })),
+    ];
+
+    const newProject = {
+      projectID: Math.floor(Math.random() * 1000000).toString(), // TEMPORARY RANDOM GENERATE ID
+      projectName: formData.name,
+      projectDescription: formData.description,
+      projectImg: "",
+      githubURL: formData.repoLink,
+      projectOwner: currentUser.userID,
+      pastContributors: [],
+      subscribedUsers: [],
+      postedDate: formData.date,
+      lastActivityDate: formData.date,
+      difficultyTag: formData.difficultyTags[0],
+      projectTags: formData.projectTags,
+      techTags: formData.techTags,
+      tasks: tasks,
+      comments: [],
+    };
+
+    dispatch(addProjectAsync(newProject));
     setIsSubmitted(true);
     toast({
       title: "Project published.",
@@ -29,11 +90,19 @@ export default function ProjectInfoForm() {
       isClosable: true,
       position: "top",
     });
+    handleReset();
   };
 
   return (
     <Container maxW="container.lg" width="100%" mt={5}>
-      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50" width="100%">
+      <Box
+        p={5}
+        shadow="md"
+        borderWidth="1px"
+        borderRadius="lg"
+        bg="gray.50"
+        width="100%"
+      >
         <Heading as="h3" size="lg" mb={5}>
           Project Info Form
         </Heading>
@@ -43,14 +112,36 @@ export default function ProjectInfoForm() {
         <Box as="form" onSubmit={handleFormSubmit} onReset={handleReset}>
           <VStack spacing={4} align="stretch">
             <DateInput value={formData.date} />
-            <TextInput id="name" label="Project Name" value={formData.name} onChange={handleChange} required />
-            <TextInput id="repoLink" label="Project Repo Link" value={formData.repoLink} onChange={handleChange} required />
-            <TextInput id="description" label="Project Description" value={formData.description} onChange={handleChange} required />
+            <TextInput
+              id="name"
+              label="Project Name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
+            <TextInput
+              id="repoLink"
+              label="Project Repo Link"
+              value={formData.repoLink}
+              onChange={handleChange}
+              required
+            />
+            <TextInput
+              id="description"
+              label="Project Description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
             <DifficultySelector
               id="difficultyTag"
               label="Difficulty Level"
               value={formData.difficultyTags[0] || ""}
-              onChange={(value) => handleChange({ target: { name: "difficultyTags", value: [value] } })}
+              onChange={(value) =>
+                handleChange({
+                  target: { name: "difficultyTags", value: [value] },
+                })
+              }
               options={Object.keys(difficultyColorMapping)}
             />
             <TagInput
@@ -84,10 +175,15 @@ export default function ProjectInfoForm() {
               onRemove={(index) => removeFromList("tasksToComplete", index)}
             />
             <HStack>
-              <Button type="submit" colorScheme="teal" isDisabled={!validateForm()}>
+              <Button
+                type="submit"
+                colorScheme="teal"
+                fontWeight="bold"
+                isDisabled={!validateForm()}
+              >
                 Publish Project
               </Button>
-              <Button type="reset" colorScheme="red">
+              <Button type="reset" colorScheme="red" fontWeight="bold">
                 Clear Inputs
               </Button>
             </HStack>

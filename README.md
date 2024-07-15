@@ -4,7 +4,7 @@
 
 - Nariman Muldashev: I am 2nd year BCS student with a prior background in consulting and finance. Currently completing a co-op at a Vancouver based fintech startup.
 - Alexander Proskiw: Hi, I'm Alex! I'm in my final year of the BCS program, really excited to learn more about web development, and like fishing in my spare time.
-- Chloe Van: one sentence about you!
+- Chloe Van: I started the BCS program in 2022 after working as a pharmacist and am currently completing a co-op at a Toronto based fintech company.
 - Kai Groden-Gilchrist: I'm in my final year of BCS - looking to transition from my background in high-throughput biology into software engineering!
 
 ## Project Description

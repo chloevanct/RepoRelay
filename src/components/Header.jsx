@@ -1,15 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Flex, Avatar, HStack, Text, Button, Image } from "@chakra-ui/react";
-import { useUser } from '../hooks/useUser';
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  Text,
+  Button,
+  Image,
+} from "@chakra-ui/react";
+import { useUser } from "../hooks/useUser";
 import NotificationBell from "../assets/notification-bell.png";
+import { useSelector } from "react-redux";
 
 export default function Header() {
-  const { currentUser } = useUser();
+  // const { currentUser } = useUser();
+
+    const currentUser = useSelector((state) => state.user.currentUser);
+
 
   return (
-    <Box bg="gray.50" p={4} shadow="md" borderWidth="1px" borderRadius="lg">
-      <Flex justifyContent="space-between" alignItems="center" maxW="container.lg" mx="auto">
+    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4}>
+      <Flex
+        justifyContent="space-between"
+        alignItems="center"
+        maxW="container.lg"
+        mx="auto"
+      >
         <Link to="/home" id="logo-link">
           <Text fontSize="2rem" fontWeight="bold" color="teal.500">
             REPO RELAY
@@ -36,15 +53,7 @@ export default function Header() {
             <Avatar size="sm" src={currentUser.userImage || ""} />
           </Link>
           <Link to="/post">
-            <Button
-              bg="teal.500"
-              color="white"
-              fontWeight="bold"
-              px={4}
-              py={2}
-              borderRadius="md"
-              _hover={{ bg: "teal.600" }}
-            >
+            <Button colorScheme="teal" fontWeight="bold">
               ADD PROJECT
             </Button>
           </Link>

@@ -8,8 +8,8 @@ export default function ProjectInfo({ project }) {
                 <Text ml='auto'>{project.projectOwner}</Text>
             </Flex>
             <Flex gap='20px'>
-                <Text>Posted: {project.postedDate}</Text>
-                <Text>Last activity: {project.lastActivityDate}</Text>
+                <Text>Posted: {new Date(project.postedDate).toLocaleDateString()}</Text>
+                <Text>Last activity: {new Date(project.lastActivityDate).toLocaleDateString()}</Text>
             </Flex>
             <Text maxWidth='100%' noOfLines={3} align='left'>{project.projectDescription}</Text>
         </Flex>
