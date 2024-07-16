@@ -5,7 +5,23 @@ import Tag from '../Tag'
 export default function ProjectTags({ project }) {
     return (
         <Flex flex='3' >
-            <UnorderedList listStyleType='none' display='flex' flexWrap='wrap' overflow="hidden" gap='10px' alignItems='flex-start' justifyContent='flex-start' alignContent='flex-start'>
+            <UnorderedList 
+                listStyleType='none' 
+                display='flex' 
+                flexWrap='wrap' 
+                overflowY="scroll" 
+                gap='10px' 
+                alignItems='flex-start' 
+                justifyContent='flex-start' 
+                alignContent='flex-start' sx={{
+                    '::-webkit-scrollbar': {
+                        width: '4px'
+                    },
+                    '::-webkit-scrollbar-thumb': {
+                        background: '#b0b0b0',
+                        borderRadius: '24px'
+                    }
+                }}>
                 <Tag tagName={project.difficultyTag} colorMapping={difficultyColorMapping}/>
                 {project.projectTags.map((tag, index) => (
                     <ListItem key={index}>
