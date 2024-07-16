@@ -25,13 +25,11 @@ export const getCommentApi = async (projectID, commentID) => {
 
 // POST a new comment to a project
 export const addCommentApi = async (projectID, comment) => {
-    console.log('in service...')
     const response = await fetch(API_COMMENTS_URL.replace(':projectID', projectID), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(comment),
     });
-    console.log('response: ', response);
 
     const data = await handleResponse(response);
     return { projectID, comment: data };

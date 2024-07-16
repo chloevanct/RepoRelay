@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { unwrapResult } from '@reduxjs/toolkit';
 
@@ -15,38 +15,24 @@ export default function ProjectDetailsPage() {
     // projectId passed as a parameter in the link (see ProjectCard.jsx) 
     const { projectId } = useParams();
     const dispatch = useDispatch();
-    const [project, setProject] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const project = useSelector((state) => state.projects.projects.find(p => p.projectID === projectId));
+    const loading = useSelector((state) => state.projects.status === 'loading');
 
     useEffect(() => {
-        const fetchProject = async () => {
-            try {
-                const resultAction = await dispatch(getProjectAsync(projectId));
-                const projectData = unwrapResult(resultAction);
-                setProject(projectData);
-            } catch (error) {
-                console.error('Failed to load project:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProject();
+        dispatch(getProjectAsync(projectId));
     }, [dispatch, projectId]);
 
-    if (loading) {
+    if (loading || !project) {
         return <p>Loading...</p>;
     }
-
-    console.log(project)
 
     return (
         <>
             <Header />
             <Box mt={10}>
-                <DetailedProjectInfo project={project} />
+                <DetailedProjectInfo project={project}/>
                 <Divider />
-                <CommentsSection project={project} />
+                <CommentsSection project={project}/>
             </Box>
         </>
     )

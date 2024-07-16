@@ -282,6 +282,7 @@ try {
     }
     const newComment = {
       postedBy: req.body.postedBy,
+      commenterProfileImage: req.body.commenterProfileImage,
       datePosted: req.body.datePosted,
       commentBody: req.body.commentBody
   };
