@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { addCommentAsync } from "../../redux/projects/projectCommentThunks";
+import { unwrapResult } from '@reduxjs/toolkit';
 
 import { FormControl, Input, Flex, Image, Button } from '@chakra-ui/react'
 
-export default function PostCommentForm({ project }) {
+export default function PostCommentForm({ project, addComment }) {
 
+    const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser);
     const [commentBody, setCommentBody] = useState("");
 
@@ -21,11 +23,18 @@ export default function PostCommentForm({ project }) {
 
         const newComment = {
             postedBy: currentUser.githubUsername,
-            commentBody: commentBody,
-            datePosted: new Date()
+            commenterProfileImage: currentUser.userImage,
+            datePosted: new Date(),
+            commentBody: commentBody
         };
 
-        // TODO: API CALL FOR POSTING COMMENT HERE
+        try {
+            dispatch(addCommentAsync({ projectID: project.projectID, comment: newComment }));
+            addComment(newComment);
+            setCommentBody("");
+        } catch (error) {
+            console.log("Failed to post comment:", error);
+        }
     };
 
     return (
@@ -38,7 +47,8 @@ export default function PostCommentForm({ project }) {
                         placeholder='Write a comment...' 
                         _placeholder={{ textAlign: 'start', lineHeight: '100%' }} 
                         justifyItems='start'
-                        onChange={handleInputChange}/>
+                        onChange={handleInputChange}
+                        value={commentBody}/>
                 </FormControl>
             </Flex>
             <Button 

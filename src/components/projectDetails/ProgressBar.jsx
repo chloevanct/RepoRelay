@@ -10,8 +10,6 @@ export default function ProgressBar({ value }) {
     setPercentage(Math.round(value));
   }, [value]);
 
-  console.log(percentage);
-
   return (
     <>
       <style>

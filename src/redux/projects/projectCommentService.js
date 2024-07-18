@@ -31,7 +31,8 @@ export const addCommentApi = async (projectID, comment) => {
         body: JSON.stringify(comment),
     });
 
-    return handleResponse(response);
+    const data = await handleResponse(response);
+    return { projectID, comment: data };
 };
 
 // PUT (edit) a comment in a project

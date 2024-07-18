@@ -200,7 +200,7 @@ const projectSlice = createSlice({
         /* add a comment*/
         .addCase(addCommentAsync.fulfilled, (state, action) => {
             const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
+            const project = state.projects.find(project => project.projectID === projectID);
             if (project) {
                 project.comments.push(comment);
             }

@@ -280,7 +280,13 @@ try {
     if (!project) {
       return res.status(404).send("Project not found");
     }
-    project.comments.push(req.body);
+    const newComment = {
+      postedBy: req.body.postedBy,
+      commenterProfileImage: req.body.commenterProfileImage,
+      datePosted: req.body.datePosted,
+      commentBody: req.body.commentBody
+  };
+    project.comments.push(newComment);
     await project.save();
     res.status(201).send(project);
   } catch (err) {
