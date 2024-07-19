@@ -21,7 +21,7 @@ import {
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
-
+import { useNavigate } from 'react-router-dom'; // import useNavigate
 import { useUser } from "../../hooks/useUser";
 
 export default function ProjectInfoForm() {
@@ -30,10 +30,9 @@ export default function ProjectInfoForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // initialize useNavigate
 
   const { currentUser } = useUser();
-
-  // console.log(currentUser);
 
   const validateForm = () => {
     return (
@@ -44,7 +43,7 @@ export default function ProjectInfoForm() {
     );
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     const tasks = [
@@ -80,17 +79,29 @@ export default function ProjectInfoForm() {
       comments: [],
     };
 
-    dispatch(addProjectAsync(newProject));
-    setIsSubmitted(true);
-    toast({
-      title: "Project published.",
-      description: "Your project has been successfully published.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-      position: "top",
-    });
-    handleReset();
+    try {
+      await dispatch(addProjectAsync(newProject)).unwrap();
+      setIsSubmitted(true);
+      toast({
+        title: "Project published.",
+        description: "Your project has been successfully published.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      handleReset();
+      navigate('/home');
+    } catch (error) {
+      toast({
+        title: "Error publishing project.",
+        description: error.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
   };
 
   return (

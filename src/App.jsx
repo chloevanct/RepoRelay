@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./redux/user/userActions";
 
 import Login from "./pages/Login";
+import DashboardPage from "./pages/DashboardPage";
 import ProjectHubPage from "./pages/ProjectHubPage";
 import PostProjectPage from "./pages/PostProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
@@ -83,7 +84,8 @@ function App() {
       ) : (
         <>
           <Route index element={<ProjectHubPage />} />
-          <Route path="/home" element={<ProjectHubPage />} />
+          <Route path="/home" element={<DashboardPage />} />
+          <Route path="/hub" element={<ProjectHubPage />} />
           <Route path="/post" element={<PostProjectPage />} />
           <Route
             path="/projectDetails/:projectId"
