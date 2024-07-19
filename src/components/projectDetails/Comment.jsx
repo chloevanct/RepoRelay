@@ -4,7 +4,6 @@ import { Flex, Image, Text } from "@chakra-ui/react"
 export default function Comment({ comment }) {
 
     const commenterProfileImage = comment.commenterProfileImage ? comment.commenterProfileImage : BlankPP;
-    console.log(comment);
 
     return (
         <Flex>

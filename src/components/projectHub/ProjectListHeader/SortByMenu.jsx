@@ -26,11 +26,33 @@ export default function SortByMenu() {
                                     >
                         {chosenOption}
                     </MenuButton>
-                    <MenuList sx={{color: '#5271FF'}}>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Relevant')}>Most Relevant</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Viewed')}>Most Viewed</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Active')}>Most Active</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Submission Date')}>Submission Date</MenuItem>
+                    <MenuList 
+                        sx={{
+                            color: '#5271FF',
+                        }}
+                        minW='0' // required to set the width properly, for some reason
+                        w='auto'
+                    >
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Relevant')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Relevant</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Viewed')}
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Viewed</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Active')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Active</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Submission Date')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Submission Date</MenuItem>
                     </MenuList>
                 </Menu>
             </Flex>

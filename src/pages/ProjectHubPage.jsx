@@ -11,7 +11,7 @@ export default function ProjectHubPage() {
       <Header></Header>
       <Flex direction="column" width="100%">
         <SearchBarHeader></SearchBarHeader>
-        <Flex gap="50px" width="100%">
+        <Flex gap="auto" width="100%">
           <FilterForm></FilterForm>
           <Flex direction="column" width="80%">
             <ProjectListHeader></ProjectListHeader>

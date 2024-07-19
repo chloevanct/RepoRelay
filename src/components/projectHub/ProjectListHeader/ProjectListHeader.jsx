@@ -11,12 +11,12 @@ export default function ProjectListHeader() {
     const filteredProjectCount = useSelector(selectFilteredProjectCount);
 
     return (
-        <Flex id="project-list-header" direction="column" justify="flex-start" align="flex-start" pl="4" pr="4" width="100%">
+        <Flex id="project-list-header" direction="column" justify="flex-start" align="flex-start" px="4" width="100%">
             <Box>
-                <Text fontSize="3xl">All Projects</Text>
+                <Text fontSize={['1rem', '1.5rem', '2rem', '2.5rem', '3rem']}>All Projects</Text>
             </Box>
-            <Flex id="showing-x-projects-sort-by" justify="space-between" align="center" width="100%">
-                <Text fontSize="md" color="#5B5B5B" mr={2}>Showing {filteredProjectCount} available projects</Text>
+            <Flex justify="space-between" align="center" width="100%">
+                <Text color="#5B5B5B" mr={2}>Showing {filteredProjectCount} available projects</Text>
                 <SortByMenu />
             </Flex>
         </Flex>
