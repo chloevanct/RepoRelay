@@ -14,6 +14,9 @@ import UserProfilePage from "./pages/UserProfilePage";
 import ProfileCreationPage from "./pages/ProfileCreationPage";
 import "./App.css";
 
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
+
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
@@ -26,7 +29,8 @@ function App() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await fetch("http://localhost:3000/user", {
+          // const response = await fetch("http://localhost:3000/user", {
+          const response = await fetch(`${serverUrl}/user`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
