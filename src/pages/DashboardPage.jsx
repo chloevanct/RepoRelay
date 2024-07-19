@@ -106,7 +106,7 @@ export default function DashboardPage() {
               Owned Projects
             </Heading>
             {ownedProjects.length === 0 ? (
-              <Spinner />
+              <Text pt="20px">No owned projects available.</Text>
             ) : (
               <VStack align="start">
                 {ownedProjects.map((project) => (
@@ -120,7 +120,7 @@ export default function DashboardPage() {
               Subscribed Projects
             </Heading>
             {subscribedProjects.length === 0 ? (
-              <Spinner />
+              <Text pt="20px">No subscribed projects available.</Text>
             ) : (
               <VStack align="start">
                 {subscribedProjects.map((project) => (
