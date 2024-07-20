@@ -67,7 +67,7 @@ export default function FilterForm() {
             </Box>
 
             <Box pb='20px'>
-                <Heading size='md' pb='10px'>
+                <Heading size={['xs', 'sm', 'md', 'lg']} pb='10px'>
                     Difficulty
                 </Heading>
                 <RadioGroup onChange={handleDifficultyChange} value={selectedDifficulty}>
@@ -83,7 +83,7 @@ export default function FilterForm() {
 
             {Object.keys(tagCategories).map((category) => (
                 <Box key={category} pb='20px'>
-                    <Heading size='md' pb='10px'>
+                    <Heading size={['xs', 'sm', 'md', 'lg']} pb='10px'>
                         {category.charAt(0).toUpperCase() + category.slice(1)} Tags
                     </Heading>
                     <Stack direction='column'>

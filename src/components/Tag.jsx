@@ -3,6 +3,7 @@
 // for example "Python" will be black, "JavaScript" will be orange. it will be a rounded box
 
 import PropTypes from "prop-types";
+import { Box } from "@chakra-ui/react";
 
 const Tag = ({ tagName, colorMapping }) => {
 	const color = colorMapping[tagName] || "#CCCCCC"; // Default to gray if color not found
@@ -28,21 +29,19 @@ const Tag = ({ tagName, colorMapping }) => {
 	const textColor = getTextColor(color);
 	
 	return (
-		<div
-		className="tag"
-		style={{
-			backgroundColor: color,
-			color: textColor,
-			padding: "5px 10px",
-			borderRadius: "20px",
-			display: "inline-block",
-			margin: "5px",
-		}}
+		<Box
+		  bg={color}
+		  color={textColor}
+		  px={[1, 1, 1.5, 2, 2.5]}
+		  py={[1, 1, 1.5, 2, 2.5]}
+		  borderRadius="20px"
+		  display="inline-block"
+		  fontSize={['0.3rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
 		>
-			{tagName}
-		</div>
-	);
-};
+		  {tagName}
+		</Box>
+	  );
+	};
 
 Tag.propTypes = {
 	tagName: PropTypes.string.isRequired,
