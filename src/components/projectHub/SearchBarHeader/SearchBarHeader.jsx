@@ -4,7 +4,7 @@ import { Box, Flex, Text } from '@chakra-ui/react'
 export default function SearchBarHeader() {
     return (
         <>
-        <Box p={8}>
+        <Box p={[4, 8]}>
             <Flex alignItems="center"
                   justifyContent={{base:"center", md:"space-between"}}
                   gap={{base: 4, md: 0}}

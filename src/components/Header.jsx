@@ -9,51 +9,55 @@ import {
   Button,
   Image,
 } from "@chakra-ui/react";
-import { useUser } from "../hooks/useUser";
-import NotificationBell from "../assets/notification-bell.png";
 import { useSelector } from "react-redux";
+import NotificationBell from "../assets/notification-bell.png";
 
 export default function Header() {
-  // const { currentUser } = useUser();
-
-    const currentUser = useSelector((state) => state.user.currentUser);
-
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   return (
-    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={4}>
+    <Box bg="gray.50" shadow="md" borderWidth="1px" borderRadius="lg" p={[2, 4]}>
       <Flex
         justifyContent="space-between"
         alignItems="center"
-        maxW="container.lg"
+        w="100%"
         mx="auto"
       >
         <Link to="/home" id="logo-link">
-          <Text fontSize="2rem" fontWeight="bold" color="teal.500">
+          <Text fontWeight="bold" color="teal.500" fontSize={['0.5rem', '0.6rem', '1.1rem', '1.75rem', '2rem']}
+          >
             REPO RELAY
           </Text>
         </Link>
-        <HStack spacing={8} alignItems="center">
+        <HStack spacing={[1.5, 3, 4, 5, 7]} alignItems="center">
           <Link to="/home">
-            <Text color="gray.700">DASHBOARD</Text>
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
+              DASHBOARD
+            </Text>
           </Link>
           <Link to="/hub">
-            <Text color="gray.700">PROJECT HUB</Text>
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
+              PROJECT HUB
+            </Text>
           </Link>
           <Link to="/aboutUs">
-            <Text color="gray.700">ABOUT US</Text>
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
+              ABOUT US
+            </Text>
           </Link>
           <Link to="/home">
-            <Image
+            <Avatar
               src={NotificationBell}
               alt="Notifications"
-              boxSize="1.3rem"
+              size={["xs", "sm", "md"]}
             />
           </Link>
           <Link to="/userProfile">
-            <Avatar size="sm" src={currentUser.userImage || ""} />
+            <Avatar size={["xs", "sm", "md"]} src={currentUser?.userImage || ""} />
           </Link>
           <Link to="/post">
-            <Button colorScheme="teal" fontWeight="bold">
+            <Button colorScheme="teal" fontWeight="bold" fontSize={['0.45rem', '0.45rem', '1.2rem']} px={[1, 1, 5]}
+            >
               ADD PROJECT
             </Button>
           </Link>

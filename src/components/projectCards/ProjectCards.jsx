@@ -98,7 +98,7 @@ export default function ProjectCards() {
             size="sm"
             _hover={{ textDecoration: "none" }}
             color="blue"
-            padding="10px"
+            padding={["5px", "10px"]}
             onClick={() => pageChange(currPage + 1)}
             disabled={currPage >= maxPage}
             opacity={currPage >= maxPage ? 0 : 1}
