@@ -11,9 +11,10 @@ export default function SortByMenu() {
     return (
         <Flex alignItems="center" justifyContent="center" p={["1", "3"]}>
             <Flex alignItems="center">
-            <Text mr="1" display="flex" alignItems="center">Sort by:</Text>
+            <Text mr="1" display="flex" alignItems="center" fontSize={['0.6rem', '0.6rem', '1.2rem']}>Sort by:</Text>
                 <Menu>
                     <MenuButton as={Button}
+                                fontSize={['0.6rem', '0.6rem', '1.2rem']}
                                 sx={{
                                     bg: 'transparent',
                                     border: 'none',

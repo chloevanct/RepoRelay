@@ -9,6 +9,7 @@ export default function ProjectImage({ project }) {
             height='100%'
             padding={['5px', '10px']}
             objectFit='cover' 
+            display={['none', 'block']}
             src={project.projectImg} 
             alt={project.projectName} 
             fallbackSrc={GitHubLogo}

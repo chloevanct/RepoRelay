@@ -88,7 +88,7 @@ export default function FilterForm() {
                     </Heading>
                     <Stack direction='column'>
                         <Menu>
-                            <MenuButton as={Button} px='1'>
+                            <MenuButton as={Button} px='1' fontSize={['0.6rem', '0.6rem', '1.2rem']}>
                                 Select {category} tags
                             </MenuButton>
                             <MenuList maxHeight="200px" overflowY="auto" minW='0'>

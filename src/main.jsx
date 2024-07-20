@@ -10,7 +10,7 @@ import "./index.css";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ChakraProvider theme={customTheme}>
+  <ChakraProvider>
     <Provider store={store}>
       <BrowserRouter>
         <App />

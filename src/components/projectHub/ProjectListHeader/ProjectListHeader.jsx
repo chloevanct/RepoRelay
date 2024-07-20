@@ -16,7 +16,7 @@ export default function ProjectListHeader() {
                 <Text fontSize={['1rem', '1.5rem', '2rem', '2.5rem', '3rem']}>All Projects</Text>
             </Box>
             <Flex justify="space-between" align="center" width="100%">
-                <Text color="#5B5B5B" mr={2}>Showing {filteredProjectCount} available projects</Text>
+                <Text color="#5B5B5B" mr={2} fontSize={['0.6rem', '0.6rem', '1.2rem']}>Showing {filteredProjectCount} available projects</Text>
                 <SortByMenu />
             </Flex>
         </Flex>

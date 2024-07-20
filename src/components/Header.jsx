@@ -31,17 +31,17 @@ export default function Header() {
         </Link>
         <HStack spacing={[1.5, 3, 4, 5, 7]} alignItems="center">
           <Link to="/home">
-            <Text color="gray.700">
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
               DASHBOARD
             </Text>
           </Link>
           <Link to="/home">
-            <Text color="gray.700">
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
               PROJECT HUB
             </Text>
           </Link>
           <Link to="/aboutUs">
-            <Text color="gray.700">
+            <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
               ABOUT US
             </Text>
           </Link>
@@ -56,7 +56,7 @@ export default function Header() {
             <Avatar size={["xs", "sm", "md"]} src={currentUser?.userImage || ""} />
           </Link>
           <Link to="/post">
-            <Button colorScheme="teal" fontWeight="bold"
+            <Button colorScheme="teal" fontWeight="bold" fontSize={['0.45rem', '0.45rem', '1.2rem']} px={[1, 1, 5]}
             >
               ADD PROJECT
             </Button>

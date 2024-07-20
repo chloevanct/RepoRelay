@@ -36,7 +36,6 @@ const Tag = ({ tagName, colorMapping }) => {
 		  py={[1, 1, 1.5, 2, 2.5]}
 		  borderRadius="20px"
 		  display="inline-block"
-		  fontSize={['0.3rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
 		>
 		  {tagName}
 		</Box>

@@ -82,8 +82,8 @@ export default function EditableProjectInfo({ project }) {
                 </Box>
                 <Box flex={['0', '0', '75%']} mb={3} display="flex" flexDirection="column" justifyContent="center">
                     <Flex direction="column" gap="10px" textAlign={['center', 'center', 'left']}>
-                        <Text>Posted: {new Date(project.postedDate).toLocaleDateString()}</Text>
-                        <Text>Last activity: {new Date(project.lastActivityDate).toLocaleDateString()}</Text>
+                        <Text fontSize={['1rem', '1rem', '1.25rem']}>Posted: {new Date(project.postedDate).toLocaleDateString()}</Text>
+                        <Text fontSize={['1rem', '1rem', '1.25rem']}>Last activity: {new Date(project.lastActivityDate).toLocaleDateString()}</Text>
                         {isEditing ? (
                             <Textarea
                                 value={newDescription}
@@ -91,7 +91,7 @@ export default function EditableProjectInfo({ project }) {
                                 placeholder="Project Description"
                             />
                         ) : (
-                            <Text maxWidth="100%">
+                            <Text maxWidth="100%" fontSize={['1rem', '1rem', '1.25rem']} noOfLines='3'>
                                 {project.projectDescription}
                             </Text>
                         )}

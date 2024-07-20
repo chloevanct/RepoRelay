@@ -2,7 +2,7 @@ import ProjectImage from './ProjectImage'
 import ProjectInfo from './ProjectInfo'
 import ProjectTags from './ProjectTags'
 import { Link } from "react-router-dom";
-import { Flex, Divider, Box } from '@chakra-ui/react'
+import { Flex, Divider } from '@chakra-ui/react'
 
 export default function ProjectCard({ project }) {
     return (
@@ -18,12 +18,12 @@ export default function ProjectCard({ project }) {
                 color='black' 
                 h='auto'
                 >  
-                <ProjectImage project={project} />
-                <Flex direction='column' width='80%' height='100%'>
-                    <Flex height='150px'>
-                        <ProjectInfo project={project} />
+                <ProjectImage project={project}/>
+                <Flex direction='column' width={['100%', '80%']} height='100%'>
+                    <Flex height={['75px', '150px']}>
+                        <ProjectInfo project={project} flexShrink={0}/>
                         <Divider orientation='vertical' borderColor='gray.400'/>
-                        <ProjectTags project={project}/>
+                        <ProjectTags project={project} flex='1'/>
                     </Flex>
                 </Flex>
             </Flex>

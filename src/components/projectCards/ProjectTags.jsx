@@ -12,6 +12,7 @@ export default function ProjectTags({ project }) {
                 overflowY="scroll" 
                 gap={['1px', '2px', '3px', '4px', '5px']} 
                 ml={['1', '2', '3', '4', '5']}
+                fontSize={['0.4rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
                 justifyContent='flex-start' 
                 alignContent='flex-start' sx={{
                     '::-webkit-scrollbar': {
