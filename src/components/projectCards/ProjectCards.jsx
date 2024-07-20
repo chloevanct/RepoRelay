@@ -81,6 +81,7 @@ export default function ProjectCards() {
             _hover={{ textDecoration: "none" }}
             color="blue"
             padding="10px"
+            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
             onClick={() => pageChange(currPage - 1)}
             disabled={currPage <= 1}
             opacity={currPage <= 1 ? 0 : 1}
@@ -98,7 +99,8 @@ export default function ProjectCards() {
             size="sm"
             _hover={{ textDecoration: "none" }}
             color="blue"
-            padding="10px"
+            padding={["5px", "10px"]}
+            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
             onClick={() => pageChange(currPage + 1)}
             disabled={currPage >= maxPage}
             opacity={currPage >= maxPage ? 0 : 1}

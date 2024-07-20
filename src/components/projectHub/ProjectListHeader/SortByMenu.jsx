@@ -9,7 +9,7 @@ export default function SortByMenu() {
     };
 
     return (
-        <Flex alignItems="center" justifyContent="center" p="3">
+        <Flex alignItems="center" justifyContent="center" p={["1", "3"]}>
             <Flex alignItems="center">
             <Text mr="1" display="flex" alignItems="center">Sort by:</Text>
                 <Menu>

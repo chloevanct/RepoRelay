@@ -13,7 +13,7 @@ export default function SearchBar() {
 
     return (
         <>
-        <InputGroup size="sm" width={{base:"80%", md:"30%"}}>
+        <InputGroup size={['xs', 'sm', 'md']} width={{base:"80%", md:"30%"}}>
             <InputLeftElement
             pointerEvents="none"
             children={<SearchIcon color="#BFBCBC"/>}
