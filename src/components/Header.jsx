@@ -35,7 +35,7 @@ export default function Header() {
               DASHBOARD
             </Text>
           </Link>
-          <Link to="/home">
+          <Link to="/hub">
             <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
               PROJECT HUB
             </Text>

@@ -23,7 +23,7 @@ const DeleteProjectButton = ({ project }) => {
                 isClosable: true,
                 position: "top",
             });
-            navigate('/'); // Redirect to homepage
+            navigate('/home');
         } catch (error) {
             toast({
                 title: "Error deleting project.",
