@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/ubc-cpsc455-2024S/project-03_the_innovators/actions/workflows/node.js.yml/badge.svg)](https://github.com/ubc-cpsc455-2024S/project-03_the_innovators/actions/workflows/node.js.yml)
+
 # Group 3 - Innovators
 
 ## Team Members
