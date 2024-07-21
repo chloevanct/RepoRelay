@@ -9,11 +9,12 @@ export default function SortByMenu() {
     };
 
     return (
-        <Flex alignItems="center" justifyContent="center" p="3">
+        <Flex alignItems="center" justifyContent="center" p={["1", "3"]}>
             <Flex alignItems="center">
-            <Text mr="1" display="flex" alignItems="center">Sort by:</Text>
+            <Text mr="1" display="flex" alignItems="center" fontSize={['0.6rem', '0.6rem', '1.2rem']}>Sort by:</Text>
                 <Menu>
                     <MenuButton as={Button}
+                                fontSize={['0.6rem', '0.6rem', '1.2rem']}
                                 sx={{
                                     bg: 'transparent',
                                     border: 'none',
@@ -26,11 +27,33 @@ export default function SortByMenu() {
                                     >
                         {chosenOption}
                     </MenuButton>
-                    <MenuList sx={{color: '#5271FF'}}>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Relevant')}>Most Relevant</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Viewed')}>Most Viewed</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Most Active')}>Most Active</MenuItem>
-                        <MenuItem onClick={() => handleMenuItemClick('Submission Date')}>Submission Date</MenuItem>
+                    <MenuList 
+                        sx={{
+                            color: '#5271FF',
+                        }}
+                        minW='0' // required to set the width properly, for some reason
+                        w='auto'
+                    >
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Relevant')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Relevant</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Viewed')}
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Viewed</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Most Active')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Most Active</MenuItem>
+                        <MenuItem 
+                            onClick={() => handleMenuItemClick('Submission Date')} 
+                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                        >
+                            Submission Date</MenuItem>
                     </MenuList>
                 </Menu>
             </Flex>

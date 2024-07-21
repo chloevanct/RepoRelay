@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCommentAsync } from "../../redux/projects/projectCommentThunks";
-import { unwrapResult } from '@reduxjs/toolkit';
 
-import { FormControl, Input, Flex, Image, Button } from '@chakra-ui/react'
+import { FormControl, Input, Flex, Image, Button, Box } from '@chakra-ui/react'
 
 export default function PostCommentForm({ project, addComment }) {
 
@@ -40,7 +39,7 @@ export default function PostCommentForm({ project, addComment }) {
     return (
         <Flex direction='column' pt='10px' pl='20px'>
             <Flex>
-                <Image src={currentUser ? currentUser.userImage : ""} width='10%' pr='10px'/>
+                <Image src={currentUser ? currentUser.userImage : ""} width={['20%', '10%']} pr='10px'/>
                 <FormControl>
                     <Input 
                         height='100%' 
@@ -54,7 +53,6 @@ export default function PostCommentForm({ project, addComment }) {
             <Button 
                 colorScheme="teal" 
                 fontWeight='bold' 
-                width='10%' 
                 ml='auto' 
                 mt='5px' 
                 onClick={handleSubmit}
