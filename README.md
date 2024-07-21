@@ -2,6 +2,10 @@
 
 # Group 3 - Innovators
 
+## Project Executive Summary
+
+Repo Relay is a web app that connects developers looking to collaborate on unfinished coding projects. It provides a platform for users to publish, find, and contribute to projects, enhancing their technical skills, expanding their portfolios, and fostering a collaborative coding community.
+
 ## Team Members
 
 - Nariman Muldashev: I am 2nd year BCS student with a prior background in consulting and finance. Currently completing a co-op at a Vancouver based fintech startup.
