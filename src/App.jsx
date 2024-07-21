@@ -16,6 +16,7 @@ import "./App.css";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
+console.log(serverUrl);
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
