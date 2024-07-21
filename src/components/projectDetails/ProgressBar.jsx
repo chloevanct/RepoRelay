@@ -22,7 +22,7 @@ export default function ProgressBar({ value }) {
         [role="progressbar"] {
           --primary: #319795;
           --secondary: #D5F2F1;
-          --size: 300px;
+          --size: 400px;
           animation: progress 2s 0.5s forwards;
           width: var(--size);
           aspect-ratio: 1;

@@ -36,7 +36,7 @@ export default function ProjectProgress({ project }) {
   }, [project.tasks]);
 
   useEffect(() => {
-    console.log('Local tasks updated:', localTasks);
+    // console.log('Local tasks updated:', localTasks);
   }, [localTasks]);
 
   const complete_tasks = useMemo(() => localTasks.filter(task => task && task.taskStatus === 'completed'), [localTasks]);

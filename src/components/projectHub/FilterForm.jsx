@@ -67,13 +67,13 @@ export default function FilterForm() {
             </Box>
 
             <Box pb='20px'>
-                <Heading size='md' pb='10px'>
+                <Heading size={['xs', 'sm', 'md', 'lg']} pb='10px'>
                     Difficulty
                 </Heading>
                 <RadioGroup onChange={handleDifficultyChange} value={selectedDifficulty}>
-                    <Stack direction='column'>
+                    <Stack direction='column' >
                         {difficultyOptions.map((option) => (
-                            <Radio key={option} value={option}>
+                            <Radio key={option} value={option} size={['sm', 'md', 'lg']}>
                                 {option}
                             </Radio>
                         ))}
@@ -83,27 +83,32 @@ export default function FilterForm() {
 
             {Object.keys(tagCategories).map((category) => (
                 <Box key={category} pb='20px'>
-                    <Heading size='md' pb='10px'>
+                    <Heading size={['xs', 'sm', 'md', 'lg']} pb='10px'>
                         {category.charAt(0).toUpperCase() + category.slice(1)} Tags
                     </Heading>
                     <Stack direction='column'>
                         <Menu>
-                            <MenuButton as={Button} rightIcon={<i className="fas fa-chevron-down"></i>}>
+                            <MenuButton as={Button} px='1' fontSize={['0.6rem', '0.6rem', '1.2rem']}>
                                 Select {category} tags
                             </MenuButton>
-                            <MenuList maxHeight="200px" overflowY="auto">
+                            <MenuList maxHeight="200px" overflowY="auto" minW='0'>
                                 <Box p={2}>
                                     <Input
                                         placeholder="Search"
                                         value={searchText[category]}
                                         onChange={(e) => handleSearchChange(category, e)}
+                                        fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
                                     />
                                 </Box>
                                 {tagCategories[category]
                                     .filter((tag) => tag.toLowerCase().includes(searchText[category].toLowerCase()))
                                     .map((tag, index) => (
                                         !checkedTags[category][index] && (
-                                            <MenuItem key={tag} onClick={() => handleDropdownChange(category, tag)}>
+                                            <MenuItem 
+                                                key={tag} 
+                                                onClick={() => handleDropdownChange(category, tag)}
+                                                fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
+                                            >
                                                 {tag}
                                             </MenuItem>
                                         )
@@ -116,6 +121,7 @@ export default function FilterForm() {
                                     key={tag}
                                     isChecked={checkedTags[category][index]}
                                     onChange={() => handleTagChange(category, index, tag)}
+                                    size={['sm', 'md', 'lg']}
                                 >
                                     {tag}
                                 </Checkbox>

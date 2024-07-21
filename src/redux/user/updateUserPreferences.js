@@ -1,9 +1,12 @@
 import axios from "axios";
 
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
+
+
 export const updateUserPreferences = async (githubUsername, updateData) => {
   try {
     const response = await axios.put(
-      `http://localhost:3000/user/${githubUsername}`,
+      `${serverUrl}/user/${githubUsername}`,
       updateData
     );
     return response.data;
