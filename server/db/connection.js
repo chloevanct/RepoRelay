@@ -10,7 +10,6 @@ const mongoose = require("mongoose");
 console.log("starting mongo");
 const connectDB = async () => {
   try {
-    console.log(process.env.DB_CONNECTION);
     await mongoose.connect(process.env.DB_CONNECTION);
 
     console.log("MongoDB connected successfully");

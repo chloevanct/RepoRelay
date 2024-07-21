@@ -1,10 +1,12 @@
-import Header from '../components/Header'
-import RelayImg from '../assets/relay.jpeg'
-import CodingImg from '../assets/coding.jpeg'
-import GlobalConnection from '../assets/global-connection.jpeg'
-import { Flex, Image, Heading, Text, Button, Divider } from '@chakra-ui/react'
+import React from "react";
+import Header from "../components/Header";
+import RelayImg from "../assets/relay.jpeg";
+import CodingImg from "../assets/coding.jpeg";
+import GlobalConnection from "../assets/global-connection.jpeg";
+import { Flex, Image, Heading, Text, Button, Divider } from "@chakra-ui/react";
 
 export default function AboutUsPage() {
+
     return (
         <Flex direction='column'>
             <Header />
@@ -35,6 +37,9 @@ export default function AboutUsPage() {
                 </Flex>
             </Flex>
 
+
         </Flex>
-    )
+      </Flex>
+    </Flex>
+  );
 }

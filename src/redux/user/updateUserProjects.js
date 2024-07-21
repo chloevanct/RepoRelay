@@ -1,9 +1,11 @@
 import axios from "axios";
 
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
+
 export const updateUserProjects = async (githubUsername, updateData) => {
   try {
     const response = await axios.patch(
-      `http://localhost:3000/user/${githubUsername}`,
+      `${serverUrl}/user/${githubUsername}`,
       updateData
     );
     return response.data;
