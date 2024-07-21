@@ -56,9 +56,11 @@ app.get("/oauth/callback", async (req, res) => {
 
     console.log(response.data);
 
-    res.redirect(
-      `https://project-03-the-innovators-d7ya.onrender.com?token=${accessToken}`
-    );
+    const redirectURL = process.env.REDIRECT_URL;
+
+    // `https://project-03-the-innovators-d7ya.onrender.com
+
+    res.redirect(`${redirectURL}?token=${accessToken}`);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

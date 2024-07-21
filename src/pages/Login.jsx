@@ -10,7 +10,9 @@ import {
 
 const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
-const CLIENT_ID = "Ov23li1yHM1QOlk2RKrV";
+const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+
+// const CLIENT_ID = "Ov23li1yHM1QOlk2RKrV";
 const REDIRECT_URI = `${serverUrl}/oauth/callback`;
 
 function loginWithGithub() {
