@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Flex, Container, Spinner, Text, Box, Heading, VStack, Button } from "@chakra-ui/react";
+import { Flex, Container, Spinner, Text, Box, Heading, VStack, Button, Divider } from "@chakra-ui/react";
 import Header from "../components/Header";
 import { selectFilteredProjects } from "../utils/selectors";
 import { getProjectsAsync } from "../redux/projects/projectCardThunks";
@@ -101,6 +101,7 @@ export default function DashboardPage() {
               </Flex>
             )}
           </Box>
+          <Divider my={8} />
           <Box p={5} width="100%">
             <Heading as="h3" size="lg" mb={5}>
               Owned Projects
@@ -115,6 +116,7 @@ export default function DashboardPage() {
               </VStack>
             )}
           </Box>
+          <Divider my={8} />
           <Box p={5} width="100%">
             <Heading as="h3" size="lg" mb={5}>
               Subscribed Projects

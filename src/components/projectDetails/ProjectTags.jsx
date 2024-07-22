@@ -92,7 +92,7 @@ export default function ProjectTags({ project }) {
                     {isEditingProject ? (
                         <TagInput
                             id='projectTags'
-                            label='Project Type Tags'
+                            label='Select project tags'
                             tags={newProjectTags}
                             tagMapping={projectColorMapping}
                             onAdd={(tag) => setNewProjectTags([...newProjectTags, tag])}
@@ -129,7 +129,7 @@ export default function ProjectTags({ project }) {
                     {isEditingTech ? (
                         <TagInput
                             id='techTags'
-                            label='Technology Tags'
+                            label='Select tech tags'
                             tags={newTechTags}
                             tagMapping={technologyColorMapping}
                             onAdd={(tag) => setNewTechTags([...newTechTags, tag])}

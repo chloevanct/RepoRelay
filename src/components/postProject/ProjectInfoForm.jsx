@@ -6,6 +6,7 @@ import {
   VStack,
   HStack,
   useToast,
+  FormLabel
 } from "@chakra-ui/react";
 import { DateInput } from "./DateInput";
 import { TextInput } from "./TextInput";
@@ -155,17 +156,19 @@ export default function ProjectInfoForm() {
               }
               options={Object.keys(difficultyColorMapping)}
             />
+            <FormLabel mb={0}>Project Tags</FormLabel>
             <TagInput
               id="projectTag"
-              label="Project Tags"
+              label="Select project tags"
               tags={formData.projectTags}
               tagMapping={projectColorMapping}
               onAdd={(tag) => addToList("projectTags", tag)}
               onRemove={(index) => removeFromList("projectTags", index)}
             />
+            <FormLabel mb={0}>Technology Tags</FormLabel>
             <TagInput
               id="techTag"
-              label="Technology Tags"
+              label="Select tech tags"
               tags={formData.techTags}
               tagMapping={technologyColorMapping}
               onAdd={(tag) => addToList("techTags", tag)}

@@ -206,7 +206,7 @@ export default function UserProfilePage() {
               {isEditingProject ? (
                 <TagInput
                   id="projectTags"
-                  label="Project Type Tags"
+                  label="Select project tags"
                   tags={newProjectTags}
                   tagMapping={projectColorMapping}
                   onAdd={(tag) => setNewProjectTags([...newProjectTags, tag])}
@@ -251,7 +251,7 @@ export default function UserProfilePage() {
               {isEditingTech ? (
                 <TagInput
                   id="techTags"
-                  label="Technology Tags"
+                  label="Select tech tags"
                   tags={newTechTags}
                   tagMapping={technologyColorMapping}
                   onAdd={(tag) => setNewTechTags([...newTechTags, tag])}
