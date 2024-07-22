@@ -136,7 +136,7 @@ export default function ProfileCreationPage() {
                         <Heading as="h4" size="md" mb={2}>Project Type Preferences</Heading>
                         <TagInput
                             id="projectTags"
-                            label="Project Type Tags"
+                            label="Select project tags"
                             tags={projectTags}
                             tagMapping={projectColorMapping}
                             onAdd={(tag) => setProjectTags([...projectTags, tag])}
@@ -149,7 +149,7 @@ export default function ProfileCreationPage() {
                         <Heading as="h4" size="md" mb={2}>Technology Preferences</Heading>
                         <TagInput
                             id="techTags"
-                            label="Technology Tags"
+                            label="Select tech tags"
                             tags={techTags}
                             tagMapping={technologyColorMapping}
                             onAdd={(tag) => setTechTags([...techTags, tag])}
