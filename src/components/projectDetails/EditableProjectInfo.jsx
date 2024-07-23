@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Flex, Heading, Text, Box, Button, Input, Textarea, Image } from '@chakra-ui/react';
+import { Flex, Heading, Text, Box, Button, Input, Textarea, Image, Link } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunks';
 import GitHubLogo from "../../assets/github-logo.png";
@@ -95,6 +95,13 @@ export default function EditableProjectInfo({ project }) {
                                 {project.projectDescription}
                             </Text>
                         )}
+                        <Link 
+                            fontSize={['1rem', '1rem', '1.25rem']}
+                            href={project.githubURL}
+                            isExternal
+                        >
+                            {project.githubURL}
+                        </Link>
                     </Flex>
                 </Box>
             </Flex>
