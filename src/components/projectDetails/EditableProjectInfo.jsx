@@ -11,7 +11,7 @@ export default function EditableProjectInfo({ project }) {
 
     const [isEditing, setIsEditing] = useState(false);
     const [newProjectName, setNewProjectName] = useState(project.projectName);
-    const [newImageUrl, setNewImageUrl] = useState(project.projectImg);
+    const [newImageUrl, setNewImageUrl] = useState(project.projectImgURL);
     const [newDescription, setNewDescription] = useState(project.projectDescription);
 
     const handleSave = () => {
@@ -19,7 +19,7 @@ export default function EditableProjectInfo({ project }) {
             id: project.projectID,
             project: {
                 projectName: newProjectName,
-                projectImg: newImageUrl,
+                projectImgURL: newImageUrl,
                 projectDescription: newDescription,
             },
         }));
@@ -28,7 +28,7 @@ export default function EditableProjectInfo({ project }) {
 
     const handleCancel = () => {
         setNewProjectName(project.projectName);
-        setNewImageUrl(project.projectImg);
+        setNewImageUrl(project.projectImgURL);
         setNewDescription(project.projectDescription);
         setIsEditing(false);
     };
@@ -74,7 +74,7 @@ export default function EditableProjectInfo({ project }) {
                             width="100%"
                             height="auto"
                             objectFit="cover"
-                            src={project.projectImg}
+                            src={project.projectImgURL}
                             alt={project.projectName}
                             fallbackSrc={GitHubLogo}
                         />

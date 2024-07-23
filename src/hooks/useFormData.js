@@ -16,6 +16,7 @@ export function useFormData() {
         name: "",
         repoLink: "",
         description: "",
+        projectImgURL: "",
         difficultyTags: [],
         projectTags: [],
         techTags: [],
@@ -93,7 +94,7 @@ export function useFormData() {
             projectID: Math.floor(Math.random() * (1000000)).toString(), // TEMPORARY RANDOM GENERATE ID
             projectName: formData.name,
             projectDescription: formData.description,
-            projectImg: "",
+            projectImg: formData.projectImgURL,
             githubURL: formData.repoLink,
             projectOwner: "username123",
             pastContributors: [],

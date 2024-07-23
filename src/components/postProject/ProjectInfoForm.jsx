@@ -63,10 +63,9 @@ export default function ProjectInfoForm() {
     ];
 
     const newProject = {
-      projectID: Math.floor(Math.random() * 1000000).toString(), // TEMPORARY RANDOM GENERATE ID
       projectName: formData.name,
       projectDescription: formData.description,
-      projectImg: "",
+      projectImgURL: formData.projectImgURL,
       githubURL: formData.repoLink,
       projectOwner: currentUser.userID,
       pastContributors: [],
@@ -126,28 +125,34 @@ export default function ProjectInfoForm() {
             <DateInput value={formData.date} />
             <TextInput
               id="name"
-              label="Project Name"
+              label="* Project Name"
               value={formData.name}
               onChange={handleChange}
               required
             />
             <TextInput
               id="repoLink"
-              label="Project Repo Link"
+              label="* Project Repo Link"
               value={formData.repoLink}
               onChange={handleChange}
               required
             />
             <TextInput
               id="description"
-              label="Project Description"
+              label="* Project Description"
               value={formData.description}
               onChange={handleChange}
               required
             />
+            <TextInput
+              id="projectImgURL"
+              label="Project Profile Image URL"
+              value={formData.projectImgURL}
+              onChange={handleChange}
+            />
             <DifficultySelector
               id="difficultyTag"
-              label="Difficulty Level"
+              label="* Difficulty Level"
               value={formData.difficultyTags[0] || ""}
               onChange={(value) =>
                 handleChange({
