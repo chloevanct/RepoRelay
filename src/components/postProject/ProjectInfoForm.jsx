@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
 import { fetchUserAsync } from "../../redux/user/userThunks";
 import { useNavigate } from 'react-router-dom';
+import sanitizeProjectInput from "./sanitization";
 
 export default function ProjectInfoForm() {
   const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
@@ -35,15 +36,19 @@ export default function ProjectInfoForm() {
 
   const validateForm = () => {
     return (
-      formData.name &&
-      formData.repoLink &&
-      formData.description &&
+      formData.name.trim() &&
+      formData.repoLink.trim() &&
+      formData.description.trim() &&
       formData.difficultyTags.length > 0
     );
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!sanitizeProjectInput(formData, toast)) {
+      return;
+    }
 
     const tasks = [
       ...formData.tasksCompleted.map((task) => ({
