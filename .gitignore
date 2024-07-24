@@ -32,3 +32,4 @@ server\package-lock.json
 server/.env
 
 .env
+model/myenv
