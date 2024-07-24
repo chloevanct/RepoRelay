@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import { selectFilteredProjects } from "../utils/selectors";
 import { getProjectsAsync } from "../redux/projects/projectCardThunks";
 import { REQUEST_STATE } from "../redux/requestState";
+import { fetchUserAsync } from "../redux/user/userThunks";
 import ProjectCard from "../components/projectCards/ProjectCard";
 
 const getRecommendedProjects = async (userProfile, allProjects) => {
@@ -27,6 +28,13 @@ export default function DashboardPage() {
   const [loadingSubscribed, setLoadingSubscribed] = useState(true);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(fetchUserAsync(token));
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getProjectsAsync());
