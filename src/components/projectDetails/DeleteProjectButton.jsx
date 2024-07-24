@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Button, useToast, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteProjectAsync } from '../../redux/projects/projectCardThunks';
+import { fetchUserAsync } from '../../redux/user/userThunks';
 
 const DeleteProjectButton = ({ project }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,10 @@ const DeleteProjectButton = ({ project }) => {
     const handleDelete = async () => {
         try {
             await dispatch(deleteProjectAsync(project.projectID)).unwrap();
+            const token = localStorage.getItem("token");
+            if (token) {
+              dispatch(fetchUserAsync(token));
+            }
             toast({
                 title: "Project deleted.",
                 description: "The project has been successfully deleted.",
