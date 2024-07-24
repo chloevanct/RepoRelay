@@ -1,7 +1,3 @@
-/* ChatGPT 4.0 June 30 2024
-lets write an endpoint which gives the server a token. the server takes that token and makes a request to the github api to get user info. checks if that user is in the mongo database (based on their github handle). if not in the database. we should add them. schema here. then we return the data in the format that matches the initial state ofrmat
-*/
-
 const express = require("express");
 const axios = require("axios");
 const User = require("../db/models/user");
@@ -90,39 +86,21 @@ router.post("/", async (req, res) => {
   }
 });
 
-/* ChatGPT 4.0 June 30 2024
-lets now create a patch request where the client will give us the github handle as a param. and in the body they will give us the field which we will need to update (mainly will be preferences tags but could also be email, first name, last name
-*/
-
-// PATCH endpoint to update user data
-router.put("/:githubUsername", async (req, res) => {
+// Read user data
+router.get("/:githubUsername", async (req, res) => {
   const { githubUsername } = req.params;
-  const updateData = req.body;
-
-  console.log(githubUsername);
-  console.log(updateData);
 
   try {
-    // Find user by GitHub username
     let user = await User.findOne({ githubUsername });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Update user with provided data
-    Object.keys(updateData).forEach((key) => {
-      user[key] = updateData[key];
-    });
-
-    await user.save();
-
-    // Prepare the response in the required format
     const responseData = {
       currentUser: {
         userID: user.userID,
         githubUsername: user.githubUsername,
-        password: "", // Omit or handle as needed
         ownedProjects: user.ownedProjects,
         subscribedProjects: user.subscribedProjects,
         firstName: user.firstName,
@@ -139,11 +117,12 @@ router.put("/:githubUsername", async (req, res) => {
 
     res.json(responseData);
   } catch (error) {
-    console.error("Error updating user data:", error);
+    console.error("Error reading user data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
+// PATCH endpoint to update user data
 router.patch("/:githubUsername", async (req, res) => {
   const { githubUsername } = req.params;
   const updateData = req.body;
@@ -159,16 +138,21 @@ router.patch("/:githubUsername", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    console.log("Before update user data:", user);
+
     // Update user with provided data
     Object.keys(updateData).forEach((key) => {
-      if (Array.isArray(user[key]) && Array.isArray(updateData[key])) {
-        user[key] = [...user[key], ...updateData[key]];
+      if (key.startsWith('preferences.')) {
+        const subKey = key.split('.')[1];
+        user.preferences[subKey] = updateData[key];
       } else {
         user[key] = updateData[key];
       }
     });
 
     await user.save();
+
+    console.log("After update user data:", user);
 
     // Prepare the response in the required format
     const responseData = {

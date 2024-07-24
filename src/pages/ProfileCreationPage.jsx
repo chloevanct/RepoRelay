@@ -1,169 +1,145 @@
-import React, { useState, useEffect } from "react";
-import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button, useToast, InputGroup, InputRightElement } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import Header from '../components/Header';
-import { TagInput } from '../components/postProject/TagInput';
-import { DifficultySelector } from '../components/postProject/DifficultySelector';
-import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../utils/tagColorMappings';
-import { useUser } from '../hooks/useUser';
+import React, { useState } from "react";
+import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button, useToast } from "@chakra-ui/react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createUserAsync, updateUserAsync } from "../redux/user/userThunks"; // Import the thunks
+
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
 export default function ProfileCreationPage() {
-    const { currentUser, handleUpdateUser } = useUser();
-    const navigate = useNavigate();
-    const toast = useToast();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
 
-    const [userID, setUserID] = useState("");
-    const [githubUsername, setGithubUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [userImage, setUserImage] = useState("");
-    const [difficultyTags, setDifficultyTags] = useState([]);
-    const [projectTags, setProjectTags] = useState([]);
-    const [techTags, setTechTags] = useState([]);
+  const githubData = location.state?.githubData || {};
 
-    const [isSaveEnabled, setIsSaveEnabled] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+  const [firstName, setFirstName] = useState(githubData.firstName || "");
+  const [lastName, setLastName] = useState(githubData.lastName || "");
+  const [email, setEmail] = useState(githubData.emailAddress || "");
+  const [userImage, setUserImage] = useState(githubData.userImage || "");
+  const [difficultyTags, setDifficultyTags] = useState([]);
+  const [projectTags, setProjectTags] = useState([]);
+  const [techTags, setTechTags] = useState([]);
 
-    useEffect(() => {
-        const allFieldsFilled = userID && githubUsername && password && firstName && lastName && email && userImage && difficultyTags.length > 0;
-        setIsSaveEnabled(allFieldsFilled);
-    }, [userID, githubUsername, password, firstName, lastName, email, userImage, difficultyTags]);
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast({
+        title: "Error",
+        description: "Authentication token not found.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      return;
+    }
 
-    const handleSave = () => {
-        const updatedUser = {
-            userID,
-            githubUsername,
-            password,
-            ownedProjects: [],
-            subscribedProjects: [],
-            firstName,
-            lastName,
-            userImage,
-            emailAddress: email,
-            preferences: {
-                difficultyTags,
-                projectTags,
-                techTags
-            }
-        };
-        handleUpdateUser(updatedUser);
-        toast({
-            title: "Profile created.",
-            description: "Your profile has been successfully created.",
-            status: "success",
-            duration: 5000,
-            isClosable: true,
-            position: "top",
-        });
-        navigate("/home");
+    const newUser = {
+      githubUsername: githubData.githubUsername,
+      firstName,
+      lastName,
+      userImage,
+      emailAddress: email,
+      preferences: {
+        difficultyTags,
+        projectTags,
+        techTags,
+      },
     };
 
-    return (
-        <>
-        <Header />
-        <Container maxW="container.lg" width="100%" mt={5}>
-            <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50" width="100%" mt={5}>
-                <Heading as="h3" size="lg" mb={5}>
-                    Profile Creation
-                </Heading>
-                <VStack spacing={4} align="stretch">
-                    <Input
-                        placeholder="User ID"
-                        value={userID}
-                        onChange={(e) => setUserID(e.target.value)}
-                    />
-                    <Input
-                        placeholder="GitHub Username"
-                        value={githubUsername}
-                        onChange={(e) => setGithubUsername(e.target.value)}
-                    />
-                    <InputGroup>
-                        <Input
-                            placeholder="Password"
-                            type={showPassword ? "text" : "password"}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <InputRightElement width="4.5rem">
-                            <Button h="1.75rem" size="sm" onClick={() => setShowPassword(!showPassword)}>
-                                {showPassword ? "Hide" : "Show"}
-                            </Button>
-                        </InputRightElement>
-                    </InputGroup>
-                    <HStack spacing={4} align="center">
-                        <Avatar size="xl" src={userImage} />
-                        <Box>
-                            <Input
-                                placeholder="First Name"
-                                value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
-                            />
-                            <Input
-                                placeholder="Last Name"
-                                value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
-                                mt={2}
-                            />
-                            <Input
-                                placeholder="Email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                mt={2}
-                            />
-                            <Input
-                                placeholder="Profile Image URL"
-                                value={userImage}
-                                onChange={(e) => setUserImage(e.target.value)}
-                                mt={2}
-                            />
-                        </Box>
-                    </HStack>
+    try {
+      let response;
+      if (githubData.isNewUser) {
+        response = await dispatch(createUserAsync(token)).unwrap();
+      } else {
+        response = await dispatch(updateUserAsync({
+          githubUsername: githubData.githubUsername,
+          updateData: newUser
+        })).unwrap();
+      }
 
-                    <Box>
-                        <Heading as="h4" size="md" mb={2}>Difficulty Preferences</Heading>
-                        <DifficultySelector
-                            id="difficultyTags"
-                            label="Difficulty Level"
-                            value={difficultyTags[0]}
-                            onChange={(value) => setDifficultyTags([value])}
-                            options={Object.keys(difficultyColorMapping)}
-                        />
-                    </Box>
+      dispatch(updateUserAsync({
+        githubUsername: githubData.githubUsername,
+        updateData: newUser
+      })).unwrap();
 
-                    <Box>
-                        <Heading as="h4" size="md" mb={2}>Project Type Preferences</Heading>
-                        <TagInput
-                            id="projectTags"
-                            label="Select project tags"
-                            tags={projectTags}
-                            tagMapping={projectColorMapping}
-                            onAdd={(tag) => setProjectTags([...projectTags, tag])}
-                            onRemove={(index) => setProjectTags(projectTags.filter((_, i) => i !== index))}
-                            allowMultiple={true}
-                        />
-                    </Box>
+      if (response) {
+        toast({
+          title: "Profile created.",
+          description: "Your profile has been successfully created.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+        navigate("/home");
+      } else {
+        console.error("Failed to save profile:", response.statusText);
+        toast({
+          title: "Error",
+          description: "Failed to save profile.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top",
+        });
+      }
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      toast({
+        title: "Error",
+        description: "Error saving profile.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+    }
+  };
 
-                    <Box>
-                        <Heading as="h4" size="md" mb={2}>Technology Preferences</Heading>
-                        <TagInput
-                            id="techTags"
-                            label="Select tech tags"
-                            tags={techTags}
-                            tagMapping={technologyColorMapping}
-                            onAdd={(tag) => setTechTags([...techTags, tag])}
-                            onRemove={(index) => setTechTags(techTags.filter((_, i) => i !== index))}
-                            allowMultiple={true}
-                        />
-                    </Box>
-
-                    <Button colorScheme="teal" onClick={handleSave} isDisabled={!isSaveEnabled}>
-                        Save Profile
-                    </Button>
-                </VStack>
+  return (
+    <Container maxW="container.lg" mt={5}>
+      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg" bg="gray.50">
+        <Heading as="h3" size="lg" mb={5}>
+          Profile Creation
+        </Heading>
+        <VStack spacing={4} align="stretch">
+          <HStack spacing={4} align="center">
+            <Avatar size="xl" src={userImage} />
+            <Box>
+              <Input
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              <Input
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                mt={2}
+              />
+              <Input
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                mt={2}
+              />
+              <Input
+                placeholder="Profile Image URL"
+                value={userImage}
+                onChange={(e) => setUserImage(e.target.value)}
+                mt={2}
+              />
             </Box>
-        </Container>
-        </>
-    );
+          </HStack>
+          {/* Add other fields for difficultyTags, projectTags, techTags */}
+          <Button colorScheme="teal" onClick={handleSave}>
+            Save Profile
+          </Button>
+        </VStack>
+      </Box>
+    </Container>
+  );
 }

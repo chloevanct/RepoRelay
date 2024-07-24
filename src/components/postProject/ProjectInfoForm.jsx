@@ -20,20 +20,18 @@ import {
   technologyColorMapping,
 } from "../../utils/tagColorMappings";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
-import { useNavigate } from 'react-router-dom'; // import useNavigate
-import { useUser } from "../../hooks/useUser";
+import { fetchUserAsync } from "../../redux/user/userThunks";
+import { useNavigate } from 'react-router-dom';
 
 export default function ProjectInfoForm() {
-  const { formData, handleChange, addToList, removeFromList, handleReset } =
-    useFormData();
+  const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // initialize useNavigate
-
-  const { currentUser } = useUser();
+  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user.currentUser);
 
   const validateForm = () => {
     return (
@@ -80,7 +78,13 @@ export default function ProjectInfoForm() {
     };
 
     try {
-      await dispatch(addProjectAsync(newProject)).unwrap();
+      console.log('Dispatching addProjectAsync with:', newProject);
+      const createdProject = await dispatch(addProjectAsync(newProject)).unwrap();
+      console.log('Project created:', createdProject);
+
+      // Refetch the user data to update ownedProjects
+      await dispatch(fetchUserAsync(currentUser.githubUsername)).unwrap();
+
       setIsSubmitted(true);
       toast({
         title: "Project published.",
@@ -93,6 +97,7 @@ export default function ProjectInfoForm() {
       handleReset();
       navigate('/home');
     } catch (error) {
+      console.error('Error publishing project:', error);
       toast({
         title: "Error publishing project.",
         description: error.message,

@@ -8,68 +8,95 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePartialProjectAsync } from "../../redux/projects/projectCardThunks";
-import { updateUser } from "../../redux/user/userThunks";
+import { updateUserAsync } from "../../redux/user/userThunks";
+import { setUser } from "../../redux/user/userSlice";
+import { useEffect } from "react";
 
 export default function ProjectUsers({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  const handleAddSubscribedUser = () => {
-    console.log("Adding subscribed user:", {
-      projectID: project.projectID,
-      userID: currentUser.userID,
-    });
-    dispatch(
-      updatePartialProjectAsync({
-        id: project.projectID,
-        project: {
-          subscribedUsers: [...project.subscribedUsers, currentUser.userID],
-        },
-      })
-    );
+  useEffect(() => {
+    console.log("Current user updated:", currentUser);
+  }, [currentUser]);
 
-    dispatch(
-      updateUser({
-        githubUsername: currentUser.githubUsername,
-        updateData: {
-          subscribedProjects: [
-            ...currentUser.subscribedProjects,
-            project.projectID,
-          ],
-        },
-      })
-    );
+  const handleAddSubscribedUser = async () => {
+    if (!currentUser || !currentUser.userID || !currentUser.subscribedProjects) {
+      console.error("Current user data is incomplete:", currentUser);
+      return;
+    }
+
+    console.log("Before adding subscribed user:", currentUser);
+
+    try {
+      await dispatch(
+        updatePartialProjectAsync({
+          id: project.projectID,
+          project: {
+            subscribedUsers: [...new Set([...project.subscribedUsers, currentUser.userID])],
+          },
+        })
+      );
+
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: {
+            subscribedProjects: [
+              ...new Set([...currentUser.subscribedProjects, project.projectID]),
+            ],
+          },
+        })
+      ).unwrap();
+
+      console.log("Updated user received:", updatedUser);
+      dispatch(setUser(updatedUser.currentUser));
+      console.log("Current user after dispatch:", updatedUser.currentUser);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
-  const handleRemoveSubscribedUser = () => {
-    console.log("Removing subscribed user:", {
-      projectID: project.projectID,
-      userID: currentUser.userID,
-    });
-    dispatch(
-      updatePartialProjectAsync({
-        id: project.projectID,
-        project: {
-          subscribedUsers: project.subscribedUsers.filter(
-            (subscriber) => subscriber !== currentUser.userID
-          ),
-        },
-      })
-    );
+  const handleRemoveSubscribedUser = async () => {
+    if (!currentUser || !currentUser.userID || !currentUser.subscribedProjects) {
+      console.error("Current user data is incomplete:", currentUser);
+      return;
+    }
 
-    dispatch(
-      updateUser({
-        githubUsername: currentUser.githubUsername,
-        updateData: {
-          subscribedProjects: currentUser.subscribedProjects.filter(
-            (id) => id !== project.projectID
-          ),
-        },
-      })
-    );
+    console.log("Before removing subscribed user:", currentUser);
+
+    try {
+      await dispatch(
+        updatePartialProjectAsync({
+          id: project.projectID,
+          project: {
+            subscribedUsers: project.subscribedUsers.filter(
+              (subscriber) => subscriber !== currentUser.userID
+            ),
+          },
+        })
+      );
+
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: {
+            subscribedProjects: currentUser.subscribedProjects.filter(
+              (id) => id !== project.projectID
+            ),
+          },
+        })
+      ).unwrap();
+
+      console.log("Updated user received:", updatedUser);
+      dispatch(setUser(updatedUser.currentUser));
+      console.log("Current user after dispatch:", updatedUser.currentUser);
+    } catch (error) {
+      console.error("Error updating user:", error);
+    }
   };
 
-  const isSubscriber = project.subscribedUsers.includes(currentUser.userID);
+  const isSubscriber = currentUser && currentUser.userID && project.subscribedUsers.includes(currentUser.userID);
 
   return (
     <Flex direction="column" mb="10px">
@@ -120,8 +147,8 @@ export default function ProjectUsers({ project }) {
             alignItems="center"
             gap="10px"
           >
-            {project.subscribedUsers.map((subscribedUser, index) => (
-              <ListItem key={index}>
+            {project.subscribedUsers.filter(Boolean).map((subscribedUser) => (
+              <ListItem key={subscribedUser}>
                 <p>{subscribedUser}</p>
               </ListItem>
             ))}
