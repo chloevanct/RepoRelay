@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Container, Heading, VStack, HStack, Avatar, Input, Button, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createUserAsync, updateUserAsync } from "../redux/user/userThunks"; // Import the thunks
+import { fetchUserAsync, updateUserAsync } from "../redux/user/userThunks"; // Import the thunks
 
 const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
@@ -52,7 +52,10 @@ export default function ProfileCreationPage() {
     try {
       let response;
       if (githubData.isNewUser) {
-        response = await dispatch(createUserAsync(token)).unwrap();
+        const token = localStorage.getItem("token");
+        if (token) {
+          dispatch(fetchUserAsync(token));
+        }
       } else {
         response = await dispatch(updateUserAsync({
           githubUsername: githubData.githubUsername,

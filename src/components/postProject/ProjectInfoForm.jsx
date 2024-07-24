@@ -78,12 +78,11 @@ export default function ProjectInfoForm() {
     };
 
     try {
-      console.log('Dispatching addProjectAsync with:', newProject);
-      const createdProject = await dispatch(addProjectAsync(newProject)).unwrap();
-      console.log('Project created:', createdProject);
-
-      // Refetch the user data to update ownedProjects
-      await dispatch(fetchUserAsync(currentUser.githubUsername)).unwrap();
+      await dispatch(addProjectAsync(newProject)).unwrap();
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch(fetchUserAsync(token));
+      }
 
       setIsSubmitted(true);
       toast({

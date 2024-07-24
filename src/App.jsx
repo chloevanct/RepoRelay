@@ -3,8 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 
-import { setUser } from "./redux/user/userActions";
-
+import { fetchUserAsync } from "./redux/user/userThunks";
 import Login from "./pages/Login";
 import DashboardPage from "./pages/DashboardPage";
 import ProjectHubPage from "./pages/ProjectHubPage";
@@ -23,35 +22,13 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          // const response = await fetch("http://localhost:3000/user", {
-          const response = await fetch(`${serverUrl}/user`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ token }),
-          });
-          if (response.ok) {
-            const data = await response.json();
-            dispatch(setUser(data.currentUser));
-          } else {
-            console.error("Failed to fetch user data:", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-
-    fetchUserData();
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(fetchUserAsync(token));
+    }
   }, [dispatch]);
 
   useEffect(() => {

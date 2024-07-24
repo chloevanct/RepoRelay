@@ -1,17 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserApi, createUserApi, updateUserApi } from './userService';
+import { getUserApi, updateUserApi } from './userService';
 
 export const fetchUserAsync = createAsyncThunk(
   'user/fetchUser',
-  async (githubUsername) => {
-    return await getUserApi(githubUsername);
-  }
-);
-
-export const createUserAsync = createAsyncThunk(
-  'user/createUser',
   async (token) => {
-    return await createUserApi(token);
+    return await getUserApi(token);
   }
 );
 

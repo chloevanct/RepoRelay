@@ -11,6 +11,7 @@ import {
   WrapItem,
   Button,
   Input,
+  Spinner,
 } from "@chakra-ui/react";
 import Header from "../components/Header";
 import Tag from "../components/Tag";
@@ -22,14 +23,13 @@ import {
   technologyColorMapping,
 } from "../utils/tagColorMappings";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateUserAsync,
-} from "../redux/user/userThunks";
+import { updateUserAsync } from "../redux/user/userThunks";
 import { setUser } from "../redux/user/userSlice";
 
 export default function UserProfilePage() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
+  const userLoading = useSelector((state) => state.user.status === 'pending');
 
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
@@ -145,6 +145,14 @@ export default function UserProfilePage() {
     setNewTechTags(currentUser.preferences?.techTags || []);
     setIsEditingTech(false);
   };
+
+  if (userLoading || !currentUser) {
+    return (
+      <Container centerContent mt={5}>
+        <Spinner size="xl" />
+      </Container>
+    );
+  }
 
   return (
     <>

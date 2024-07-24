@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../requestState';
-import { fetchUserAsync, createUserAsync, updateUserAsync } from './userThunks';
+import { fetchUserAsync, updateUserAsync } from './userThunks';
 
 const INITIAL_STATE = {
   currentUser: null,
@@ -33,10 +33,6 @@ const userSlice = createSlice({
         console.log('fetchUserAsync.rejected with:', action.error);
         state.status = REQUEST_STATE.REJECTED;
         state.error = action.error;
-      })
-      .addCase(createUserAsync.fulfilled, (state, action) => {
-        console.log('createUserAsync.fulfilled with:', action.payload);
-        state.currentUser = action.payload;
       })
       .addCase(updateUserAsync.fulfilled, (state, action) => {
         console.log('updateUserAsync.fulfilled with:', action.payload);

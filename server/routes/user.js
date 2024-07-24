@@ -86,49 +86,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Read user data
-router.get("/:githubUsername", async (req, res) => {
-  const { githubUsername } = req.params;
-
-  try {
-    let user = await User.findOne({ githubUsername });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const responseData = {
-      currentUser: {
-        userID: user.userID,
-        githubUsername: user.githubUsername,
-        ownedProjects: user.ownedProjects,
-        subscribedProjects: user.subscribedProjects,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        userImage: user.userImage,
-        emailAddress: user.emailAddress,
-        preferences: {
-          difficultyTags: user.preferences.difficultyTags,
-          projectTags: user.preferences.projectTags,
-          techTags: user.preferences.techTags,
-        },
-      },
-    };
-
-    res.json(responseData);
-  } catch (error) {
-    console.error("Error reading user data:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 // PATCH endpoint to update user data
 router.patch("/:githubUsername", async (req, res) => {
   const { githubUsername } = req.params;
   const updateData = req.body;
-
-  console.log(githubUsername);
-  console.log(updateData);
 
   try {
     // Find user by GitHub username

@@ -12,12 +12,14 @@ const DeleteProjectButton = ({ project }) => {
     const dispatch = useDispatch();
     const toast = useToast();
     const navigate = useNavigate();
-    const currentUser = useSelector((state) => state.user.currentUser);
 
     const handleDelete = async () => {
         try {
             await dispatch(deleteProjectAsync(project.projectID)).unwrap();
-            await dispatch(fetchUserAsync(currentUser.githubUsername)).unwrap();
+            const token = localStorage.getItem("token");
+            if (token) {
+              dispatch(fetchUserAsync(token));
+            }
             toast({
                 title: "Project deleted.",
                 description: "The project has been successfully deleted.",

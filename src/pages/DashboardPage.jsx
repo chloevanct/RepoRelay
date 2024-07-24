@@ -8,7 +8,7 @@ import { REQUEST_STATE } from "../redux/requestState";
 import ProjectCard from "../components/projectCards/ProjectCard";
 
 const getRecommendedProjects = async (userProfile, allProjects) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
   return allProjects.slice(0, 3);
 };
 
@@ -18,14 +18,15 @@ export default function DashboardPage() {
   const getProjectsStatus = useSelector((state) => state.projects.getProjects);
   const error = useSelector((state) => state.projects.error);
   const currentUser = useSelector((state) => state.user.currentUser);
+
   const [ownedProjects, setOwnedProjects] = useState([]);
   const [subscribedProjects, setSubscribedProjects] = useState([]);
   const [recommendedProjects, setRecommendedProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingRecommended, setLoadingRecommended] = useState(true);
+  const [loadingOwned, setLoadingOwned] = useState(true);
+  const [loadingSubscribed, setLoadingSubscribed] = useState(true);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [fading, setFading] = useState(false);
-
-  console.log('Current user in DashboardPage:', currentUser);
 
   useEffect(() => {
     dispatch(getProjectsAsync());
@@ -33,35 +34,28 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (currentUser && displayedCards.length > 0) {
-      const uniqueOwnedProjects = Array.from(
-        new Set(displayedCards.filter((project) => currentUser.ownedProjects?.includes(project.projectID)))
+      const uniqueOwnedProjects = displayedCards.filter((project) =>
+        currentUser.ownedProjects?.includes(project.projectID)
       );
       setOwnedProjects(uniqueOwnedProjects);
+      setLoadingOwned(false);
 
-      const uniqueSubscribedProjects = Array.from(
-        new Set(displayedCards.filter((project) => currentUser.subscribedProjects?.includes(project.projectID)))
+      const uniqueSubscribedProjects = displayedCards.filter((project) =>
+        currentUser.subscribedProjects?.includes(project.projectID)
       );
       setSubscribedProjects(uniqueSubscribedProjects);
-
-      getRecommendedProjects(currentUser, displayedCards).then((projects) => {
-        const uniqueRecommendedProjects = Array.from(new Set(projects));
-        setRecommendedProjects(uniqueRecommendedProjects);
-        setLoading(false);
-      });
+      setLoadingSubscribed(false);
     }
   }, [currentUser, displayedCards]);
 
   useEffect(() => {
-    if (ownedProjects.length > 0) {
-      console.log("Owned Projects Keys:", ownedProjects.map((project) => project.projectID));
+    if (currentUser && displayedCards.length > 0) {
+      getRecommendedProjects(currentUser, displayedCards).then((projects) => {
+        setRecommendedProjects(projects);
+        setLoadingRecommended(false);
+      });
     }
-    if (subscribedProjects.length > 0) {
-      console.log("Subscribed Projects Keys:", subscribedProjects.map((project) => project.projectID));
-    }
-    if (recommendedProjects.length > 0) {
-      console.log("Recommended Projects Keys:", recommendedProjects.map((project) => project.projectID));
-    }
-  }, [ownedProjects, subscribedProjects, recommendedProjects]);
+  }, [currentUser, displayedCards]);
 
   if (getProjectsStatus === REQUEST_STATE.REJECTED) {
     return <Text>Error: {error}</Text>;
@@ -70,7 +64,9 @@ export default function DashboardPage() {
   const handlePreviousClick = () => {
     setFading(true);
     setTimeout(() => {
-      setCurrentProjectIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : recommendedProjects.length - 1));
+      setCurrentProjectIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : recommendedProjects.length - 1
+      );
       setFading(false);
     }, 500);
   };
@@ -78,7 +74,9 @@ export default function DashboardPage() {
   const handleNextClick = () => {
     setFading(true);
     setTimeout(() => {
-      setCurrentProjectIndex((prevIndex) => (prevIndex < recommendedProjects.length - 1 ? prevIndex + 1 : 0));
+      setCurrentProjectIndex((prevIndex) =>
+        prevIndex < recommendedProjects.length - 1 ? prevIndex + 1 : 0
+      );
       setFading(false);
     }, 500);
   };
@@ -92,7 +90,7 @@ export default function DashboardPage() {
             <Heading as="h3" size="lg" mb={5}>
               Recommended Projects
             </Heading>
-            {loading ? (
+            {loadingRecommended ? (
               <Spinner />
             ) : (
               <Flex direction="column" align="center">
@@ -116,7 +114,9 @@ export default function DashboardPage() {
             <Heading as="h3" size="lg" mb={5}>
               Owned Projects
             </Heading>
-            {ownedProjects.length === 0 ? (
+            {loadingOwned ? (
+              <Spinner />
+            ) : ownedProjects.length === 0 ? (
               <Text pt="20px">No owned projects available.</Text>
             ) : (
               <VStack align="start">
@@ -131,7 +131,9 @@ export default function DashboardPage() {
             <Heading as="h3" size="lg" mb={5}>
               Subscribed Projects
             </Heading>
-            {subscribedProjects.length === 0 ? (
+            {loadingSubscribed ? (
+              <Spinner />
+            ) : subscribedProjects.length === 0 ? (
               <Text pt="20px">No subscribed projects available.</Text>
             ) : (
               <VStack align="start">

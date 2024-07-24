@@ -7,8 +7,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { updatePartialProjectAsync } from "../../redux/projects/projectCardThunks";
-import { updateUserAsync } from "../../redux/user/userThunks";
+import { getProjectsAsync, updatePartialProjectAsync } from "../../redux/projects/projectCardThunks";
+import { fetchUserAsync, updateUserAsync } from "../../redux/user/userThunks";
 import { setUser } from "../../redux/user/userSlice";
 import { useEffect } from "react";
 
@@ -16,9 +16,6 @@ export default function ProjectUsers({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-  useEffect(() => {
-    console.log("Current user updated:", currentUser);
-  }, [currentUser]);
 
   const handleAddSubscribedUser = async () => {
     if (!currentUser || !currentUser.userID || !currentUser.subscribedProjects) {
@@ -37,6 +34,7 @@ export default function ProjectUsers({ project }) {
           },
         })
       );
+      dispatch(getProjectsAsync());
 
       const updatedUser = await dispatch(
         updateUserAsync({
@@ -48,6 +46,10 @@ export default function ProjectUsers({ project }) {
           },
         })
       ).unwrap();
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch(fetchUserAsync(token));
+      }
 
       console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
@@ -76,6 +78,7 @@ export default function ProjectUsers({ project }) {
           },
         })
       );
+      dispatch(getProjectsAsync());
 
       const updatedUser = await dispatch(
         updateUserAsync({
@@ -87,6 +90,10 @@ export default function ProjectUsers({ project }) {
           },
         })
       ).unwrap();
+      const token = localStorage.getItem("token");
+      if (token) {
+        dispatch(fetchUserAsync(token));
+      }
 
       console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
