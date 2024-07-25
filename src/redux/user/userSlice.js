@@ -1,89 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import { REQUEST_STATE } from '../requestState';
+import { fetchUserAsync, updateUserAsync } from './userThunks';
 
-const initialUserState = {
-  currentUser: {
-    userID: "username123",
-    githubUsername: "username123",
-    password: "password",
-    ownedProjects: ["1"],
-    subscribedProjects: ["1"],
-    firstName: "John",
-    lastName: "Doe",
-    userImage:
-      "https://t4.ftcdn.net/jpg/02/19/63/31/360_F_219633151_BW6TD8D1EA9OqZu4JgdmeJGg4JBaiAHj.jpg",
-    emailAddress: "john.doe@example.com",
-    preferences: {
-      difficultyTags: ["Beginner"],
-      projectTags: ["AI Development", "Machine Learning"],
-      techTags: ["Python", "Java", "JavaScript"],
-    },
-  },
+const INITIAL_STATE = {
+  currentUser: null,
+  status: REQUEST_STATE.IDLE,
+  error: null,
 };
 
 const userSlice = createSlice({
-  name: "user",
-  initialState: initialUserState,
+  name: 'user',
+  initialState: INITIAL_STATE,
   reducers: {
     setUser: (state, action) => {
+      console.log('setUser called with:', action.payload);
       state.currentUser = action.payload;
     },
-    updateUser: (state, action) => {
-      state.currentUser = { ...state.currentUser, ...action.payload };
-    },
-    updateUserID: (state, action) => {
-      state.currentUser.userID = action.payload;
-    },
-    updateGithubUsername: (state, action) => {
-      state.currentUser.githubUsername = action.payload;
-    },
-    updatePassword: (state, action) => {
-      state.currentUser.password = action.payload;
-    },
-    updateOwnedProjects: (state, action) => {
-      state.currentUser.ownedProjects = action.payload;
-    },
-    updateSubscribedProjects: (state, action) => {
-      state.currentUser.subscribedProjects = action.payload;
-    },
-    updateFirstName: (state, action) => {
-      state.currentUser.firstName = action.payload;
-    },
-    updateLastName: (state, action) => {
-      state.currentUser.lastName = action.payload;
-    },
-    updateUserImage: (state, action) => {
-      state.currentUser.userImage = action.payload;
-    },
-    updateEmailAddress: (state, action) => {
-      state.currentUser.emailAddress = action.payload;
-    },
-    updateDifficultyTags: (state, action) => {
-      state.currentUser.preferences.difficultyTags = action.payload;
-    },
-    updateProjectTags: (state, action) => {
-      state.currentUser.preferences.projectTags = action.payload;
-    },
-    updateTechTags: (state, action) => {
-      state.currentUser.preferences.techTags = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserAsync.pending, (state) => {
+        console.log('fetchUserAsync.pending');
+        state.status = REQUEST_STATE.PENDING;
+        state.error = null;
+      })
+      .addCase(fetchUserAsync.fulfilled, (state, action) => {
+        console.log('fetchUserAsync.fulfilled with:', action.payload);
+        state.status = REQUEST_STATE.FULFILLED;
+        state.currentUser = action.payload;
+      })
+      .addCase(fetchUserAsync.rejected, (state, action) => {
+        console.log('fetchUserAsync.rejected with:', action.error);
+        state.status = REQUEST_STATE.REJECTED;
+        state.error = action.error;
+      })
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        console.log('updateUserAsync.fulfilled with:', action.payload);
+        state.currentUser = action.payload;
+      });
   },
 });
 
-export const {
-  setUser,
-  updateUser,
-  updateUserID,
-  updateGithubUsername,
-  updatePassword,
-  updateOwnedProjects,
-  updateSubscribedProjects,
-  updateFirstName,
-  updateLastName,
-  updateUserImage,
-  updateEmailAddress,
-  updateDifficultyTags,
-  updateProjectTags,
-  updateTechTags,
-} = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -46,21 +46,18 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const newProject = new Project({ projectID: uuidv4(), ...req.body });
 
-  const ownerID = newProject.projectOwner;
-
-  const user = await User.findOneAndUpdate(
-    { userID: ownerID },
-    { $push: { ownedProjects: newProject.projectID } },
-    { new: true }
-  );
-
-  if (!user) {
-    return res.status(404).send("User not found");
-  }
-
   console.log(req.body);
   try {
+    // Save the new project
     await newProject.save();
+
+    // Update the user who owns the project
+    await User.findOneAndUpdate(
+      { userID: newProject.projectOwner },
+      { $push: { ownedProjects: newProject.projectID } },
+      { new: true }
+    );
+
     return res.status(201).send(newProject);
   } catch (err) {
     return res.status(500).send("Internal Error: " + err.message);
@@ -115,15 +112,44 @@ router.delete("/:id", async (req, res) => {
     const projectID = req.params.id;
     console.log("Received DELETE request for projectID:", projectID);
 
-    const result = await Project.deleteOne({ projectID: projectID });
-    if (result.deletedCount === 0) {
+    const project = await Project.findOne({ projectID });
+    console.log("Project found:", project);
+
+    if (!project) {
+      console.log("Project not found");
       return res.status(404).send("Project not found");
     }
+
+    // Remove the project from the owner's owned projects
+    const ownerUpdateResult = await User.findOneAndUpdate(
+      { userID: project.projectOwner },
+      { $pull: { ownedProjects: projectID } },
+      { new: true }
+    );
+    console.log("Owner update result:", ownerUpdateResult);
+
+    // Remove the project from subscribers' subscribed projects
+    const subscriberUpdateResult = await User.updateMany(
+      { subscribedProjects: projectID },
+      { $pull: { subscribedProjects: projectID } }
+    );
+    console.log("Subscriber update result:", subscriberUpdateResult);
+
+    const result = await Project.deleteOne({ projectID: projectID });
+    console.log("Delete result:", result);
+
+    if (result.deletedCount === 0) {
+      console.log("Project not found during deletion");
+      return res.status(404).send("Project not found");
+    }
+
     return res.status(204).send();
   } catch (err) {
+    console.log("Error occurred:", err.message);
     return res.status(500).send("Internal Error: " + err.message);
   }
 });
+
 
 /* ------------------------------ tasks ------------------------------ */
 // GET list of all tasks in a project

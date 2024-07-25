@@ -10,6 +10,8 @@ import {
   Wrap,
   WrapItem,
   Button,
+  Input,
+  Spinner,
 } from "@chakra-ui/react";
 import Header from "../components/Header";
 import Tag from "../components/Tag";
@@ -20,90 +22,137 @@ import {
   projectColorMapping,
   technologyColorMapping,
 } from "../utils/tagColorMappings";
-import { useUser } from "../hooks/useUser";
-
-import { useSelector, useDispatch } from "react-redux";
-
-import { getProjectsAsync } from "../redux/projects/projectCardThunks";
-
-import ProjectCard from "../components/projectCards/ProjectCard";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserAsync } from "../redux/user/userThunks";
+import { setUser } from "../redux/user/userSlice";
 
 export default function UserProfilePage() {
-  const {
-    currentUser,
-    handleUpdateDifficultyTags,
-    handleUpdateProjectTags,
-    handleUpdateTechTags,
-  } = useUser();
-
-  // console.log(currentUser);
-
   const dispatch = useDispatch();
-  const projects = useSelector((state) => state.projects.projects);
+  const currentUser = useSelector((state) => state.user.currentUser);
+  const userLoading = useSelector((state) => state.user.status === 'pending');
 
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingDifficulty, setIsEditingDifficulty] = useState(false);
   const [isEditingProject, setIsEditingProject] = useState(false);
   const [isEditingTech, setIsEditingTech] = useState(false);
 
-  const [newDifficultyTags, setNewDifficultyTags] = useState([]);
+  const [newFirstName, setNewFirstName] = useState("");
+  const [newLastName, setNewLastName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newUserImage, setNewUserImage] = useState("");
 
+  const [newDifficultyTags, setNewDifficultyTags] = useState([]);
   const [newProjectTags, setNewProjectTags] = useState([]);
   const [newTechTags, setNewTechTags] = useState([]);
-  const [ownedProjects, setOwnedProjects] = useState([]);
-  const [subscribedProjects, setSubscribedProjects] = useState([]);
 
   useEffect(() => {
-    dispatch(getProjectsAsync());
-  }, [dispatch]);
+    if (currentUser) {
+      setNewFirstName(currentUser.firstName || "");
+      setNewLastName(currentUser.lastName || "");
+      setNewEmail(currentUser.emailAddress || "");
+      setNewUserImage(currentUser.userImage || "");
 
-  useEffect(() => {
-    setNewDifficultyTags(currentUser.preferences.difficultyTags);
-    setNewProjectTags(currentUser.preferences.projectTags);
-    setNewTechTags(currentUser.preferences.techTags);
-    setOwnedProjects(
-      // projects
-      projects.filter((project) =>
-        currentUser.ownedProjects.includes(project.projectID)
-      )
-    );
-    setSubscribedProjects(
-      projects.filter((project) =>
-        currentUser.subscribedProjects.includes(project.projectID)
-      )
-    );
-    // console.log(ownedProjects);
-  }, [currentUser, projects]);
+      setNewDifficultyTags(currentUser.preferences?.difficultyTags || []);
+      setNewProjectTags(currentUser.preferences?.projectTags || []);
+      setNewTechTags(currentUser.preferences?.techTags || []);
+    }
+  }, [currentUser]);
 
-  // console.log(currentUser);
-  const handleSaveDifficulty = () => {
-    handleUpdateDifficultyTags(newDifficultyTags);
-    setIsEditingDifficulty(false);
+  const handleSaveProfile = async () => {
+    try {
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: {
+            firstName: newFirstName,
+            lastName: newLastName,
+            emailAddress: newEmail,
+            userImage: newUserImage,
+          },
+        })
+      ).unwrap();
+      dispatch(setUser(updatedUser.currentUser));
+      setIsEditingProfile(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
-  const handleSaveProject = () => {
-    handleUpdateProjectTags(newProjectTags);
-    setIsEditingProject(false);
+  const handleSaveDifficulty = async () => {
+    try {
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: { "preferences.difficultyTags": newDifficultyTags },
+        })
+      ).unwrap();
+      dispatch(setUser(updatedUser.currentUser));
+      setIsEditingDifficulty(false);
+    } catch (error) {
+      console.error("Error updating difficulty tags:", error);
+    }
   };
 
-  const handleSaveTech = () => {
-    handleUpdateTechTags(newTechTags);
-    setIsEditingTech(false);
+  const handleSaveProject = async () => {
+    try {
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: { "preferences.projectTags": newProjectTags },
+        })
+      ).unwrap();
+      dispatch(setUser(updatedUser.currentUser));
+      setIsEditingProject(false);
+    } catch (error) {
+      console.error("Error updating project tags:", error);
+    }
+  };
+
+  const handleSaveTech = async () => {
+    try {
+      const updatedUser = await dispatch(
+        updateUserAsync({
+          githubUsername: currentUser.githubUsername,
+          updateData: { "preferences.techTags": newTechTags },
+        })
+      ).unwrap();
+      dispatch(setUser(updatedUser.currentUser));
+      setIsEditingTech(false);
+    } catch (error) {
+      console.error("Error updating tech tags:", error);
+    }
+  };
+
+  const handleCancelProfile = () => {
+    setNewFirstName(currentUser.firstName || "");
+    setNewLastName(currentUser.lastName || "");
+    setNewEmail(currentUser.emailAddress || "");
+    setNewUserImage(currentUser.userImage || "");
+    setIsEditingProfile(false);
   };
 
   const handleCancelDifficulty = () => {
-    setNewDifficultyTags(currentUser.preferences.difficultyTags);
+    setNewDifficultyTags(currentUser.preferences?.difficultyTags || []);
     setIsEditingDifficulty(false);
   };
 
   const handleCancelProject = () => {
-    setNewProjectTags(currentUser.preferences.projectTags);
+    setNewProjectTags(currentUser.preferences?.projectTags || []);
     setIsEditingProject(false);
   };
 
   const handleCancelTech = () => {
-    setNewTechTags(currentUser.preferences.techTags);
+    setNewTechTags(currentUser.preferences?.techTags || []);
     setIsEditingTech(false);
   };
+
+  if (userLoading || !currentUser) {
+    return (
+      <Container centerContent mt={5}>
+        <Spinner size="xl" />
+      </Container>
+    );
+  }
 
   return (
     <>
@@ -125,16 +174,62 @@ export default function UserProfilePage() {
             <HStack spacing={4} align="center">
               <Avatar
                 size="xl"
-                name={`${currentUser.firstName} ${currentUser.lastName}`}
-                src={currentUser.userImage}
+                name={`${currentUser.firstName || ""} ${currentUser.lastName || ""}`}
+                src={currentUser.userImage || ""}
               />
               <Box>
-                <Heading
-                  as="h4"
-                  size="md"
-                >{`${currentUser.firstName} ${currentUser.lastName}`}</Heading>
-                <Text>{currentUser.emailAddress}</Text>
-                <Text>{`GitHub: ${currentUser.githubUsername}`}</Text>
+                {isEditingProfile ? (
+                  <>
+                    <Input
+                      value={newUserImage}
+                      onChange={(e) => setNewUserImage(e.target.value)}
+                      placeholder="Image URL"
+                      mb={2}
+                    />
+                    <Input
+                      value={newFirstName}
+                      onChange={(e) => setNewFirstName(e.target.value)}
+                      placeholder="First Name"
+                      mb={2}
+                    />
+                    <Input
+                      value={newLastName}
+                      onChange={(e) => setNewLastName(e.target.value)}
+                      placeholder="Last Name"
+                      mb={2}
+                    />
+                    <Input
+                      value={newEmail}
+                      onChange={(e) => setNewEmail(e.target.value)}
+                      placeholder="Email"
+                      mb={2}
+                    />
+                    <HStack>
+                      <Button size="sm" onClick={handleSaveProfile}>
+                        Save
+                      </Button>
+                      <Button size="sm" onClick={handleCancelProfile}>
+                        Cancel
+                      </Button>
+                    </HStack>
+                  </>
+                ) : (
+                  <>
+                    <Heading
+                      as="h4"
+                      size="md"
+                    >{`${currentUser.firstName || ""} ${currentUser.lastName || ""}`}</Heading>
+                    <Text>{currentUser.emailAddress || ""}</Text>
+                    <Text>{`GitHub: ${currentUser.githubUsername || ""}`}</Text>
+                    <Button
+                      size="sm"
+                      mt={2}
+                      onClick={() => setIsEditingProfile(true)}
+                    >
+                      Edit Profile
+                    </Button>
+                  </>
+                )}
               </Box>
             </HStack>
 
@@ -165,7 +260,7 @@ export default function UserProfilePage() {
                 <DifficultySelector
                   id="difficultyTags"
                   label="Difficulty Level"
-                  value={newDifficultyTags[0]}
+                  value={newDifficultyTags[0] || ""}
                   onChange={(value) => setNewDifficultyTags([value])}
                   options={Object.keys(difficultyColorMapping)}
                 />
@@ -272,39 +367,6 @@ export default function UserProfilePage() {
                   ))}
                 </Wrap>
               )}
-            </Box>
-
-            {/* <Box>
-              <Heading as="h4" size="md" mb={2}>
-                Owned Projects
-              </Heading>
-              <VStack align="start">
-                {currentUser.ownedProjects.map((projectId, index) => (
-                  <Text key={index}>Project ID: {projectId}</Text>
-                ))}
-              </VStack>
-            </Box> */}
-
-            <Box>
-              <Heading as="h4" size="md" mb={2}>
-                Owned Projects
-              </Heading>
-              <VStack align="start">
-                {ownedProjects.map((project) => (
-                  <ProjectCard key={project.projectID} project={project} />
-                ))}
-              </VStack>
-            </Box>
-
-            <Box>
-              <Heading as="h4" size="md" mb={2}>
-                Subscribed Projects
-              </Heading>
-              <VStack align="start">
-                {subscribedProjects.map((project) => (
-                  <ProjectCard key={project.projectID} project={project} />
-                ))}
-              </VStack>
             </Box>
           </VStack>
         </Box>
