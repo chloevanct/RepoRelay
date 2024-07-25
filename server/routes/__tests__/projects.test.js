@@ -47,6 +47,7 @@ jest.mock('../../db/models/project', () => {
 jest.mock('../../db/models/user', () => {
     return {
         findOneAndUpdate: jest.fn(),
+        updateMany: jest.fn(),
     };
 });
 
@@ -83,10 +84,27 @@ describe('Projects API', () => {
     });
 
     it('should delete a project', async () => {
+        const mockOwnerUpdateResult = { userID: mockProject.projectOwner, ownedProjects: [] };
+        const mockSubscriberUpdateResult = { nModified: 0 };
+
+        Project.findOne.mockResolvedValue(mockProject);
         Project.deleteOne.mockResolvedValue({ deletedCount: 1 });
+        User.findOneAndUpdate.mockResolvedValue(mockOwnerUpdateResult);
+        User.updateMany.mockResolvedValue(mockSubscriberUpdateResult);
 
         const response = await request(app).delete(`/projects/${mockProject.projectID}`);
         expect(response.status).toBe(204);
+        expect(Project.findOne).toHaveBeenCalledWith({ projectID: mockProject.projectID });
+        expect(Project.deleteOne).toHaveBeenCalledWith({ projectID: mockProject.projectID });
+        expect(User.findOneAndUpdate).toHaveBeenCalledWith(
+            { userID: mockProject.projectOwner },
+            { $pull: { ownedProjects: mockProject.projectID } },
+            { new: true }
+        );
+        expect(User.updateMany).toHaveBeenCalledWith(
+            { subscribedProjects: mockProject.projectID },
+            { $pull: { subscribedProjects: mockProject.projectID } }
+        );
     });
 
     it('should update a project', async () => {
