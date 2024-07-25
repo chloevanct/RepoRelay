@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Menu, MenuButton, MenuList, MenuItem, Button, Flex, Text } from '@chakra-ui/react';
 
-export default function SortByMenu() {
-    const [chosenOption, setChosenOption] = useState('Most Relevant');
-
+export default function SortByMenu({ chosenOption, setChosenOption }) {
     const handleMenuItemClick = (option) => {
         setChosenOption(option);
     };
@@ -22,38 +20,35 @@ export default function SortByMenu() {
                                     _active: { bg: 'transparent', border: 'none'},
                                     color: '#5271FF',
                                     display: 'flex',
-                                    alignItems:'center'
+                                    alignItems:'center',
+                                    width: ['100px', '120px', '140px'],
+                                    justifyContent: 'center'
                                 }}
                                     >
                         {chosenOption}
                     </MenuButton>
-                    <MenuList 
+                    <MenuList
                         sx={{
                             color: '#5271FF',
                         }}
                         minW='0' // required to set the width properly, for some reason
                         w='auto'
                     >
-                        <MenuItem 
-                            onClick={() => handleMenuItemClick('Most Relevant')} 
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Newest')}
                             fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
                         >
-                            Most Relevant</MenuItem>
-                        <MenuItem 
-                            onClick={() => handleMenuItemClick('Most Viewed')}
+                            Newest</MenuItem>
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Oldest')}
                             fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
                         >
-                            Most Viewed</MenuItem>
-                        <MenuItem 
-                            onClick={() => handleMenuItemClick('Most Active')} 
+                            Oldest</MenuItem>
+                        <MenuItem
+                            onClick={() => handleMenuItemClick('Most Active')}
                             fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
                         >
                             Most Active</MenuItem>
-                        <MenuItem 
-                            onClick={() => handleMenuItemClick('Submission Date')} 
-                            fontSize={['0.45rem', '0.5rem', '0.7rem', '0.9rem', '1.2rem']}
-                        >
-                            Submission Date</MenuItem>
                     </MenuList>
                 </Menu>
             </Flex>

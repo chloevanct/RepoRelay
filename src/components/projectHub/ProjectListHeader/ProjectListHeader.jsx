@@ -5,7 +5,7 @@ import { Flex, Box, Text } from '@chakra-ui/react';
 import { selectFilteredProjectCount } from '../../../utils/selectors';
 
 // Component to display the header of the project list, including the number of available projects and a sort menu
-export default function ProjectListHeader() {
+export default function ProjectListHeader({ chosenOption, setChosenOption }) {
 
     // Get the count of filtered projects from the Redux store
     const filteredProjectCount = useSelector(selectFilteredProjectCount);
@@ -17,7 +17,7 @@ export default function ProjectListHeader() {
             </Box>
             <Flex justify="space-between" align="center" width="100%">
                 <Text color="#5B5B5B" mr={2} fontSize={['0.6rem', '0.6rem', '1.2rem']}>Showing {filteredProjectCount} available projects</Text>
-                <SortByMenu />
+                <SortByMenu chosenOption={chosenOption} setChosenOption={setChosenOption} />
             </Flex>
         </Flex>
     );
