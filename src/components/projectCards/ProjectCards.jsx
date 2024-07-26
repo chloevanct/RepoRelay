@@ -17,12 +17,10 @@ import {
 
 const CARDS_PER_PAGE = 5;
 
-// **PROBABLY ADD SORTING LOGIC HERE**
-
 // Page navigation logic adapted from Google Gemini code (June 6, 2024).
 // Query: how do I adjust my project cards to display 5 at a time with
 //        multiple pages to scroll through if there's more than 5?
-export default function ProjectCards() {
+export default function ProjectCards({ sortOption }) {
   const dispatch = useDispatch();
   const displayedCards = useSelector(selectFilteredProjects);
   const getProjectsStatus = useSelector((state) => state.projects.getProjects);
@@ -32,7 +30,23 @@ export default function ProjectCards() {
   const maxPage = Math.ceil(displayedCards.length / CARDS_PER_PAGE);
 
   const [currPage, setCurrPage] = useState(1);
-  const currPageCards = displayedCards.slice(
+
+  const sortProjects = (projects, option) => {
+    switch (option) {
+      case 'Newest':
+        return [...projects].sort((a, b) => new Date(b.postedDate) - new Date(a.postedDate));
+      case 'Oldest':
+        return [...projects].sort((a, b) => new Date(a.postedDate) - new Date(b.postedDate));
+      case 'Most Active':
+        return [...projects].sort((a, b) => new Date(b.lastActivityDate) - new Date(a.lastActivityDate));
+      default:
+        return projects;
+    }
+  };
+
+  const sortedProjects = sortProjects(displayedCards, sortOption);
+
+  const currPageCards = sortedProjects.slice(
     (currPage - 1) * CARDS_PER_PAGE,
     currPage * CARDS_PER_PAGE
   );

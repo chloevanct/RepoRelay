@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import Header from "../components/Header";
 import SearchBarHeader from "../components/projectHub/SearchBarHeader/SearchBarHeader";
 import FilterForm from "../components/projectHub/FilterForm";
@@ -6,6 +7,8 @@ import ProjectCards from "../components/projectCards/ProjectCards";
 import { Flex } from "@chakra-ui/react";
 
 export default function ProjectHubPage() {
+  const [sortOption, setSortOption] = useState('Newest');
+
   return (
     <Flex direction="column" width="100%">
       <Header></Header>
@@ -14,8 +17,8 @@ export default function ProjectHubPage() {
         <Flex gap="auto" width="100%">
           <FilterForm></FilterForm>
           <Flex direction="column" width="80%">
-            <ProjectListHeader></ProjectListHeader>
-            <ProjectCards></ProjectCards>
+            <ProjectListHeader chosenOption={sortOption} setChosenOption={setSortOption} />
+            <ProjectCards sortOption={sortOption} />
           </Flex>
         </Flex>
       </Flex>
