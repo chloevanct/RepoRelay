@@ -17,11 +17,15 @@ import {
 
 const CARDS_PER_PAGE = 5;
 
-// **PROBABLY ADD SORTING LOGIC HERE**
-
-// Page navigation logic adapted from Google Gemini code (June 6, 2024).
-// Query: how do I adjust my project cards to display 5 at a time with
-//        multiple pages to scroll through if there's more than 5?
+/**
+ * Renders a list of project cards with pagination.
+ *
+ * @returns {JSX.Element} The rendered project cards component.
+ * 
+ * Page navigation logic adapted from Google Gemini code (June 6, 2024).
+ * Query: how do I adjust my project cards to display 5 at a time with
+ *   multiple pages to scroll through if there's more than 5?
+ */
 export default function ProjectCards() {
   const dispatch = useDispatch();
   const displayedCards = useSelector(selectFilteredProjects);

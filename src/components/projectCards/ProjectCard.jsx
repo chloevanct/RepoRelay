@@ -4,6 +4,14 @@ import ProjectTags from './ProjectTags'
 import { Link } from "react-router-dom";
 import { Flex, Divider } from '@chakra-ui/react'
 
+
+/**
+ * Renders a project card component that displays a project's image, info, and tags.
+ *
+ * @param {Object} project - The project data to be displayed.
+ *
+ * @returns {JSX.Element} The rendered project card component.
+ */
 export default function ProjectCard({ project }) {
     return (
         <Link to={`/projectDetails/${project.projectID}`}>

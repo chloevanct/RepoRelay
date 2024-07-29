@@ -5,6 +5,14 @@ import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunk
 import GitHubLogo from "../../assets/github-logo.png";
 import DeleteProjectButton from './DeleteProjectButton';
 
+
+/**
+ * A component that displays and allows editing of project information, including the project name, image URL, and description.
+ *
+ * @param {Object} project - The project object containing project details.
+ * 
+ * @returns {JSX.Element} The rendered EditableProjectInfo component.
+ */
 export default function EditableProjectInfo({ project }) {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser);

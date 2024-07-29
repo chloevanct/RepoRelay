@@ -23,6 +23,15 @@ import { CloseIcon, CheckIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import ProgressBar from './ProgressBar';
 import { addTaskAsync, updatePartialTaskAsync, deleteTaskAsync } from '../../redux/projects/projectTaskThunks';
 
+
+/**
+ * A component for displaying and managing project tasks, including adding, updating, and deleting tasks.
+ * The component provides a visual representation of task progress and allows users to manage tasks by updating their status.
+ *
+ * @param {Object} project - The project object containing tasks and other details.
+ * 
+ * @returns {JSX.Element} The rendered ProjectProgress component.
+ */
 export default function ProjectProgress({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -36,7 +45,6 @@ export default function ProjectProgress({ project }) {
   }, [project.tasks]);
 
   useEffect(() => {
-    // console.log('Local tasks updated:', localTasks);
   }, [localTasks]);
 
   const complete_tasks = useMemo(() => localTasks.filter(task => task && task.taskStatus === 'completed'), [localTasks]);

@@ -17,6 +17,19 @@ import {
 import { DeleteButton } from "./DeleteButton";
 import Tag from "../Tag";
 
+/**
+ * Creates a form field component for adding Tag components to a project.
+ *
+ * @param {string} id - The id of the input field.
+ * @param {string} label - The label displayed on the input box.
+ * @param {Array<string>} tags - The list of tags to add to the project.
+ * @param {Object} tagMapping - The type of mapping to apply to the tags.
+ *  ** Expects `difficultyColorMapping`, `projectColorMapping`, `technologyColorMapping`.
+ * @param {Function} onAdd - The callback function to add a tag.
+ * @param {Function} onRemove - The callback function to remove a tag.
+ *
+ * @returns {JSX.Element} The rendered tag input component.
+ */
 export function TagInput({ id, label, tags, tagMapping, onAdd, onRemove }) {
   const [searchText, setSearchText] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();

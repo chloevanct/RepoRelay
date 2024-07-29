@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 
+
 export default function sanitizeProjectInput(formData, toast) {
     const maxNameLength = 50;
     const maxDescriptionLength = 500;

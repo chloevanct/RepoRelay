@@ -26,6 +26,12 @@ import { fetchUserAsync } from "../../redux/user/userThunks";
 import { useNavigate } from 'react-router-dom';
 import sanitizeProjectInput from "./sanitization";
 
+
+/**
+ * Creates a parent form component to setup a new project.
+ * 
+ * @returns {JSX.Element} The rendered project info form component.
+ */
 export default function ProjectInfoForm() {
   const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -34,6 +40,11 @@ export default function ProjectInfoForm() {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
 
+  /**
+   * Validates the form data to ensure all required fields are filled with non-whitespace values.
+   *
+   * @returns {boolean} True if the form data is valid, otherwise false.
+   */
   const validateForm = () => {
     return (
       formData.name.trim() &&
@@ -43,6 +54,12 @@ export default function ProjectInfoForm() {
     );
   };
 
+  /**
+   * Handles the form submission, including sanitization and dispatching the add project action.
+   *
+   * @param {Object} e - The event object.
+   * @returns {Promise<void>} 
+   */
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     

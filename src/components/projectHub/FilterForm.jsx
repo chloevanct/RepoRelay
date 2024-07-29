@@ -5,6 +5,13 @@ import { toggleTagFilter, clearFilters } from '../../redux/projects/projectSlice
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../../utils/tagColorMappings';
 import ClearFiltersButton from './ClearFiltersButton';
 
+
+/**
+ * A form component for filtering projects based on difficulty, project tags, and technology tags.
+ * It includes options to select or deselect tags and clear all filters at once. The component uses Redux for state management.
+ * 
+ * @returns {JSX.Element} The rendered FilterForm component.
+ */
 export default function FilterForm() {
     const dispatch = useDispatch();
 

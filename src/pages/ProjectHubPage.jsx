@@ -5,6 +5,13 @@ import ProjectListHeader from "../components/projectHub/ProjectListHeader/Projec
 import ProjectCards from "../components/projectCards/ProjectCards";
 import { Flex } from "@chakra-ui/react";
 
+/**
+ * ProjectHubPage component serves as the main page for exploring projects.
+ * Includes a header, a search bar, a filter form, a project list header, 
+ * and a list of project cards. 
+ * 
+ * @returns {JSX.Element} The rendered Project Hub page.
+ */
 export default function ProjectHubPage() {
   return (
     <Flex direction="column" width="100%">

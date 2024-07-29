@@ -4,6 +4,13 @@ import { addCommentAsync } from "../../redux/projects/projectCommentThunks";
 
 import { FormControl, Input, Flex, Image, Button, Box } from '@chakra-ui/react'
 
+/**
+ * A component that allows users to post comments on a project.
+ *
+ * @param {Object} project - The project object on which the comment is to be posted.
+ * 
+ * @returns {JSX.Element} The rendered PostCommentForm component.
+ */
 export default function PostCommentForm({ project, addComment }) {
 
     const dispatch = useDispatch();

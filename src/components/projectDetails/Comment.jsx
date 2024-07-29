@@ -1,6 +1,13 @@
 import BlankPP from "../../assets/blank-profile-picture.jpeg";
 import { Flex, Image, Text, Box } from "@chakra-ui/react"
 
+/**
+ * Renders a single comment with the commenter's profile image, name, date, and comment body.
+ *
+ * @param {Object} comment - The comment object to be displayed.
+ * 
+ * @returns {JSX.Element} The rendered comment component.
+ */
 export default function Comment({ comment }) {
 
     const commenterProfileImage = comment.commenterProfileImage ? comment.commenterProfileImage : BlankPP;
