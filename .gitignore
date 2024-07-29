@@ -33,3 +33,4 @@ server/.env
 
 .env
 model/myenv
+/model/__pycache__
