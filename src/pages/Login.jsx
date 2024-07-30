@@ -12,7 +12,6 @@ const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
 const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 
-// const CLIENT_ID = "Ov23li1yHM1QOlk2RKrV";
 const REDIRECT_URI = `${serverUrl}/oauth/callback`;
 
 function loginWithGithub() {
@@ -21,6 +20,12 @@ function loginWithGithub() {
   );
 }
 
+/**
+ * Login component that provides a login interface for users to authenticate with GitHub.
+ * The login button initiates the OAuth flow by redirecting the user to GitHub's authorization page.
+ * 
+ * @returns {JSX.Element} The rendered Login page with a welcome message and GitHub login button.
+ */ 
 const Login = () => {
   return (
     <Container maxW="container.sm" centerContent mt={10}>

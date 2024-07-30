@@ -32,6 +32,11 @@ const getRecommendedProjects = async (githubUsername) => {
   }
 };
 
+/**
+ * DashboardPage component that displays a list of recommended projects, owned projects, and subscribed projects.
+ * 
+ * @returns {JSX.Element} The rendered Dashboard page with project sections and navigation controls.
+ */
 export default function DashboardPage() {
   const dispatch = useDispatch();
   const displayedCards = useSelector(selectFilteredProjects);

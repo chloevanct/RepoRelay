@@ -10,6 +10,14 @@ import CommentsSection from '../components/projectDetails/CommentsSection';
 
 import { Box, Divider, Spinner, Container } from '@chakra-ui/react';
 
+/**
+ * ProjectDetailsPage component displays detailed information and comments for a specific project.
+ * Fetches project data based on the project ID from the URL parameters. 
+ * Uses Redux for state management and handles asynchronous data fetching using thunks.
+ * 
+ * @returns {JSX.Element} The rendered Project Details page with detailed project information
+ * and a comments section.
+ */
 export default function ProjectDetailsPage() {
   const { projectId } = useParams();
   const dispatch = useDispatch();

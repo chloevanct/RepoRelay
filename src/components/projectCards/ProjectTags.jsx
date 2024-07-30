@@ -2,6 +2,13 @@ import { UnorderedList, Flex, ListItem } from '@chakra-ui/react'
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../../utils/tagColorMappings'
 import Tag from '../Tag'
 
+/**
+ * Renders a list of tags for a project including difficulty, project, and technology tags.
+ *
+ * @param {Object} project - The project object containing tags. 
+ * 
+ * @returns {JSX.Element} The rendered project tags component.
+ */
 export default function ProjectTags({ project }) {
     return (
         <Flex w={['40%', '30%']}>

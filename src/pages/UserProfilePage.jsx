@@ -26,6 +26,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserAsync } from "../redux/user/userThunks";
 import { setUser } from "../redux/user/userSlice";
 
+/**
+ * UserProfilePage component allows users to view and edit their profile information and preferences.
+ * 
+ * @returns {JSX.Element} The rendered User Profile page.
+ */
 export default function UserProfilePage() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);

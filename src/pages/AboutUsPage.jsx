@@ -5,6 +5,11 @@ import CodingImg from "../assets/coding.jpeg";
 import GlobalConnection from "../assets/global-connection.jpeg";
 import { Flex, Image, Heading, Text, Button, Divider } from "@chakra-ui/react";
 
+/**
+ * AboutUsPage component that provides information about the "Repo Relay" platform.
+ * 
+ * @returns {JSX.Element} The rendered About Us page.
+ */
 export default function AboutUsPage() {
   return (
     <Flex direction="column">

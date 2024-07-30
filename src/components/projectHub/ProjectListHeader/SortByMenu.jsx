@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { Menu, MenuButton, MenuList, MenuItem, Button, Flex, Text } from '@chakra-ui/react';
 
+/**
+ * A component that displays a dropdown menu for sorting options.
+ * Users can choose from predefined sorting options, which updates the displayed project cards.
+ * 
+ * @returns {JSX.Element} The rendered SortByMenu component.
+ */
 export default function SortByMenu({ chosenOption, setChosenOption }) {
     const handleMenuItemClick = (option) => {
         setChosenOption(option);

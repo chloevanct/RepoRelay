@@ -11,6 +11,12 @@ import {
 import { useSelector } from "react-redux";
 import NotificationBell from "../assets/notification-bell.png";
 
+
+/**
+ * Main Header component for the application.
+ * 
+ * @returns {JSX.Element} The rendered Header component.
+ */
 export default function Header() {
   const currentUser = useSelector((state) => state.user.currentUser);
 

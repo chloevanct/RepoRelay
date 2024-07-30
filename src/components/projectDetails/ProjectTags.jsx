@@ -7,6 +7,13 @@ import { DifficultySelector } from '../postProject/DifficultySelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunks';
 
+/**
+ * Component for displaying and editing project difficulty, project, and technology tags.
+ *
+ * @param {Object} project - The project data to display and edit.
+ * 
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function ProjectTags({ project }) {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser);

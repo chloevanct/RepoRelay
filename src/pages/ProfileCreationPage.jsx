@@ -6,6 +6,15 @@ import { fetchUserAsync, updateUserAsync } from "../redux/user/userThunks"; // I
 
 const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
+/**
+ * ProfileCreationPage component triggered upon first login.
+ * The component handles saving the profile data by dispatching appropriate Redux actions
+ * 
+ * It uses the user's GitHub data (if available) to prefill the fields and handles 
+ * authentication using a token stored in localStorage.
+ * 
+ * @returns {JSX.Element} The rendered Profile Creation page with a form for user details.
+ */ 
 export default function ProfileCreationPage() {
   const location = useLocation();
   const navigate = useNavigate();

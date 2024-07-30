@@ -1,6 +1,15 @@
 import SearchBar from './SearchBar'
 import { Box, Flex, Text } from '@chakra-ui/react'
 
+/**
+ * A component that renders a header section for the search bar.
+ * 
+ * This component displays a text message and the SearchBar component.
+ * The text message is hidden on small screens and shown on medium and larger screens.
+ * The layout adjusts to center the content on small screens and space it out on larger screens.
+ * 
+ * @returns {JSX.Element} The rendered SearchBarHeader component.
+ */
 export default function SearchBarHeader() {
     return (
         <>
