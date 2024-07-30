@@ -5,6 +5,7 @@ var logger = require("morgan");
 const connectDB = require("./db/connection");
 
 var projectsRouter = require("./routes/projects");
+var emailRouter = require("./routes/email");
 const axios = require("axios");
 const cors = require("cors");
 
@@ -34,6 +35,8 @@ app.use("/user", userRouter);
 
 app.use("/projects", projectsRouter);
 
+app.use("/email", emailRouter);
+
 app.get("/oauth/callback", async (req, res) => {
   const code = req.query.code;
 
@@ -54,7 +57,6 @@ app.get("/oauth/callback", async (req, res) => {
 
     const accessToken = response.data.access_token;
 
-    console.log(response.data);
 
     const redirectURL = process.env.REDIRECT_URL;
 

@@ -27,18 +27,18 @@ Additional functionalities, such as a machine learning recommender system for pr
 
 
 ### Minimal Requirements (3-5, will definitely complete)
-1. As a user, I want to create a profile where I can identify my project preferences and technology skills, enabling me to have an identity and interact with the platform.
-2. As a programmer with an unfinished coding project, I want to post a new project with all required information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level), making my project available for other community members to view and contribute to.
-3. As a programmer looking to tackle a new project, I want to view all available projects in the database, so I can easily find and choose projects I want to contribute to.
-4. As a project contributor, I want to update project information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level) as the project progresses, so that it accurately reflects the project state.
-5. As a project contributor, I want to delete an existing project when it is no longer feasible to work on, ensuring other community members don't accidentally contribute to it.
+1. :white_check_mark: As a user, I want to create a profile where I can identify my project preferences and technology skills, enabling me to have an identity and interact with the platform.
+2. :white_check_mark: As a programmer with an unfinished coding project, I want to post a new project with all required information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level), making my project available for other community members to view and contribute to.
+3. :white_check_mark: As a programmer looking to tackle a new project, I want to view all available projects in the database, so I can easily find and choose projects I want to contribute to.
+4. :white_check_mark: As a project contributor, I want to update project information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level) as the project progresses, so that it accurately reflects the project state.
+5. :white_check_mark: As a project contributor, I want to delete an existing project when it is no longer feasible to work on, ensuring other community members don't accidentally contribute to it.
 
 ### Standard Requirements (3-7, will most likely complete)
-1. As a user, I want to be able to search and filter projects based on various criteria, so that I can quickly locate projects that match my interests and skills.
-2. As a project contributor, I want to be able to subscribe to projects I am interested in or intend to contribute to, so that these projects are tracked in my profile for better organization and follow-up.
-3. As a user, I want to be able to use a colorful tag/hashtag system for categorizing work completed, work to complete, technologies used, and expected difficulty, so that I can rapidly visually identify key project characteristics.
-4. As a contributor, I want to be able to chat with other people working on the same project, so that I can facilitate communication and collaboration.
-5. As a user, I want to be able to authenticate with GitHub and retrieve more data on project repositories using the GitHub API, so that I can streamline the login process and access more detailed project information.
+1. :white_check_mark: As a user, I want to be able to search and filter projects based on various criteria, so that I can quickly locate projects that match my interests and skills.
+2. :white_check_mark: As a project contributor, I want to be able to subscribe to projects I am interested in or intend to contribute to, so that these projects are tracked in my profile for better organization and follow-up.
+3. :white_check_mark: As a user, I want to be able to use a colorful tag/hashtag system for categorizing work completed, work to complete, technologies used, and expected difficulty, so that I can rapidly visually identify key project characteristics.
+4. :white_check_mark: As a contributor, I want to be able to chat with other people working on the same project, so that I can facilitate communication and collaboration.
+5. :white_check_mark: As a user, I want to be able to authenticate with GitHub using the GitHub API so that I can streamline the login process.
 
 ### Stretch Requirements (2-3, plan to complete at least 1!)
 1. As a project contributor, I want to receive machine learning generated project recommendations based on my interests, profile information, and past contributions, so that I can easily find new projects that align with my preferences and skills.

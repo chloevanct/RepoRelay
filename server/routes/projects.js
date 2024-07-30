@@ -12,6 +12,8 @@ const { Project } = require("../db/models");
 
 const User = require("../db/models/user");
 
+const Recommendation = require("../db/models/recommendation");
+
 // ! projects are found by ProjectID (as per group meeting to not break front end)
 // therefore we use findOne({ projectID: projectID })
 // ! tasks and comments are found by _id (mongodb's allocated id)
@@ -150,7 +152,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-
 /* ------------------------------ tasks ------------------------------ */
 // GET list of all tasks in a project
 router.get("/:projectID/tasks", async (req, res) => {
@@ -186,16 +187,17 @@ router.get("/:projectID/tasks/:taskID", async (req, res) => {
 });
 
 // POST a new task to a project
-router.post('/:projectID/tasks', async (req, res) => {
+router.post("/:projectID/tasks", async (req, res) => {
   try {
-      const projectID = req.params.projectID;
-      const project = await Project.findOne({ projectID: projectID });
-      if (!project) {
-        return res.status(404).send('Project not found');
-      }
-      project.tasks.push(req.body);
-      await project.save();
-      res.status(201).send(project);
+    const projectID = req.params.projectID;
+    const project = await Project.findOne({ projectID: projectID });
+    if (!project) {
+      return res.status(404).send("Project not found");
+    }
+    project.tasks.push(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
+    await project.save();
+    res.status(201).send(project);
   } catch (err) {
     return res.status(500).send("Internal Error: " + err.message);
   }
@@ -215,6 +217,7 @@ router.put("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     task.set(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -236,6 +239,7 @@ router.patch("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     Object.assign(task, req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -257,6 +261,7 @@ router.delete("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     project.tasks.pull(taskID);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(204).send();
   } catch (err) {
@@ -299,8 +304,8 @@ router.get("/:projectID/comments/:commentID", async (req, res) => {
 });
 
 // POST a new comment to a project
-router.post('/:projectID/comments', async (req, res) => {
-try {
+router.post("/:projectID/comments", async (req, res) => {
+  try {
     const projectID = req.params.projectID;
     const project = await Project.findOne({ projectID: projectID });
     if (!project) {
@@ -310,9 +315,10 @@ try {
       postedBy: req.body.postedBy,
       commenterProfileImage: req.body.commenterProfileImage,
       datePosted: req.body.datePosted,
-      commentBody: req.body.commentBody
-  };
+      commentBody: req.body.commentBody,
+    };
     project.comments.push(newComment);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(201).send(project);
   } catch (err) {
@@ -334,6 +340,7 @@ router.put("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     comment.set(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -355,6 +362,7 @@ router.patch("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     Object.assign(comment, req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -376,8 +384,39 @@ router.delete("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     project.comments.pull(commentID);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(204).send();
+  } catch (err) {
+    return res.status(500).send("Internal Error: " + err.message);
+  }
+});
+
+// GET recommendation projects
+router.get("/recommendations/:githubUsername", async (req, res) => {
+  try {
+    const githubUsername = req.params.githubUsername;
+
+    // Step 1: Retrieve all projects
+    const allProjects = await Project.find({}).exec();
+
+    // Step 2: Retrieve the recommended project IDs for the given GitHub username
+    const recommendation = await Recommendation.findOne({
+      userID: githubUsername,
+    }).exec();
+
+    if (!recommendation) {
+      // Step 3: If no recommendations for the username, return all projects
+      return res.status(200).json(allProjects);
+    }
+
+    // Step 4: Filter projects based on recommended project IDs
+    const recommendedProjectIDs = recommendation.recommendations;
+    const filteredProjects = allProjects.filter((project) =>
+      recommendedProjectIDs.includes(project.projectID)
+    );
+
+    return res.status(200).json(filteredProjects);
   } catch (err) {
     return res.status(500).send("Internal Error: " + err.message);
   }

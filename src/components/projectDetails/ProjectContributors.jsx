@@ -11,6 +11,8 @@ import { getProjectsAsync, updatePartialProjectAsync } from "../../redux/project
 import { fetchUserAsync, updateUserAsync } from "../../redux/user/userThunks";
 import { setUser } from "../../redux/user/userSlice";
 import { useEffect } from "react";
+import { subscribeToProjectApi } from "../../redux/email/emailService";
+
 
 /**
  * A component that displays and manages the list of users subscribed to a project.
@@ -62,6 +64,16 @@ export default function ProjectUsers({ project }) {
       console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
       console.log("Current user after dispatch:", updatedUser.currentUser);
+
+    // send subscription email notification
+    const emailData = {
+      githubUsername: currentUser.githubUsername,
+      projectOwnerID: project.projectOwner,
+      projectName: project.projectName
+    };
+
+    const response = await subscribeToProjectApi(emailData);
+
     } catch (error) {
       console.error("Error updating user:", error);
     }

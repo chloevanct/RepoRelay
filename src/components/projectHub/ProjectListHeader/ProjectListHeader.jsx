@@ -10,7 +10,7 @@ import { selectFilteredProjectCount } from '../../../utils/selectors';
  * 
  * @returns {JSX.Element} The rendered project list header component.
  */
-export default function ProjectListHeader() {
+export default function ProjectListHeader({ chosenOption, setChosenOption }) {
 
     const filteredProjectCount = useSelector(selectFilteredProjectCount);
 
@@ -21,7 +21,7 @@ export default function ProjectListHeader() {
             </Box>
             <Flex justify="space-between" align="center" width="100%">
                 <Text color="#5B5B5B" mr={2} fontSize={['0.6rem', '0.6rem', '1.2rem']}>Showing {filteredProjectCount} available projects</Text>
-                <SortByMenu />
+                <SortByMenu chosenOption={chosenOption} setChosenOption={setChosenOption} />
             </Flex>
         </Flex>
     );

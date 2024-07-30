@@ -4,10 +4,10 @@ name: Node.js CI
 on:
   push:
     branches:
-      - project_5
+      - final_project
   pull_request:
     branches:
-      - project_5
+      - final_project
 
 jobs:
   build:
@@ -29,3 +29,8 @@ jobs:
         run: |
           cd server
           npm run build --if-present
+      - name: Test
+        run: |
+          cd server
+          npm start &
+          npm test
