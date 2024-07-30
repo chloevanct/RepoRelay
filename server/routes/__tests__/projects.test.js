@@ -77,8 +77,8 @@ describe('Projects API', () => {
         User.findOneAndUpdate.mockResolvedValue({ userID: mockProject.projectOwner, ownedProjects: [mockProject.projectID] });
 
         const response = await request(app).post('/projects').send(mockProject);
-        console.log('Response status:', response.status);
-        console.log('Response body:', response.body);
+        // console.log('Response status:', response.status);
+        // console.log('Response body:', response.body);
         expect(response.status).toBe(201);
         expect(response.body).toEqual(mockProject);
     });
