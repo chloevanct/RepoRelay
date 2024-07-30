@@ -15,14 +15,14 @@ import { Flex } from "@chakra-ui/react";
 export default function ProjectHubPage() {
   return (
     <Flex direction="column" width="100%">
-      <Header></Header>
+      <Header />
       <Flex direction="column" width="100%">
-        <SearchBarHeader></SearchBarHeader>
-        <Flex gap="auto" width="100%">
-          <FilterForm></FilterForm>
-          <Flex direction="column" width="80%">
-            <ProjectListHeader></ProjectListHeader>
-            <ProjectCards></ProjectCards>
+        <SearchBarHeader />
+        <Flex width="100%">
+          <FilterForm width='20%'></FilterForm>
+          <Flex direction="column" boxSizing="border-box">
+            <ProjectListHeader />
+            <ProjectCards />
           </Flex>
         </Flex>
       </Flex>
