@@ -18,10 +18,12 @@ import {
   useDisclosure,
   IconButton,
   HStack,
+  useToast
 } from '@chakra-ui/react';
 import { CloseIcon, CheckIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import ProgressBar from './ProgressBar';
 import { addTaskAsync, updatePartialTaskAsync, deleteTaskAsync } from '../../redux/projects/projectTaskThunks';
+import { sanitizeTaskBody, validateTaskBody } from '../../utils/sanitization'; 
 
 
 /**
@@ -36,6 +38,7 @@ export default function ProjectProgress({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   const [localTasks, setLocalTasks] = useState(project.tasks || []);
   const [newTaskBody, setNewTaskBody] = useState('');
@@ -68,14 +71,17 @@ export default function ProjectProgress({ project }) {
       return;
     }
 
+    const sanitizedTaskBody = sanitizeTaskBody(newTaskBody);
+    if (!validateTaskBody(sanitizedTaskBody, toast)) {
+      return;
+    }
+
     const newTask = {
       postedBy: currentUser.userID,
       datePosted: new Date().toISOString(),
-      taskBody: newTaskBody,
+      taskBody: sanitizedTaskBody,
       taskStatus: 'open',
     };
-
-    console.log('Adding new task:', newTask);
 
     const resultAction = await dispatch(addTaskAsync({ projectID: project.projectID, task: newTask }));
     if (addTaskAsync.fulfilled.match(resultAction)) {

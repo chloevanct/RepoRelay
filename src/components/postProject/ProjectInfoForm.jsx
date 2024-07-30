@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
 import { fetchUserAsync } from "../../redux/user/userThunks";
 import { useNavigate } from 'react-router-dom';
-import sanitizeProjectInput from "./sanitization";
+import sanitizeAllNewProjectFields from "../../utils/sanitization";
 
 
 /**
@@ -63,40 +63,42 @@ export default function ProjectInfoForm() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
-    if (!sanitizeProjectInput(formData, toast)) {
+    const sanitizedFormData = sanitizeAllNewProjectFields(formData, toast);
+
+    if (!sanitizedFormData) {
       return;
     }
 
     const tasks = [
-      ...formData.tasksCompleted.map((task) => ({
+      ...sanitizedFormData.tasksCompleted.map((task) => ({
         postedBy: currentUser.userID,
-        datePosted: formData.date,
+        datePosted: sanitizedFormData.date,
         taskBody: task,
         taskStatus: 'completed',
       })),
-      ...formData.tasksToComplete.map((task) => ({
+      ...sanitizedFormData.tasksToComplete.map((task) => ({
         postedBy: currentUser.userID,
-        datePosted: formData.date,
+        datePosted: sanitizedFormData.date,
         taskBody: task,
         taskStatus: 'open',
       })),
     ];
 
     const newProject = {
-      projectName: formData.name,
-      projectDescription: formData.description,
-      projectImgURL: formData.projectImgURL,
-      githubURL: formData.repoLink,
-      projectOwner: currentUser.userID,
-      pastContributors: [],
-      subscribedUsers: [],
-      postedDate: formData.date,
-      lastActivityDate: formData.date,
-      difficultyTag: formData.difficultyTags[0],
-      projectTags: formData.projectTags,
-      techTags: formData.techTags,
-      tasks: tasks,
-      comments: [],
+        projectName: sanitizedFormData.name,
+        projectDescription: sanitizedFormData.description,
+        projectImgURL: sanitizedFormData.projectImgURL,
+        githubURL: sanitizedFormData.repoLink,
+        projectOwner: currentUser.userID,
+        pastContributors: [],
+        subscribedUsers: [],
+        postedDate: formData.date,
+        lastActivityDate: formData.date,
+        difficultyTag: formData.difficultyTags[0],
+        projectTags: formData.projectTags,
+        techTags: formData.techTags,
+        tasks: tasks,
+        comments: [],
     };
 
     try {
