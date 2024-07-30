@@ -5,6 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { deleteProjectAsync } from '../../redux/projects/projectCardThunks';
 import { fetchUserAsync } from '../../redux/user/userThunks';
 
+
+/**
+ * A button component that allows users to delete a project, with a confirmation dialog and error handling.
+ *
+ * @param {Object} project - The project object to be deleted.
+ * 
+ * @returns {JSX.Element} The rendered DeleteProjectButton component.
+ */
 const DeleteProjectButton = ({ project }) => {
     const [isOpen, setIsOpen] = useState(false);
     const onClose = () => setIsOpen(false);

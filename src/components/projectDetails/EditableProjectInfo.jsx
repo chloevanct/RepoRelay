@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
-import { Flex, Heading, Text, Box, Button, Input, Textarea, Image, Link } from '@chakra-ui/react';
+import { Flex, Heading, Text, Box, Button, Input, Textarea, Image, Link, useToast } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updatePartialProjectAsync } from '../../redux/projects/projectCardThunks';
 import GitHubLogo from "../../assets/github-logo.png";
 import DeleteProjectButton from './DeleteProjectButton';
+import { sanitizeText, sanitizeTaskBody, validateName, validateDescription, validateImageUrl } from '../../utils/sanitization'; 
 
+
+/**
+ * A component that displays and allows editing of project information, including the project name, image URL, and description.
+ *
+ * @param {Object} project - The project object containing project details.
+ * 
+ * @returns {JSX.Element} The rendered EditableProjectInfo component.
+ */
 export default function EditableProjectInfo({ project }) {
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.user.currentUser);
+    const toast = useToast();
 
     const [isEditing, setIsEditing] = useState(false);
     const [newProjectName, setNewProjectName] = useState(project.projectName);
@@ -15,12 +25,24 @@ export default function EditableProjectInfo({ project }) {
     const [newDescription, setNewDescription] = useState(project.projectDescription);
 
     const handleSave = () => {
+        const sanitizedProjectName = sanitizeText(newProjectName);
+        const sanitizedImageUrl = sanitizeText(newImageUrl);
+        const sanitizedDescription = sanitizeText(newDescription);
+
+        if (
+            !validateName(sanitizedProjectName, toast) ||
+            !validateDescription(sanitizedDescription, toast) ||
+            !validateImageUrl(sanitizedImageUrl, toast)
+        ) {
+            return;
+        }
+
         dispatch(updatePartialProjectAsync({
             id: project.projectID,
             project: {
-                projectName: newProjectName,
-                projectImgURL: newImageUrl,
-                projectDescription: newDescription,
+                projectName: sanitizedProjectName,
+                projectImgURL: sanitizedImageUrl,
+                projectDescription: sanitizedDescription,
             },
         }));
         setIsEditing(false);

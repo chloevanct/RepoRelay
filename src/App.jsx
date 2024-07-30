@@ -17,6 +17,18 @@ const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
 console.log(serverUrl);
 
+/**
+ * The App component serves as the main entry point for the application.
+ * It handles authentication state and routing for the app based on the user's authentication status.
+ * 
+ * The component performs the following:
+ * - Checks for an authentication token in local storage or URL query parameters.
+ * - Fetches user data if a token is present.
+ * - Sets the authentication state based on the presence of a valid token.
+ * - Defines the routes for different pages, including login, dashboard, project hub, project posting, project details, about us, user profile, and profile creation.
+ * 
+ * @returns {JSX.Element} The rendered App component with routing logic based on authentication state.
+ */
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const dispatch = useDispatch();

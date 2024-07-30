@@ -3,6 +3,14 @@ import { SearchIcon } from "@chakra-ui/icons"
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchQuery } from '../../../redux/projects/projectSlice'
 
+/**
+ * A component that renders a search bar for filtering projects.
+ * 
+ * The search bar includes an input field with a search icon, allowing users to type in a query to filter projects.
+ * The search query is managed in the Redux store and updated as the user types.
+ * 
+ * @returns {JSX.Element} The rendered SearchBar component.
+ */
 export default function SearchBar() {
     const dispatch = useDispatch()
     const searchQuery = useSelector((state) => state.projects.searchQuery)

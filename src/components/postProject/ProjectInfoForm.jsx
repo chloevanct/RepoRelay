@@ -24,7 +24,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProjectAsync } from "../../redux/projects/projectCardThunks";
 import { fetchUserAsync } from "../../redux/user/userThunks";
 import { useNavigate } from 'react-router-dom';
+import sanitizeAllNewProjectFields from "../../utils/sanitization";
 
+
+/**
+ * Creates a parent form component to setup a new project.
+ * 
+ * @returns {JSX.Element} The rendered project info form component.
+ */
 export default function ProjectInfoForm() {
   const { formData, handleChange, addToList, removeFromList, handleReset } = useFormData();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -33,48 +40,65 @@ export default function ProjectInfoForm() {
   const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user.currentUser);
 
+  /**
+   * Validates the form data to ensure all required fields are filled with non-whitespace values.
+   *
+   * @returns {boolean} True if the form data is valid, otherwise false.
+   */
   const validateForm = () => {
     return (
-      formData.name &&
-      formData.repoLink &&
-      formData.description &&
+      formData.name.trim() &&
+      formData.repoLink.trim() &&
+      formData.description.trim() &&
       formData.difficultyTags.length > 0
     );
   };
 
+  /**
+   * Handles the form submission, including sanitization and dispatching the add project action.
+   *
+   * @param {Object} e - The event object.
+   * @returns {Promise<void>} 
+   */
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
+    const sanitizedFormData = sanitizeAllNewProjectFields(formData, toast);
+
+    if (!sanitizedFormData) {
+      return;
+    }
 
     const tasks = [
-      ...formData.tasksCompleted.map((task) => ({
+      ...sanitizedFormData.tasksCompleted.map((task) => ({
         postedBy: currentUser.userID,
-        datePosted: formData.date,
+        datePosted: sanitizedFormData.date,
         taskBody: task,
         taskStatus: 'completed',
       })),
-      ...formData.tasksToComplete.map((task) => ({
+      ...sanitizedFormData.tasksToComplete.map((task) => ({
         postedBy: currentUser.userID,
-        datePosted: formData.date,
+        datePosted: sanitizedFormData.date,
         taskBody: task,
         taskStatus: 'open',
       })),
     ];
 
     const newProject = {
-      projectName: formData.name,
-      projectDescription: formData.description,
-      projectImgURL: formData.projectImgURL,
-      githubURL: formData.repoLink,
-      projectOwner: currentUser.userID,
-      pastContributors: [],
-      subscribedUsers: [],
-      postedDate: formData.date,
-      lastActivityDate: formData.date,
-      difficultyTag: formData.difficultyTags[0],
-      projectTags: formData.projectTags,
-      techTags: formData.techTags,
-      tasks: tasks,
-      comments: [],
+        projectName: sanitizedFormData.name,
+        projectDescription: sanitizedFormData.description,
+        projectImgURL: sanitizedFormData.projectImgURL,
+        githubURL: sanitizedFormData.repoLink,
+        projectOwner: currentUser.userID,
+        pastContributors: [],
+        subscribedUsers: [],
+        postedDate: formData.date,
+        lastActivityDate: formData.date,
+        difficultyTag: formData.difficultyTags[0],
+        projectTags: formData.projectTags,
+        techTags: formData.techTags,
+        tasks: tasks,
+        comments: [],
     };
 
     try {

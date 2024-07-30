@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCommentAsync } from "../../redux/projects/projectCommentThunks";
+import { sanitizeCommentBody, validateCommentBody } from '../../utils/sanitization'; 
 
-import { FormControl, Input, Flex, Image, Button, Box } from '@chakra-ui/react'
+import { FormControl, Input, Flex, Image, Button, useToast } from '@chakra-ui/react'
 
+/**
+ * A component that allows users to post comments on a project.
+ *
+ * @param {Object} project - The project object on which the comment is to be posted.
+ * 
+ * @returns {JSX.Element} The rendered PostCommentForm component.
+ */
 export default function PostCommentForm({ project, addComment }) {
 
     const dispatch = useDispatch();
+    const toast = useToast();
+
     const currentUser = useSelector((state) => state.user.currentUser);
     const [commentBody, setCommentBody] = useState("");
 
@@ -20,11 +30,16 @@ export default function PostCommentForm({ project, addComment }) {
             return;
         }
 
+        const sanitizedCommentBody = sanitizeCommentBody(commentBody);
+        if (!validateCommentBody(sanitizedCommentBody, toast)) {
+          return;
+        }
+
         const newComment = {
             postedBy: currentUser.githubUsername,
             commenterProfileImage: currentUser.userImage,
             datePosted: new Date(),
-            commentBody: commentBody
+            commentBody: sanitizedCommentBody
         };
 
         try {

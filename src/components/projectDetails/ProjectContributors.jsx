@@ -14,6 +14,14 @@ import { useEffect } from "react";
 import { subscribeToProjectApi } from "../../redux/email/emailService";
 
 
+/**
+ * A component that displays and manages the list of users subscribed to a project.
+ * Allows the current user to join or leave the project team.
+ *
+ * @param {Object} project - The project object to display and manage.
+ * 
+ * @returns {JSX.Element} The rendered ProjectUsers component.
+ */
 export default function ProjectUsers({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
