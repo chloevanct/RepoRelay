@@ -5,10 +5,15 @@ var logger = require("morgan");
 const connectDB = require("./db/connection");
 
 var projectsRouter = require("./routes/projects");
+var emailRouter = require("./routes/email");
 const axios = require("axios");
 const cors = require("cors");
 
 require("dotenv").config(); // To load CLIENT_ID and CLIENT_SECRET from .env file
+
+console.log('Mailgun API Key:', process.env.MAILGUN_API_KEY);
+console.log('Mailgun Domain:', process.env.MAILGUN_DOMAIN);
+console.log('Email User:', process.env.EMAIL_USER);
 
 var indexRouter = require("./routes/index");
 
@@ -33,6 +38,8 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 
 app.use("/projects", projectsRouter);
+
+app.use("/email", emailRouter);
 
 app.get("/oauth/callback", async (req, res) => {
   const code = req.query.code;
