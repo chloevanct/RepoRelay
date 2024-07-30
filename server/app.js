@@ -11,10 +11,6 @@ const cors = require("cors");
 
 require("dotenv").config(); // To load CLIENT_ID and CLIENT_SECRET from .env file
 
-console.log('Mailgun API Key:', process.env.MAILGUN_API_KEY);
-console.log('Mailgun Domain:', process.env.MAILGUN_DOMAIN);
-console.log('Email User:', process.env.EMAIL_USER);
-
 var indexRouter = require("./routes/index");
 
 const userRouter = require("./routes/user");
