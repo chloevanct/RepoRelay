@@ -412,9 +412,14 @@ router.get("/recommendations/:githubUsername", async (req, res) => {
 
     // Step 4: Filter projects based on recommended project IDs
     const recommendedProjectIDs = recommendation.recommendations;
-    const filteredProjects = allProjects.filter((project) =>
+    let filteredProjects = allProjects.filter((project) =>
       recommendedProjectIDs.includes(project.projectID)
     );
+
+    // Step 5: Limit the results to the first 3 projects if the array is larger than 3
+    if (filteredProjects.length > 3) {
+      filteredProjects = filteredProjects.slice(0, 3);
+    }
 
     return res.status(200).json(filteredProjects);
   } catch (err) {
