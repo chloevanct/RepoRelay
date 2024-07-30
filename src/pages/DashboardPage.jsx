@@ -8,9 +8,28 @@ import { REQUEST_STATE } from "../redux/requestState";
 import { fetchUserAsync } from "../redux/user/userThunks";
 import ProjectCard from "../components/projectCards/ProjectCard";
 
-const getRecommendedProjects = async (userProfile, allProjects) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
-  return allProjects.slice(0, 3);
+const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
+export const API_BASE_URL = `${serverUrl}/projects`;
+
+const getRecommendedProjects = async (githubUsername) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/recommendations/${githubUsername}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error fetching recommended projects: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching recommended projects:", error);
+    return [];
+  }
 };
 
 export default function DashboardPage() {
@@ -58,7 +77,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (currentUser && displayedCards.length > 0) {
-      getRecommendedProjects(currentUser, displayedCards).then((projects) => {
+      getRecommendedProjects(currentUser.githubUsername).then((projects) => {
         setRecommendedProjects(projects);
         setLoadingRecommended(false);
       });
@@ -98,6 +117,9 @@ export default function DashboardPage() {
             <Heading as="h3" size="lg" mb={5}>
               Recommended Projects
             </Heading>
+            <Text fontSize="lg" mb={5}>
+              Based on your preferences, we think you might enjoy these projects!
+            </Text>
             {loadingRecommended ? (
               <Spinner />
             ) : (
