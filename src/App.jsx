@@ -9,7 +9,6 @@ import PostProjectPage from "./pages/PostProjectPage";
 import ProjectDetailsPage from "./pages/ProjectDetailsPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import UserProfilePage from "./pages/UserProfilePage";
-import ProfileCreationPage from "./pages/ProfileCreationPage";
 import { useToast } from "@chakra-ui/react";
 import "./App.css";
 
@@ -25,7 +24,7 @@ console.log(serverUrl);
  * - Checks for an authentication token in local storage or URL query parameters.
  * - Fetches user data if a token is present.
  * - Sets the authentication state based on the presence of a valid token.
- * - Defines the routes for different pages, including login, dashboard, project hub, project posting, project details, about us, user profile, and profile creation.
+ * - Defines the routes for different pages, including login, dashboard, project hub, project posting, project details, about us, and user profile.
  * 
  * @returns {JSX.Element} The rendered App component with routing logic based on authentication state.
  */
@@ -84,7 +83,6 @@ function App() {
           />
           <Route path="/aboutUs" element={<AboutUsPage />} />
           <Route path="/userProfile" element={<UserProfilePage onLogout={handleLogout} />} />
-          <Route path="/initProfile" element={<ProfileCreationPage />} />
         </>
       )}
     </Routes>
