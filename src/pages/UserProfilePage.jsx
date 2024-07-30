@@ -13,6 +13,7 @@ import {
   Input,
   Spinner,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "../components/Header";
 import Tag from "../components/Tag";
 import { TagInput } from "../components/postProject/TagInput";
@@ -22,11 +23,10 @@ import {
   projectColorMapping,
   technologyColorMapping,
 } from "../utils/tagColorMappings";
-import { useDispatch, useSelector } from "react-redux";
 import { updateUserAsync } from "../redux/user/userThunks";
 import { setUser } from "../redux/user/userSlice";
 
-export default function UserProfilePage() {
+export default function UserProfilePage({ onLogout }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
   const userLoading = useSelector((state) => state.user.status === 'pending');
@@ -170,6 +170,9 @@ export default function UserProfilePage() {
           <Heading as="h3" size="lg" mb={5}>
             User Profile
           </Heading>
+          <Button colorScheme="red" onClick={onLogout}>
+              Logout
+            </Button>
           <VStack spacing={4} align="stretch">
             <HStack spacing={4} align="center">
               <Avatar

@@ -118,7 +118,7 @@ export default function DashboardPage() {
               Recommended Projects
             </Heading>
             <Text fontSize="lg" mb={5}>
-              Based on your preferences, we think you might enjoy these 3 projects!
+              Based on your preferences, we think you might enjoy these projects!
             </Text>
             {loadingRecommended ? (
               <Spinner />
