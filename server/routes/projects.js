@@ -195,6 +195,7 @@ router.post("/:projectID/tasks", async (req, res) => {
       return res.status(404).send("Project not found");
     }
     project.tasks.push(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(201).send(project);
   } catch (err) {
@@ -216,6 +217,7 @@ router.put("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     task.set(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -237,6 +239,7 @@ router.patch("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     Object.assign(task, req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -258,6 +261,7 @@ router.delete("/:projectID/tasks/:taskID", async (req, res) => {
       return res.status(404).send("Task not found");
     }
     project.tasks.pull(taskID);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(204).send();
   } catch (err) {
@@ -314,6 +318,7 @@ router.post("/:projectID/comments", async (req, res) => {
       commentBody: req.body.commentBody,
     };
     project.comments.push(newComment);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(201).send(project);
   } catch (err) {
@@ -335,6 +340,7 @@ router.put("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     comment.set(req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -356,6 +362,7 @@ router.patch("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     Object.assign(comment, req.body);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(200).send(project);
   } catch (err) {
@@ -377,6 +384,7 @@ router.delete("/:projectID/comments/:commentID", async (req, res) => {
       return res.status(404).send("Comment not found");
     }
     project.comments.pull(commentID);
+    project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
     res.status(204).send();
   } catch (err) {
