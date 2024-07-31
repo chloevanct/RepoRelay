@@ -11,7 +11,7 @@ import { getProjectsAsync, updatePartialProjectAsync } from "../../redux/project
 import { fetchUserAsync, updateUserAsync } from "../../redux/user/userThunks";
 import { setUser } from "../../redux/user/userSlice";
 import { useEffect } from "react";
-import { subscribeToProjectApi } from "../../redux/email/emailService";
+import { subscribeToProjectApi, unsubscribeFromProjectApi } from "../../redux/email/emailService";
 
 
 /**
@@ -19,7 +19,7 @@ import { subscribeToProjectApi } from "../../redux/email/emailService";
  * Allows the current user to join or leave the project team.
  *
  * @param {Object} project - The project object to display and manage.
- * 
+ *
  * @returns {JSX.Element} The rendered ProjectUsers component.
  */
 export default function ProjectUsers({ project }) {
@@ -74,6 +74,11 @@ export default function ProjectUsers({ project }) {
 
     const response = await subscribeToProjectApi(emailData);
 
+    if (!response.ok) {
+      console.error('Failed to send subscription email');
+    } else {
+      console.log('Subscription email sent successfully');
+    }
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -118,6 +123,21 @@ export default function ProjectUsers({ project }) {
       console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
       console.log("Current user after dispatch:", updatedUser.currentUser);
+
+    // send unsubscription email notification
+    const emailData = {
+      githubUsername: currentUser.githubUsername,
+      projectOwnerID: project.projectOwner,
+      projectName: project.projectName
+    };
+
+    const response = await unsubscribeFromProjectApi(emailData);
+
+    if (!response.ok) {
+      console.error('Failed to send unsubscription email');
+    } else {
+      console.log('Unsubscription email sent successfully');
+    }
     } catch (error) {
       console.error("Error updating user:", error);
     }

@@ -22,11 +22,50 @@ const sendEmail = (to, subject, text) => {
         return;
     }
 
+    const htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+            }
+            h2 {
+                font-size: 20px;
+                color: #333333;
+            }
+            p {
+                font-size: 16px;
+                color: #666666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>${subject}</h2>
+            <p>${text}</p>
+            <p>This is an automated message, <b>please do not reply.</b></p>
+        </div>
+    </body>
+    </html>
+    `;
+
     const messageData = {
         from: process.env.EMAIL_USER,
         to: to,
         subject: subject,
-        text: text
+        text: text,
+        html: htmlContent
     };
 
     mg.messages.create(process.env.MAILGUN_DOMAIN, messageData)

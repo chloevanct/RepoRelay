@@ -13,3 +13,14 @@ export const subscribeToProjectApi = async (emailData) => {
 
     return handleResponse(response);
 };
+
+// POST to unsubscribe from a project
+export const unsubscribeFromProjectApi = async (emailData) => {
+    const response = await fetch(`${EMAIL_API_BASE_URL}/unsubscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(emailData),
+    });
+
+    return handleResponse(response);
+};
