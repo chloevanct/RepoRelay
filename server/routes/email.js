@@ -15,7 +15,7 @@ router.post('/subscribe', async (req, res) => {
 
         const projectOwnerEmail = projectOwner.emailAddress;
         const subject = `New Contributor Request for ${projectName}`;
-        const text = `A user with the GitHub username ${githubUsername} wants to contribute to your project: ${projectName}. Please review and add them as a contributor on the Github repository.`;
+        const text = `A user with the GitHub username ${githubUsername} wants to contribute to your project, ${projectName}. Please review and add them as a contributor on the Github repository.`;
 
         sendEmail(projectOwnerEmail, subject, text);
         res.status(200).send('Contributor add request sent successfully');
@@ -37,7 +37,7 @@ router.post('/unsubscribe', async (req, res) => {
 
         const projectOwnerEmail = projectOwner.emailAddress;
         const subject = `Contributor Left: ${projectName}`;
-        const text = `A user with the GitHub username ${githubUsername} has left your project: ${projectName}. Please remove them as a contributor on the Github repository.`;
+        const text = `A user with the GitHub username ${githubUsername} has left your project, ${projectName}. Please remove them as a contributor on the Github repository.`;
 
         sendEmail(projectOwnerEmail, subject, text);
         res.status(200).send('Contributor removal request sent successfully');
