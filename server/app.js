@@ -57,7 +57,6 @@ app.get("/oauth/callback", async (req, res) => {
 
     const accessToken = response.data.access_token;
 
-    console.log(response.data);
 
     const redirectURL = process.env.REDIRECT_URL;
 

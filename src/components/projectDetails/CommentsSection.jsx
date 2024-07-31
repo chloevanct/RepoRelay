@@ -5,6 +5,13 @@ import { Flex, Heading, UnorderedList, ListItem, Button } from '@chakra-ui/react
 
 const COMMENTS_PER_PAGE = 10;
 
+/**
+ * Renders a section of comments for a project, allowing users to post new comments and load more comments.
+ *
+ * @param {Object} project - The project object containing comments.
+ * 
+ * @returns {JSX.Element} The rendered comments section component.
+ */
 export default function CommentsSection({ project }) {
 
     const [displayedComments, setDisplayedComments] = useState([...project.comments].reverse().slice(0, COMMENTS_PER_PAGE));

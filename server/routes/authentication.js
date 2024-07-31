@@ -9,7 +9,7 @@ router.get("/getAccessToken", async function (req, res, next) {
 
   req.query.code;
 
-  console.log(req.query.code);
+  // console.log(req.query.code);
 
   const params =
     "?client_id=" +

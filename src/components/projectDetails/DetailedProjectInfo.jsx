@@ -5,6 +5,14 @@ import ProjectContributors from "./ProjectContributors";
 import ProjectTags from "./ProjectTags";
 import ProjectProgress from "./ProjectProgress";
 
+/**
+ * A parent component that displays detailed information about a project.
+ *   Child components include editable details, contributors, tags, and progress.
+ *
+ * @param {Object} project - The project object containing detailed information.
+ * 
+ * @returns {JSX.Element} The rendered DetailedProjectInfo component.
+ */
 export default function DetailedProjectInfo({ project }) {
   return (
     <Flex direction="column">
