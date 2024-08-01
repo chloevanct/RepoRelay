@@ -141,7 +141,7 @@ export default function ProjectProgress({ project }) {
                     />
                   </Flex>
                 )}
-                <Box textAlign='left'>{task.taskBody}</Box>
+                <Box textAlign='left' width="100%">{task.taskBody}</Box>
                 {canEdit && (
                   <IconButton
                     aria-label='Delete task'
@@ -179,7 +179,7 @@ export default function ProjectProgress({ project }) {
                     />
                   </Flex>
                 )}
-                <Box textAlign='left'>{task.taskBody}</Box>
+                <Box textAlign='left' width="100%">{task.taskBody}</Box>
                 {canEdit && (
                   <IconButton
                     aria-label='Delete task'
@@ -209,7 +209,7 @@ export default function ProjectProgress({ project }) {
                     />
                   </Flex>
                 )}
-                <Box textAlign='left'>{task.taskBody}</Box>
+                <Box textAlign='left' width="100%">{task.taskBody}</Box>
                 {canEdit && (
                   <IconButton
                     aria-label='Delete task'

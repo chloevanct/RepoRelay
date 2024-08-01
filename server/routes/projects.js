@@ -263,7 +263,7 @@ router.delete("/:projectID/tasks/:taskID", async (req, res) => {
     project.tasks.pull(taskID);
     project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
-    res.status(204).send();
+    res.status(200).send(project); // Return the updated project
   } catch (err) {
     return res.status(500).send("Internal Error: " + err.message);
   }
@@ -386,7 +386,7 @@ router.delete("/:projectID/comments/:commentID", async (req, res) => {
     project.comments.pull(commentID);
     project.lastActivityDate = new Date(); // update lastActivityDate
     await project.save();
-    res.status(204).send();
+    res.status(200).send(project); // Return the updated project
   } catch (err) {
     return res.status(500).send("Internal Error: " + err.message);
   }

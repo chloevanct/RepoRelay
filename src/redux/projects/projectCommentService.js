@@ -1,7 +1,6 @@
+// redux/projects/projectCommentService.js
 import { handleResponse } from '../../utils/apiUtils.js';
-
 import { API_BASE_URL } from './projectCardService.js';
-
 
 const API_COMMENTS_URL = `${API_BASE_URL}/:projectID/comments`;
 
@@ -31,8 +30,7 @@ export const addCommentApi = async (projectID, comment) => {
         body: JSON.stringify(comment),
     });
 
-    const data = await handleResponse(response);
-    return { projectID, comment: data };
+    return handleResponse(response);
 };
 
 // PUT (edit) a comment in a project
@@ -62,10 +60,11 @@ export const deleteCommentApi = async (projectID, commentID) => {
     const response = await fetch(`${API_COMMENTS_URL.replace(':projectID', projectID)}/${commentID}`, {
         method: 'DELETE',
     });
+
     if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`${response.status}: ${errorText}`);
     }
 
-    return commentID;
+    return handleResponse(response);
 };

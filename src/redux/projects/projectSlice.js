@@ -1,17 +1,31 @@
+// redux/projects/projectSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { REQUEST_STATE } from '../requestState';
-import { getProjectsAsync, getProjectAsync, addProjectAsync, updateProjectAsync, updatePartialProjectAsync, deleteProjectAsync } from './projectCardThunks';
-import { getTasksAsync, getTaskAsync, addTaskAsync, updateTaskAsync, updatePartialTaskAsync, deleteTaskAsync } from './projectTaskThunks';
-import { getCommentsAsync, getCommentAsync, addCommentAsync, updateCommentAsync, updatePartialCommentAsync, deleteCommentAsync } from './projectCommentThunks';
+import { 
+    getProjectsAsync, 
+    getProjectAsync, 
+    addProjectAsync, 
+    updateProjectAsync, 
+    updatePartialProjectAsync, 
+    deleteProjectAsync 
+} from './projectCardThunks';
+import { 
+    getTasksAsync, 
+    getTaskAsync, 
+    addTaskAsync, 
+    updateTaskAsync, 
+    updatePartialTaskAsync, 
+    deleteTaskAsync 
+} from './projectTaskThunks';
+import { 
+    getCommentsAsync, 
+    getCommentAsync, 
+    addCommentAsync, 
+    updateCommentAsync, 
+    updatePartialCommentAsync, 
+    deleteCommentAsync 
+} from './projectCommentThunks';
 
-/*
-Code adapted from the following documentation:
-  https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
-Actions supported:
-  addProject(payload: project)
-  toggleTagFilter(payload: (string)tag)
-  clearFilters()
-*/
 const INITIAL_STATE = {
     projects: [],
     getProjects: REQUEST_STATE.IDLE,
@@ -39,7 +53,6 @@ const projectSlice = createSlice({
         toggleTagFilter: (state, action) => {
             const { tag, type } = action.payload;
 
-            // Ensure only one difficulty tag can be selected at once
             if (type === 'difficultyTag') {
                 state.filters.difficultyTag = tag === null ? '' : tag;
             } else {
@@ -66,181 +79,126 @@ const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        /* get ALL projects */
-        .addCase(getProjectsAsync.fulfilled, (state, action) => {
-            state.getProjects = REQUEST_STATE.FULFILLED
-            state.projects = action.payload;
-        })
-        .addCase(getProjectsAsync.pending, (state) => {
-            state.getProjects = REQUEST_STATE.PENDING
-            state.error = null;
-        })
-        .addCase(getProjectsAsync.rejected, (state, action) => {
-            state.getProjects = REQUEST_STATE.REJECTED
-            state.error = action.error;
-        })
-
-        /* get ONE project */
-        .addCase(getProjectAsync.fulfilled, (state, action) => {
-            state.projects.push(action.payload); // GET a project by ProjectID and add to [projects]
-        })
-
-        /* add a project */
-        .addCase(addProjectAsync.fulfilled, (state, action) => {
-            state.projects.push(action.payload);
-        })
-
-        /* update a project */
-        .addCase(updateProjectAsync.fulfilled, (state, action) => {
-            const index = state.projects.findIndex(project => project.id === action.payload.id);
-            if (index !== -1) {
-                state.projects[index] = action.payload;
-            }
-        })
-
-        /* update a project PARTIALLY */
-        .addCase(updatePartialProjectAsync.fulfilled, (state, action) => {
-            const index = state.projects.findIndex(project => project.id === action.payload.id);
-            if (index !== -1) {
-                state.projects[index] = {
-                    ...state.projects[index],
-                    ...action.payload,
+            .addCase(getProjectsAsync.fulfilled, (state, action) => {
+                state.getProjects = REQUEST_STATE.FULFILLED;
+                state.projects = action.payload;
+            })
+            .addCase(getProjectsAsync.pending, (state) => {
+                state.getProjects = REQUEST_STATE.PENDING;
+                state.error = null;
+            })
+            .addCase(getProjectsAsync.rejected, (state, action) => {
+                state.getProjects = REQUEST_STATE.REJECTED;
+                state.error = action.error;
+            })
+            .addCase(getProjectAsync.fulfilled, (state, action) => {
+                state.projects.push(action.payload);
+            })
+            .addCase(addProjectAsync.fulfilled, (state, action) => {
+                state.projects.push(action.payload);
+            })
+            .addCase(updateProjectAsync.fulfilled, (state, action) => {
+                const index = state.projects.findIndex(project => project.projectID === action.payload.projectID);
+                if (index !== -1) {
+                    state.projects[index] = action.payload;
                 }
-            }
-        })
-
-        /* delete a project */
-        .addCase(deleteProjectAsync.fulfilled, (state, action) => {
-            state.projects = state.projects.filter(project => project.id !== action.payload.id)
-        })
-
-        /* ------------------------------ tasks ------------------------------ */
-        /* get ALL tasks */
-        .addCase(getTasksAsync.fulfilled, (state, action) => {
-            const { projectID, tasks } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.tasks = tasks;
-            }
-        })
-
-        /* get ONE task */
-        .addCase(getTaskAsync.fulfilled, (state, action) => {
-            const { projectID, task } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.tasks.push(task); // GET a task by task _id and add to project.tasks array
-            }
-        })
-
-        /* add a task*/
-        .addCase(addTaskAsync.fulfilled, (state, action) => {
-            const { projectID, task } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.tasks.push(task);
-            }
-        })
-
-        /* update a task*/
-        .addCase(updateTaskAsync.fulfilled, (state, action) => {
-            const { projectID, task } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                const index = project.tasks.findIndex(t => t._id === task._id);
-                if (index != -1) {
-                    project.tasks[index] = task;
+            })
+            .addCase(updatePartialProjectAsync.fulfilled, (state, action) => {
+                const index = state.projects.findIndex(project => project.projectID === action.payload.projectID);
+                if (index !== -1) {
+                    state.projects[index] = {
+                        ...state.projects[index],
+                        ...action.payload,
+                    };
                 }
-            }
-        })
-
-        /* update a task PARTIALLY*/
-        .addCase(updatePartialTaskAsync.fulfilled, (state, action) => {
-            const { projectID, task } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                const index = project.tasks.findIndex(t => t._id === task._id);
-                if (index != -1) {
-                    project.tasks[index] = {
-                        ...project.tasks[index],
-                        ...task,
-                    }
+            })
+            .addCase(deleteProjectAsync.fulfilled, (state, action) => {
+                state.projects = state.projects.filter(project => project.projectID !== action.payload.projectID);
+            })
+            .addCase(getTasksAsync.fulfilled, (state, action) => {
+                const { projectID, tasks } = action.payload;
+                const project = state.projects.find(project => project.projectID === projectID);
+                if (project) {
+                    project.tasks = tasks;
                 }
-            }
-        })
-
-        /* delete a task*/
-        .addCase(deleteTaskAsync.fulfilled, (state, action) => {
-            const { projectID, taskID } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.tasks = project.tasks.filter(task => task._id != taskID);
-            }
-        })
-
-        /* ------------------------------ comments ------------------------------ */
-        /* get ALL comments */
-        .addCase(getCommentsAsync.fulfilled, (state, action) => {
-            const { projectID, comments } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.comments = comments;
-            }
-        })
-
-        /* get ONE comment */
-        .addCase(getCommentAsync.fulfilled, (state, action) => {
-            const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.comments.push(comment); // GET a comment by comment _id and add to project.comment array
-            }
-        })
-
-        /* add a comment*/
-        .addCase(addCommentAsync.fulfilled, (state, action) => {
-            const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.projectID === projectID);
-            if (project) {
-                project.comments.push(comment);
-            }
-        })
-
-        /* update a comment*/
-        .addCase(updateCommentAsync.fulfilled, (state, action) => {
-            const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                const index = project.comments.findIndex(c => c._id === comment._id);
-                if (index != -1) {
-                    project.comments[index] = comment;
+            })
+            .addCase(getTaskAsync.fulfilled, (state, action) => {
+                const { projectID, task } = action.payload;
+                const project = state.projects.find(project => project.projectID === projectID);
+                if (project) {
+                    project.tasks.push(task);
                 }
-            }
-        })
-
-        /* update a comment PARTIALLY*/
-        .addCase(updatePartialCommentAsync.fulfilled, (state, action) => {
-            const { projectID, comment } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                const index = project.comments.findIndex(c => c._id === comment._id);
-                if (index != -1) {
-                    project.comments[index] = {
-                        ...project.comments[index],
-                        ...comment,
-                    }
+            })
+            .addCase(addTaskAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
                 }
-            }
-        })
-
-        /* delete a comment*/
-        .addCase(deleteCommentAsync.fulfilled, (state, action) => {
-            const { projectID, commentID } = action.payload;
-            const project = state.projects.find(project => project.id === projectID);
-            if (project) {
-                project.comments = project.comments.filter(comment => comment._id != commentID);
-            }
-        })
+            })
+            .addCase(updateTaskAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(updatePartialTaskAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(deleteTaskAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(getCommentsAsync.fulfilled, (state, action) => {
+                const { projectID, comments } = action.payload;
+                const project = state.projects.find(project => project.projectID === projectID);
+                if (project) {
+                    project.comments = comments;
+                }
+            })
+            .addCase(getCommentAsync.fulfilled, (state, action) => {
+                const { projectID, comment } = action.payload;
+                const project = state.projects.find(project => project.projectID === projectID);
+                if (project) {
+                    project.comments.push(comment);
+                }
+            })
+            .addCase(addCommentAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(updateCommentAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(updatePartialCommentAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            })
+            .addCase(deleteCommentAsync.fulfilled, (state, action) => {
+                const updatedProject = action.payload;
+                const index = state.projects.findIndex(project => project.projectID === updatedProject.projectID);
+                if (index !== -1) {
+                    state.projects[index] = updatedProject;
+                }
+            });
     },
 });
 

@@ -1,3 +1,4 @@
+// redux/projects/projectTaskThunks.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getTasksApi, getTaskApi, addTaskApi, updateTaskApi, updatePartialTaskApi, deleteTaskApi } from './projectTaskService';
 
@@ -18,27 +19,31 @@ export const getTaskAsync = createAsyncThunk(
 export const addTaskAsync = createAsyncThunk(
     'tasks/addTask',
     async ({ projectID, task }) => {
-        return await addTaskApi(projectID, task);
+        const updatedProject = await addTaskApi(projectID, task);
+        return updatedProject;
     }
 );
 
 export const updateTaskAsync = createAsyncThunk(
     'tasks/updateTask',
     async ({ projectID, taskID, task }) => {
-        return await updateTaskApi(projectID, taskID, task);
+        const updatedProject = await updateTaskApi(projectID, taskID, task);
+        return updatedProject;
     }
 );
 
 export const updatePartialTaskAsync = createAsyncThunk(
     'tasks/updatePartialTask',
     async ({ projectID, taskID, task }) => {
-        return await updatePartialTaskApi(projectID, taskID, task);
+        const updatedProject = await updatePartialTaskApi(projectID, taskID, task);
+        return updatedProject;
     }
 );
 
 export const deleteTaskAsync = createAsyncThunk(
     'tasks/deleteTask',
     async ({ projectID, taskID }) => {
-        return await deleteTaskApi(projectID, taskID);
+        const updatedProject = await deleteTaskApi(projectID, taskID);
+        return updatedProject;
     }
 );

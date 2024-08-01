@@ -1,7 +1,6 @@
+// redux/projects/projectTaskService.js
 import { handleResponse } from '../../utils/apiUtils.js';
-
 import { API_BASE_URL } from './projectCardService.js';
-
 
 const API_TASKS_URL = `${API_BASE_URL}/:projectID/tasks`;
 
@@ -10,7 +9,6 @@ export const getTasksApi = async (projectID) => {
     const response = await fetch(API_TASKS_URL.replace(':projectID', projectID), {
         method: 'GET',
     });
-
     return handleResponse(response);
 };
 
@@ -19,7 +17,6 @@ export const getTaskApi = async (projectID, taskID) => {
     const response = await fetch(`${API_TASKS_URL.replace(':projectID', projectID)}/${taskID}`, {
         method: 'GET',
     });
-
     return handleResponse(response);
 };
 
@@ -30,7 +27,6 @@ export const addTaskApi = async (projectID, task) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
     });
-
     return handleResponse(response);
 };
 
@@ -41,7 +37,6 @@ export const updateTaskApi = async (projectID, taskID, task) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
     });
-
     return handleResponse(response);
 };
 
@@ -52,7 +47,6 @@ export const updatePartialTaskApi = async (projectID, taskID, task) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task),
     });
-
     return handleResponse(response);
 };
 
@@ -61,10 +55,5 @@ export const deleteTaskApi = async (projectID, taskID) => {
     const response = await fetch(`${API_TASKS_URL.replace(':projectID', projectID)}/${taskID}`, {
         method: 'DELETE',
     });
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`${response.status}: ${errorText}`);
-    }
-
-    return taskID;
+    return handleResponse(response);
 };
