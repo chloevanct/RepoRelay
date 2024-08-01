@@ -13,7 +13,6 @@ import { setUser } from "../../redux/user/userSlice";
 import { useEffect } from "react";
 import { subscribeToProjectApi, unsubscribeFromProjectApi } from "../../redux/email/emailService";
 
-
 /**
  * A component that displays and manages the list of users subscribed to a project.
  * Allows the current user to join or leave the project team.
@@ -26,14 +25,16 @@ export default function ProjectUsers({ project }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
 
-
   const handleAddSubscribedUser = async () => {
     if (!currentUser || !currentUser.userID || !currentUser.subscribedProjects) {
       console.error("Current user data is incomplete:", currentUser);
       return;
     }
 
-    console.log("Before adding subscribed user:", currentUser);
+    if (currentUser.userID === project.projectOwner) {
+      console.error("Project owner cannot subscribe to their own project.");
+      return;
+    }
 
     try {
       await dispatch(
@@ -61,24 +62,21 @@ export default function ProjectUsers({ project }) {
         dispatch(fetchUserAsync(token));
       }
 
-      console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
-      console.log("Current user after dispatch:", updatedUser.currentUser);
 
-    // send subscription email notification
-    const emailData = {
-      githubUsername: currentUser.githubUsername,
-      projectOwnerID: project.projectOwner,
-      projectName: project.projectName
-    };
+      const emailData = {
+        githubUsername: currentUser.githubUsername,
+        projectOwnerID: project.projectOwner,
+        projectName: project.projectName,
+      };
 
-    const response = await subscribeToProjectApi(emailData);
+      const response = await subscribeToProjectApi(emailData);
 
-    if (!response.ok) {
-      console.error('Failed to send subscription email');
-    } else {
-      console.log('Subscription email sent successfully');
-    }
+      if (!response.ok) {
+        console.error('Failed to send subscription email');
+      } else {
+        console.log('Subscription email sent successfully');
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
@@ -89,8 +87,6 @@ export default function ProjectUsers({ project }) {
       console.error("Current user data is incomplete:", currentUser);
       return;
     }
-
-    console.log("Before removing subscribed user:", currentUser);
 
     try {
       await dispatch(
@@ -120,30 +116,28 @@ export default function ProjectUsers({ project }) {
         dispatch(fetchUserAsync(token));
       }
 
-      console.log("Updated user received:", updatedUser);
       dispatch(setUser(updatedUser.currentUser));
-      console.log("Current user after dispatch:", updatedUser.currentUser);
 
-    // send unsubscription email notification
-    const emailData = {
-      githubUsername: currentUser.githubUsername,
-      projectOwnerID: project.projectOwner,
-      projectName: project.projectName
-    };
+      const emailData = {
+        githubUsername: currentUser.githubUsername,
+        projectOwnerID: project.projectOwner,
+        projectName: project.projectName,
+      };
 
-    const response = await unsubscribeFromProjectApi(emailData);
+      const response = await unsubscribeFromProjectApi(emailData);
 
-    if (!response.ok) {
-      console.error('Failed to send unsubscription email');
-    } else {
-      console.log('Unsubscription email sent successfully');
-    }
+      if (!response.ok) {
+        console.error('Failed to send unsubscription email');
+      } else {
+        console.log('Unsubscription email sent successfully');
+      }
     } catch (error) {
       console.error("Error updating user:", error);
     }
   };
 
   const isSubscriber = currentUser && currentUser.userID && project.subscribedUsers.includes(currentUser.userID);
+  const isOwner = currentUser && currentUser.userID === project.projectOwner;
 
   return (
     <Flex direction="column" mb="10px">
@@ -211,7 +205,7 @@ export default function ProjectUsers({ project }) {
           width={["50%", "50%", "auto"]}
           px={["10px", "10px", "0px"]}
         >
-          {!isSubscriber ? (
+          {!isOwner && !isSubscriber ? (
             <Button
               size="sm"
               colorScheme="teal"
@@ -221,7 +215,7 @@ export default function ProjectUsers({ project }) {
             >
               Join The Team
             </Button>
-          ) : (
+          ) : !isOwner && isSubscriber ? (
             <Button
               size="sm"
               colorScheme="red"
@@ -231,7 +225,7 @@ export default function ProjectUsers({ project }) {
             >
               Leave The Team
             </Button>
-          )}
+          ) : null}
         </Box>
       </Flex>
     </Flex>
