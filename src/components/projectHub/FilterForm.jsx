@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Stack, Heading, Checkbox, RadioGroup, Radio, Menu, MenuButton, MenuList, MenuItem, Button, Input } from '@chakra-ui/react';
 import { toggleTagFilter, clearFilters } from '../../redux/projects/projectSlice.js';
 import { difficultyColorMapping, projectColorMapping, technologyColorMapping } from '../../utils/tagColorMappings';
@@ -30,6 +30,22 @@ export default function FilterForm() {
     const [checkedTags, setCheckedTags] = useState(initialCheckedState);
     const [selectedDifficulty, setSelectedDifficulty] = useState('Any');
     const [searchText, setSearchText] = useState({ project: '', tech: '' });
+
+
+    const activeFilters = useSelector((state) => state.projects.filters);
+
+    useEffect(() => {
+        const updatedCheckedTags = { ...initialCheckedState };
+        Object.keys(tagCategories).forEach(category => {
+            tagCategories[category].forEach((tag, index) => {
+                if (activeFilters[`${category}Tags`]?.includes(tag)) {
+                    updatedCheckedTags[category][index] = true;
+                }
+            });
+        });
+        setCheckedTags(updatedCheckedTags);
+        setSelectedDifficulty(activeFilters.difficultyTag || 'Any');
+    }, [activeFilters, initialCheckedState, tagCategories]);
 
     const clearAllTags = () => {
         setCheckedTags(initialCheckedState);

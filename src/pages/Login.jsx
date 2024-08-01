@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Heading, Text, Flex, Image, Divider } from "@chakra-ui/react";
+
+import RelayImg from "../assets/relay.jpeg";
+import CodingImg from "../assets/coding.jpeg";
+import GlobalConnection from "../assets/global-connection.jpeg";
 
 const serverUrl = import.meta.env.VITE_SERVER_URL || "http://localhost:3000";
 
@@ -26,34 +23,61 @@ function loginWithGithub() {
  * 
  * @returns {JSX.Element} The rendered Login page with a welcome message and GitHub login button.
  */ 
-const Login = () => {
+export default function Login() {
   return (
-    <Container maxW="container.sm" centerContent mt={10}>
-      <Box
-        p={8}
-        shadow="md"
-        borderWidth="1px"
-        borderRadius="lg"
-        bg="gray.50"
-        width="100%"
-        textAlign="center"
-      >
-        <Heading as="h1" size="xl" mb={4} color="teal.500">
-          Welcome to Repo Relay
+    <Flex direction="column">
+      <Flex direction="column" align="center" pb="20px" pt="10px">
+        <Image src={RelayImg} alt="Relay Image" width="40%" pb="10px" />
+        <Heading size={["lg", "xl"]} pb="5px">
+          Grow your portfolio with Repo Relay
         </Heading>
-        <Text fontSize="md" mb={6} color="gray.700">
-          Repo Relay is a web app for developers to publish, find, and
-          collaborate on unfinished coding projects, enhancing their skills and
-          expanding their portfolio.
+        <Text pb="10px">
+          Share your unfinished coding projects with the community, or
+          contribute to existing ones
         </Text>
-        <VStack spacing={4}>
-          <Button colorScheme="teal" size="lg" onClick={loginWithGithub}>
+        <Button colorScheme="teal" size="lg" onClick={loginWithGithub}>
             Login with GitHub
-          </Button>
-        </VStack>
-      </Box>
-    </Container>
+        </Button>
+      </Flex>
+      <Divider alignSelf="center" width="90%" />
+      <Flex justify="center" gap="20px" pt="20px" pb="20px">
+        <Flex
+          direction="column"
+          width={["80%", "40%"]}
+          textAlign={["center", "left"]}
+        >
+          <Heading size={["md", "lg"]} pb="5px">
+            Advance and expand your skillset
+          </Heading>
+          <Text>
+            Build on your existing skills by taking on new projects with
+            familiar technologies, or challenge yourself by trying something
+            new.
+          </Text>
+        </Flex>
+        <Image src={CodingImg} alt="Coding" width={["40%", "40%"]} />
+      </Flex>
+      <Divider alignSelf="center" width="90%" />
+      <Flex justify="center" gap="20px" pt="20px" pb="20px">
+        <Image
+          src={GlobalConnection}
+          alt="Global Connection"
+          width={["40%", "40%"]}
+        />
+        <Flex
+          direction="column"
+          width={["80%", "40%"]}
+          textAlign={["center", "left"]}
+        >
+          <Heading size={["md", "lg"]} pb="5px">
+            Collaborate with a diverse, global coding community
+          </Heading>
+          <Text>
+            Get access to an active community of developers of all skill levels
+            and backgrounds.
+          </Text>
+        </Flex>
+      </Flex>
+    </Flex>
   );
-};
-
-export default Login;
+}

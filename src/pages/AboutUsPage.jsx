@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import RelayImg from "../assets/relay.jpeg";
 import CodingImg from "../assets/coding.jpeg";
 import GlobalConnection from "../assets/global-connection.jpeg";
-import { Flex, Image, Heading, Text, Button, Divider } from "@chakra-ui/react";
+import { Flex, Image, Heading, Text, Divider } from "@chakra-ui/react";
 
 /**
  * AboutUsPage component that provides information about the "Repo Relay" platform.
@@ -23,9 +23,6 @@ export default function AboutUsPage() {
           Share your unfinished coding projects with the community, or
           contribute to existing ones
         </Text>
-        <Button colorScheme="teal" fontWeight="bold">
-          JOIN NOW
-        </Button>
       </Flex>
       <Divider alignSelf="center" width="90%" />
       <Flex justify="center" gap="20px" pt="20px" pb="20px">

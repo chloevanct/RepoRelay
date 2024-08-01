@@ -9,7 +9,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
-import NotificationBell from "../assets/notification-bell.png";
 
 
 /**
@@ -53,13 +52,6 @@ export default function Header() {
             <Text color="gray.700" fontSize={['0.45rem', '0.5rem', '1.2rem']}>
               ABOUT US
             </Text>
-          </Link>
-          <Link to="/home">
-            <Avatar
-              src={NotificationBell}
-              alt="Notifications"
-              size={["xs", "sm", "md"]}
-            />
           </Link>
           <Link to="/userProfile">
             <Avatar size={["xs", "sm", "md"]} src={currentUser?.userImage || ""} />

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { selectFilteredProjects } from "../../utils/selectors";
 import { getProjectsAsync } from "../../redux/projects/projectCardThunks";
+import { clearFilters } from "../../redux/projects/projectSlice";
 import { REQUEST_STATE } from "../../redux/requestState";
 import ProjectCard from "./ProjectCard";
 
@@ -62,6 +63,7 @@ export default function ProjectCards({ sortOption }) {
   };
 
   useEffect(() => {
+    dispatch(clearFilters());
     dispatch(getProjectsAsync());
   }, [dispatch]);
 
