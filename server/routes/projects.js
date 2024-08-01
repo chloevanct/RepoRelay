@@ -70,11 +70,11 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const projectID = req.params.id;
-    console.log("Recieved PUT request for projectID", projectID);
+    console.log("Received PUT request for projectID", projectID);
 
     const updatedProject = await Project.findOneAndUpdate(
       { projectID: projectID },
-      req.body,
+      { ...req.body, lastActivityDate: new Date() },
       { new: true, runValidators: true }
     );
 
@@ -94,7 +94,7 @@ router.patch("/:id", async (req, res) => {
     const projectID = req.params.id;
     const updatedProject = await Project.findOneAndUpdate(
       { projectID: projectID },
-      { $set: req.body },
+      { $set: { ...req.body, lastActivityDate: new Date() } },
       { new: true, runValidators: true }
     );
 
