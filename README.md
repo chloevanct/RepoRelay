@@ -83,5 +83,6 @@ To refine the recommendations, we filter out projects that the users already own
 - **Example:** Example description
 
 ### 6.4 Kai Groden-Gilchrist
-- **Example:** Example description
-
+- **Frontend Logic:** Designed and developed frontend systems including the initial redux integration, filtering and pagination for displayed project cards, and the comments system on projects.
+- **Backend Integration:** Connected frontend components and redux state with backend APIs, facilitating client-server communication with error handling and state management to ensure robust and reliable data fetching and updating.
+- **Code Maintenance:** Updated docstrings, code style, refactored for code maintainability, and ensured sanitization of db inputs throughout the project.
