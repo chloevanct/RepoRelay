@@ -74,7 +74,10 @@ To refine the recommendations, we filter out projects that the users already own
 - **Deployment:** Deployed both backend node.js Express server and React application on a hosted Render server by creating confuring deployment instances and environment variables
 
 ### 6.2 Alexander Proskiw
-- **Example:** Example description
+- **Frontend Development:** Designed and developed key pages and components including Project Tags, Project Creation Form, User Profile Page, User Login Page, Detailed Project Detail Page, and the Homepage for recommended, owned, and subscribed projects.
+- **Redux State Management and API Integration:** Integrated state management for projects (adding, editing, and deleting) and users (adding, editing) into the appropriate frontend components. Refactored frontend logic, thunks, and backend API endpoints to ensure consistent state management for users and projects.
+- **Detailed User Functionality:** Implemented functionality and visibility for components/buttons based on user status (unsubscribed users, subscribed users, and project owners). Added ability to log out and log in with different accounts.
+
 
 ### 6.3 Chloe Van
 - **Example:** Example description
