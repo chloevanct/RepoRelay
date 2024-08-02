@@ -12,8 +12,9 @@ const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 const REDIRECT_URI = `${serverUrl}/oauth/callback`;
 
 function loginWithGithub() {
+  console.log("calling login with github");
   window.location.assign(
-    `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`
+    `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&prompt=select_account`
   );
 }
 

@@ -55,7 +55,7 @@ function App() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setIsAuthenticated(false);
     toast({
       title: "Logged out",
