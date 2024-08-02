@@ -2,86 +2,83 @@
 
 # Group 3 - Innovators
 
-## Project Executive Summary
+## 1.0 Project Executive Summary
 
 Repo Relay is a web app that connects developers looking to collaborate on unfinished coding projects. It provides a platform for users to publish, find, and contribute to projects, enhancing their technical skills, expanding their portfolios, and fostering a collaborative coding community.
 
-## Sample Account for GitHub Authentication
+### Opening the Project
 
-Because this app requires GitHub for project sharing and authentication, we've provided a sample GitHub account that can be used to login:
+Deployed Repo Relay can be accessed on this [Render server](https://project-03-the-innovators-d7ya.onrender.com/)
+
+Please note that the application is hosted on Render's free tier, so it might take a few minutes to load.
+
+Since this app requires GitHub for project sharing and authentication, we've provided a test GitHub account for login:
 - Username: Repo-Relay
 - Password: reporelay1996
 
-## Team Members
-
-- Nariman Muldashev: I am 2nd year BCS student with a prior background in consulting and finance. Currently completing a co-op at a Vancouver based fintech startup.
-- Alexander Proskiw: Hi, I'm Alex! I'm in my final year of the BCS program, really excited to learn more about web development, and like fishing in my spare time.
-- Chloe Van: I started the BCS program in 2022 after working as a pharmacist and am currently completing a co-op at a Toronto based fintech company.
-- Kai Groden-Gilchrist: I'm in my final year of BCS - looking to transition from my background in high-throughput biology into software engineering!
-
-## Project Description
-Repo Relay is a web app designed for developers of all experience levels who have coding projects they cannot complete or who are looking for projects to build on. It provides a hub where users can publish, find, and collaborate on unfinished coding projects, allowing them to enhance their technical skills, expand their portfolio, and contribute to the coding community.
+We recommend authenticating using the test account in incognito mode to prevent logging in with your current GitHub account.
 
 
-The app will store information about coding projects, including project goals, tasks completed, tasks to complete, difficulty, languages used, and details about the contributors. Users will be able to search for projects, view detailed project information, sign up for those projects they are interested in and keep track of ongoing projects.
 
 
-Additional functionalities, such as a machine learning recommender system for project suggestions and deeper integration with the GitHub API, may be added based on time constraints.
+## 2.0 Project Goals
 
-
-## Project Task Requirements
-
-
-### Minimal Requirements (3-5, will definitely complete)
+### 2.1 Minimal Goals
 1. :white_check_mark: As a user, I want to create a profile where I can identify my project preferences and technology skills, enabling me to have an identity and interact with the platform.
 2. :white_check_mark: As a programmer with an unfinished coding project, I want to post a new project with all required information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level), making my project available for other community members to view and contribute to.
 3. :white_check_mark: As a programmer looking to tackle a new project, I want to view all available projects in the database, so I can easily find and choose projects I want to contribute to.
 4. :white_check_mark: As a project contributor, I want to update project information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level) as the project progresses, so that it accurately reflects the project state.
 5. :white_check_mark: As a project contributor, I want to delete an existing project when it is no longer feasible to work on, ensuring other community members don't accidentally contribute to it.
 
-### Standard Requirements (3-7, will most likely complete)
+### 2.2 Standard Goals
 1. :white_check_mark: As a user, I want to be able to search and filter projects based on various criteria, so that I can quickly locate projects that match my interests and skills.
 2. :white_check_mark: As a project contributor, I want to be able to subscribe to projects I am interested in or intend to contribute to, so that these projects are tracked in my profile for better organization and follow-up.
 3. :white_check_mark: As a user, I want to be able to use a colorful tag/hashtag system for categorizing work completed, work to complete, technologies used, and expected difficulty, so that I can rapidly visually identify key project characteristics.
 4. :white_check_mark: As a contributor, I want to be able to chat with other people working on the same project, so that I can facilitate communication and collaboration.
 5. :white_check_mark: As a user, I want to be able to authenticate with GitHub using the GitHub API so that I can streamline the login process.
 
-### Stretch Requirements (2-3, plan to complete at least 1!)
-1. As a project contributor, I want to receive machine learning generated project recommendations based on my interests, profile information, and past contributions, so that I can easily find new projects that align with my preferences and skills.
-2. As a project owner or contributor, I want to host code files directly on the website, so that I can easily collaborate and manage project files without relying on external services.
-3. As a project contributor, I want to interact with gamification elements such as badges, leaderboards, and achievement tracking, so that I can be motivated and encouraged to participate more actively in the community.
+### 2.3 Stretch Goals
+1. :white_check_mark: As a project contributor, I want to receive machine learning generated project recommendations based on my interests, profile information, and past contributions, so that I can easily find new projects that align with my preferences and skills.
+2. :x: As a project owner or contributor, I want to host code files directly on the website, so that I can easily collaborate and manage project files without relying on external services.
+3. :x: As a project contributor, I want to interact with gamification elements such as badges, leaderboards, and achievement tracking, so that I can be motivated and encouraged to participate more actively in the community.
 
 
-## Project Task Breakdown
-
-### Minimal Requirement Breakdown
-**Minimal Requirement 2: Creating a new coding project.**
-1. Design the front-end project creation page using React, ensuring it is responsive and accessible on different devices.
-2. Create a form for users to enter project details with fields for project name, project repo, description, tasks completed, tasks remaining, tech stack, and difficulty level, including form validation and tooltips.
-3. Implement backend validation of the project details using Node/Express to ensure data integrity and handle errors.
-4. Set up an API endpoint with Node/Express to handle project creation requests and save the data to the MongoDB database.
-5. After adding the project to the database, dynamically display the new project card on the front-end without needing a page refresh.
-
-**Minimal Requirement 3: View all coding projects in the database.**
-1. Create a projects collection in MongoDB with fields for project name, GitHub repo, description, and users subscribed to the project.
-2. Set up an API endpoint using Node/Express to query the MongoDB collection for available projects, returning the data in JSON format.
-3. Develop a React component to display the project list, querying the API endpoint to retrieve and render project data.
-4. Apply styling to the project list using CSS or a styling library to ensure a clean and user-friendly presentation.
+## 3.0 Tech Stack
+- MongoDB: Stores information about projects and users, including project details (name, tasks, tags, URL, owner, subscribed users) and user data (preferences, owned and subscribed projects, GitHub name). Projects include an embedded comments structure, and we also maintain a list of recommended projects for each user.
+- React: Used for the frontend to display projects and authentication processes. We manage state with Redux, including server data and authentication status, and utilize Chakra UI for styling components.
+- Node.js & Express: Powers the backend, handling API requests and server-side logic. It manages GitHub API authentication, project and user data operations, and uses Mongoose for database interactions. The server also sends out email notification to a project owner when a user subscribes to the project or when a unsubscribes.  
+- GitHub Actions: Automates testing and deployment processes. It runs Node.js tests and checks the build status of our web app upon push or pull request events to the final_project branch, ensuring code integrity and readiness for deployment.
+- Deployment on Render: We deployed our application using two separate instances on Render: one for the React frontend and another for the Node.js server. This setup ensures scalable, reliable access to both the client and server components of our application.
 
 
-## Images
+## 4.0 Above and Beyond Functionality Description
+Our project includes an advanced feature that goes beyond the course requirements: a recommender system built using Python and scikit-learn. This system suggests projects to users based on their preferences, utilizing unsupervised machine learning techniques. We implemented a TF-IDF vectorization approach combined with cosine similarity to assess the similarity between user preferences and project characteristics. The process involves vectorizing the text associated with project tags and user preferences and then calculating similarity scores to generate personalized recommendations.
 
-The rough sketch prototypes below show the key tasks of the app including viewing all available projects, and creating a new project.
+To refine the recommendations, we filter out projects that the users already own or are subscribed to. This ensures that the recommendations are relevant and novel. Although the recommendation process is currently run manually, we aim to deploy it as a scalable ML pipeline, automating data retrieval, processing, and updating recommendations in our MongoDB database. This future deployment will streamline the recommendation updates and enhance the overall user experience by keeping suggestions fresh and aligned with users' evolving interests.
 
-### Project List Sketch
-<img src ="images/Projects_view.png" width="700px">
 
-### Project Creation Sketch
-<img src ="images/Add_project.png" width="700px">
+## 5.0 Next Steps
+1. Deployment of Machine Learning Model: Our current recommendation system operates manually. The next step is to deploy this machine learning model as an automated pipeline, ensuring that project recommendations are updated dynamically as new data comes in. This will enhance the accuracy and timeliness of the recommendations.
 
-## Describe your topic/interest in about 150-200 words
-Our team chose to create Repo Relay because we recognize the common challenge developers face in completing coding projects. Many developers, whether beginners or seasoned professionals, often start ambitious projects but struggle to finish them due to time constraints, shifting priorities, or the need for specific expertise. Repo Relay aims to bridge this gap by providing a platform where these unfinished projects can find new contributors. This collaborative environment not only helps in completing these projects but also fosters learning and growth within the coding community, allowing developers to enhance their skills and expand their portfolios while contributing to meaningful projects.
+2. Supervised Machine Learning Integration: As we collect more user and project data, we aim to transition from our current unsupervised learning approach to supervised learning. This shift will enable us to better tailor recommendations based on user interactions and feedback, ultimately improving the relevance of suggested projects.
 
-## References
-N/A
+3. Gamification Elements: We plan to introduce gamification features such as badges, leaderboards, and achievement tracking. These elements will provide motivation and encouragement for contributors, fostering a more engaged and active community. This feature will recognize user contributions and achievements, enhancing their overall experience on the platform.
+
+
+
+## 6.0 List of Contributions
+
+### 6.1 Nariman Muldashev
+- **User Backend:** Implemented user related logic on the server backend with frontend integrations including GitHub authentication (GitHub OAuth app), updating user preferences, profile creation, fetching user information from database and GitHub
+- **Project Recommender:** Implemented and deployed the recommender system on the backend by building an unsupervised machine learning to estimate cosine similarity between user preferences and list of available projects
+- **Deployment:** Deployed both backend node.js Express server and React application on a hosted Render server by creating confuring deployment instances and environment variables
+
+### 6.2 Alexander Proskiw
+- **Example:** Example description
+
+### 6.3 Chloe Van
+- **Example:** Example description
+
+### 6.4 Kai Groden-Gilchrist
+- **Example:** Example description
 
