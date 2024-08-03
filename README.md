@@ -34,7 +34,7 @@ We recommend authenticating using the test account in incognito mode to prevent 
 1. :white_check_mark: As a user, I want to be able to search and filter projects based on various criteria, so that I can quickly locate projects that match my interests and skills.
 2. :white_check_mark: As a project contributor, I want to be able to subscribe to projects I am interested in or intend to contribute to, so that these projects are tracked in my profile for better organization and follow-up.
 3. :white_check_mark: As a user, I want to be able to use a colorful tag/hashtag system for categorizing work completed, work to complete, technologies used, and expected difficulty, so that I can rapidly visually identify key project characteristics.
-4. :white_check_mark: As a contributor, I want to communicate with others working on the same project to facilitate better collaboration.
+4. :white_check_mark: As a user, I want to communicate with others working on the same project to facilitate better collaboration.
 5. :white_check_mark: As a user, I want to be able to authenticate with GitHub using the GitHub API so that I can streamline the login process.
 
 ### 2.3 Stretch Goals
