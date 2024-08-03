@@ -34,7 +34,7 @@ We recommend authenticating using the test account in incognito mode to prevent 
 1. :white_check_mark: As a user, I want to be able to search and filter projects based on various criteria, so that I can quickly locate projects that match my interests and skills.
 2. :white_check_mark: As a project contributor, I want to be able to subscribe to projects I am interested in or intend to contribute to, so that these projects are tracked in my profile for better organization and follow-up.
 3. :white_check_mark: As a user, I want to be able to use a colorful tag/hashtag system for categorizing work completed, work to complete, technologies used, and expected difficulty, so that I can rapidly visually identify key project characteristics.
-4. :white_check_mark: As a contributor, I want to be able to chat with other people working on the same project, so that I can facilitate communication and collaboration.
+4. :white_check_mark: As a contributor, I want to communicate with others working on the same project to facilitate better collaboration.
 5. :white_check_mark: As a user, I want to be able to authenticate with GitHub using the GitHub API so that I can streamline the login process.
 
 ### 2.3 Stretch Goals
@@ -80,7 +80,9 @@ To refine the recommendations, we filter out projects that the users already own
 
 
 ### 6.3 Chloe Van
-- **Example:** Example description
+- **Backend Development:** Designed and investigated the schema for projects, set up server connection to MongoDB, implemented full CRUD operations with corresponding services, thunks, and extraReducers for Projects, Comments, and Tasks, and reorganized Redux directories.
+- **Emailing System:** Investigated and set up an emailing system with Mailgun to notify the project owner when a contributor joins or leaves a team, prompting updates to the GitHub repository.
+- **Frontend Development:** Implemented reactive components (ProjectListHeader, SearchBarHeader), integrated search functionality with Redux, and added functionalities to the SortBy Menu (newest, oldest, most active).
 
 ### 6.4 Kai Groden-Gilchrist
 - **Frontend Logic:** Designed and developed frontend systems including the initial redux integration, filtering and pagination for displayed project cards, and the comments system on projects.
