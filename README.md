@@ -25,9 +25,9 @@ We recommend authenticating using the test account in incognito mode to prevent 
 
 ### 2.1 Minimal Goals
 1. :white_check_mark: As a user, I want to create a profile where I can identify my project preferences and technology skills, enabling me to have an identity and interact with the platform.
-2. :white_check_mark: As a programmer with an unfinished coding project, I want to post a new project with all required information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level), making my project available for other community members to view and contribute to.
+2. :white_check_mark: As a programmer with an unfinished coding project, I want to post a new project with all required information (project name, description, tasks, tech stack, and difficulty level), making my project available for other community members to view and contribute to.
 3. :white_check_mark: As a programmer looking to tackle a new project, I want to view all available projects in the database, so I can easily find and choose projects I want to contribute to.
-4. :white_check_mark: As a project contributor, I want to update project information (project name, description, tasks completed, tasks remaining, tech stack, and difficulty level) as the project progresses, so that it accurately reflects the project state.
+4. :white_check_mark: As a project contributor, I want to update project information (project name, description, tasks, tech stack, and difficulty level) as the project progresses, so that it accurately reflects the project state.
 5. :white_check_mark: As a project contributor, I want to delete an existing project when it is no longer feasible to work on, ensuring other community members don't accidentally contribute to it.
 
 ### 2.2 Standard Goals
@@ -38,7 +38,7 @@ We recommend authenticating using the test account in incognito mode to prevent 
 5. :white_check_mark: As a user, I want to be able to authenticate with GitHub using the GitHub API so that I can streamline the login process.
 
 ### 2.3 Stretch Goals
-1. :white_check_mark: As a project contributor, I want to receive machine learning generated project recommendations based on my interests, profile information, and past contributions, so that I can easily find new projects that align with my preferences and skills.
+1. :white_check_mark: As a user, I want to receive machine learning generated project recommendations based on my interests, profile information, and past contributions, so that I can easily find new projects that align with my preferences and skills.
 2. :x: As a project owner or contributor, I want to host code files directly on the website, so that I can easily collaborate and manage project files without relying on external services.
 3. :x: As a project contributor, I want to interact with gamification elements such as badges, leaderboards, and achievement tracking, so that I can be motivated and encouraged to participate more actively in the community.
 
