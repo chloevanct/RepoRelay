@@ -42,13 +42,35 @@ We recommend authenticating using the test account in incognito mode to prevent 
 2. :x: As a project owner or contributor, I want to host code files directly on the website, so that I can easily collaborate and manage project files without relying on external services.
 3. :x: As a project contributor, I want to interact with gamification elements such as badges, leaderboards, and achievement tracking, so that I can be motivated and encouraged to participate more actively in the community.
 
-
 ## 3.0 Tech Stack
-- MongoDB: Stores information about projects and users, including project details (name, tasks, tags, URL, owner, subscribed users) and user data (preferences, owned and subscribed projects, GitHub name). Projects include an embedded comments structure, and we also maintain a list of recommended projects for each user.
-- React: Used for the frontend to display projects and authentication processes. We manage state with Redux, including server data and authentication status, and utilize Chakra UI for styling components.
-- Node.js & Express: Powers the backend, handling API requests and server-side logic. It manages GitHub API authentication, project and user data operations, and uses Mongoose for database interactions. The server also sends out email notification to a project owner when a user subscribes to the project or when a unsubscribes.  
-- GitHub Actions: Automates testing and deployment processes. It runs Node.js tests and checks the build status of our web app upon push or pull request events to the final_project branch, ensuring code integrity and readiness for deployment.
-- Deployment on Render: We deployed our application using two separate instances on Render: one for the React frontend and another for the Node.js server. This setup ensures scalable, reliable access to both the client and server components of our application.
+
+### 3.1 HTML, CSS, & JavaScript
+- **HTML**: HTML forms the foundational structure of the project, with the `index.html` file crucial for initial setup and injecting React components. JSX, used within React, is syntactically similar to HTML and allows seamless integration of dynamic content within the markup.
+  
+- **CSS**: CSS is used for styling components. Chakra UI provides a comprehensive design system for consistency and responsiveness, while custom CSS allows for further customization. This combination balances ease of use and unique design.
+
+- **JavaScript**: JavaScript is the primary language used throughout the stack, powering the UI with React/Redux on the frontend and managing server-side logic with Node.js/Express on the backend. This unified approach simplifies development compared to using multiple languages.
+
+### 3.2 React & Redux
+- **React**: React provides a component-based architecture for building reusable and maintainable UI components, such as project cards and tag components used throughout the application. The virtual DOM improves performance by minimizing direct manipulations of the actual DOM, making React more organized and scalable than traditional JavaScript or jQuery for complex user interfaces.
+  
+- **Redux**: Redux manages the state across the application, which is particularly useful for managing project data and authentication status. It provides a single source of truth for all areas of the application, making state management more straightforward than using plain React.
+
+- **Chakra UI**: Chakra UI is used for styling components, offering accessible, reusable, and composable components. It provides a good balance between ease of use and customization compared to other UI frameworks.
+
+### 3.3 Node & Express
+- **Node.js & Express**: Node.js and Express power the backend, handling API requests and server-side logic efficiently. They also manage GitHub API authentication, project and user data operations, and use Mongoose for database interactions. Node.js's non-blocking, event-driven architecture is well-suited for I/O-intensive applications, and Express simplifies the creation of robust APIs.
+
+- **Email Notifications**: The server sends email notifications to project owners when users subscribe or unsubscribe from a project, enhancing engagement and communication. Email provides a direct and reliable way to reach users compared to other notification methods.
+
+### 3.4 MongoDB
+- **MongoDB**: MongoDB stores information about projects (name, tasks, tags, URL, owner, subscribed users, comments, etc.) and users (preferences, owned and subscribed projects, GitHub name, etc.), offering a flexible schema design for complex data structures. Projects include an embedded comments structure, and we maintain a list of recommended projects for each user. MongoDB handles large volumes of unstructured data and scales easily, making it more suitable than traditional relational databases like MySQL.
+
+### 3.5 GitHub Actions & Deployment
+- **GitHub Actions**: Automates testing and deployment processes, ensuring code integrity with seamless GitHub integration. It runs Node.js tests and checks build status upon push or pull request events, simplifying the CI/CD pipeline compared to other tools.
+
+- **Deployment on Render**: The application is deployed using two instances on Render: one for the React frontend and another for the Node.js server. Render is user-friendly and cost-effective, making it easy to scale and manage the application. While Render's free tier is convenient, it has slower spin-up times compared to paid alternatives like AWS or Heroku, which offer faster deployment options.
+
 
 
 ## 4.0 Above and Beyond Functionality Description
